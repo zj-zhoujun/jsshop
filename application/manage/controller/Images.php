@@ -54,15 +54,17 @@ class Images extends Manage
             $upload_max_filesize = config('jshop.upload_filesize');
             $upload_max_filesize = empty($upload_max_filesize) ? 5242880 : $upload_max_filesize;//默认5M
 
-
-            if(isset($_FILES['upfile'])){
-                $file_extension   = get_file_extension($_FILES['upfile']['name']);
-                $savepath = DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'uploads' . get_hash_dir($_FILES['upfile']['name']);
-            }else{
-                $file_extension   = get_file_extension($_FILES['file']['name']);
-                $savepath = DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'uploads' . get_hash_dir($_FILES['file']['name']);
-
+            if(isset($_FILES['upfile']))
+            {
+                $file_extension = get_file_extension($_FILES['upfile']['name']);
+                $savepath =  '/static/uploads/images/' . get_hash_dir($_FILES['upfile']['name']);
             }
+            else
+            {
+                $file_extension = get_file_extension($_FILES['file']['name']);
+                $savepath =  '/static/uploads/images/' . get_hash_dir($_FILES['file']['name']);
+            }
+
             //上传处理类
             $config = array(
                 'rootPath' => ROOT_PATH . DIRECTORY_SEPARATOR . 'public',
@@ -448,5 +450,24 @@ class Images extends Manage
     private function retrieve($url) {
         preg_match('/\/([^\/]+\.[a-z]+)[^\/]*$/',$url,$match);
         return $match[1];
+    }
+
+
+    public function del()
+    {
+        $return_data = [
+            'status' => false,
+            'msg'    => '删除失败',
+            'data'   => ''
+        ];
+        $id          = input('param.id/s', '');
+        if (!$id) {
+            return $return_data;
+        }
+        if (delImage($id)) {
+            $return_data['msg']    = '删除成功';
+            $return_data['status'] = true;
+        }
+        return $return_data;
     }
 }

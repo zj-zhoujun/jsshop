@@ -9,6 +9,8 @@
 namespace app\Manage\controller;
 
 use app\common\controller\Manage;
+use app\common\model\GoodsGrade;
+use app\common\model\UserGrade;
 use Request;
 use app\common\model\Goods as goodsModel;
 use app\common\model\GoodsType;
@@ -60,6 +62,14 @@ class Goods extends Manage
     public function add()
     {
         $this->_common();
+        //处理会员价
+        if ($this->view->gradelist) {
+            $gradelist = [];
+            foreach ($this->view->gradelist as $key => $value) {
+                $gradelist[$key] = $value;
+                $gradelist[$key]['grade_price'] = 0;
+            }
+        }
         return $this->fetch('add');
     }
 
@@ -84,6 +94,11 @@ class Goods extends Manage
         $brandModel = new Brand();
         $brandList  = $brandModel->getAllBrand();
         $this->assign('brandList', $brandList);
+
+        //会员等级
+        $gradeModel = new UserGrade();
+        $gradelist = $gradeModel->getAll();
+        $this->assign('gradelist', $gradelist);
 
         hook('goodscommon', $this);//商品编辑、添加时增加钩子
 
@@ -220,6 +235,26 @@ class Goods extends Manage
                 return $result;
             }
         }
+        //保存会员价
+        $grade_price = input('post.goods.grade_price/a', []);
+        if ($grade_price) {
+            $grade_price_arr = [];
+            foreach ($grade_price as $key => $value) {
+                $grade_price_arr[] = [
+                    'goods_id'    => $goods_id,
+                    'grade_id'    => $key,
+                    'grade_price' => $value,
+                ];
+            }
+            $goodsGrade = new GoodsGrade();
+            $goodsGrade->where(['goods_id' => $goods_id])->delete();
+            if (!$goodsGrade->saveAll($grade_price_arr)) {
+                $goodsModel->rollback();
+                $result['msg'] = '会员价保存失败';
+                return $result;
+            }
+        }
+
         //保存图片
         if (isset($data['images']) && count($data['images']) > 1) {
             $imgRelData = [];
@@ -271,6 +306,9 @@ class Goods extends Manage
         $data['goods']['goods_type_id'] = input('post.goods_type_id', 0);
         $data['goods']['brand_id']      = input('post.goods.brand_id', 0);
         $data['goods']['bn']            = input('post.goods.bn', $bn);
+        if (empty($data['goods']['bn'])) {
+            $data['goods']['bn'] = $bn;
+        }
         $data['goods']['brief']         = input('post.goods.brief', '');
         $data['goods']['intro']         = input('post.goods.intro', '');
         $data['goods']['price']         = input('post.goods.price', '');
@@ -284,7 +322,6 @@ class Goods extends Manage
         $data['goods']['is_hot']        = input('post.goods.is_hot', '2');
         $open_spec                      = input('post.open_spec', 0);
         $specdesc                       = input('post.spec/a', []);
-
         if ($specdesc && $open_spec) {
             if(count($specdesc) == 1){//优化只一个规格的情况
                 $product = input('post.product/a',[]);
@@ -324,7 +361,7 @@ class Goods extends Manage
             $result['msg'] = '请先上传图片';
             return $result;
         }
-        $data['goods']['image_id'] = $images[0];
+        $data['goods']['image_id'] = reset($images);
         $data['images']            = $images;
         $goodsModel                = new goodsModel();
 
@@ -342,6 +379,7 @@ class Goods extends Manage
                 return $result;
             }
         }
+
         $result['data']   = $data;
         $result['status'] = true;
         return $result;
@@ -377,6 +415,9 @@ class Goods extends Manage
         $open_spec                     = input('post.open_spec', 0);
         if ($open_spec && $data['goods']['product_spes']) {
             $data['product']['spes_desc'] = $data['goods']['product_spes'];
+        }
+        if(!$data['product']['sn']){
+            $data['product']['sn'] = get_sn(4);
         }
         if ($isEdit) {
             $validate = new ProductsValidate();
@@ -599,6 +640,25 @@ class Goods extends Manage
         $this->assign('secondCat', $secondCat);
 
         $this->_common();
+        //处理会员价
+        $goodsGradeModel = new GoodsGrade();
+        $goodsGrade      = $goodsGradeModel->getGradePrice($goods_id);
+        if ($this->view->gradelist) {
+            $gradelist = [];
+            foreach ($this->view->gradelist as $key => $value) {
+                $gradelist[$key] = $value;
+                if ($goodsGrade['status']) {
+                    foreach ($goodsGrade['data'] as $k => $v) {
+                        if ($value['id'] == $v['grade_id']) {
+                            $gradelist[$key]['grade_price'] = $v['grade_price'];
+                        }
+                    }
+                } else {
+                    $gradelist[$key]['grade_price'] = 0;
+                }
+            }
+        }
+        $this->assign('gradelist', $gradelist);
         return $this->fetch('edit');
     }
 
@@ -618,7 +678,6 @@ class Goods extends Manage
             $result['msg'] = $checkData['msg'];
             return $result;
         }
-
         $data = $checkData['data'];
         //验证商品数据
         $goodsModel    = new goodsModel();
@@ -755,6 +814,26 @@ class Goods extends Manage
         if ($productIds) {
             $productsModel->deleteProduct($productIds);
         }
+        //保存会员价
+        $grade_price = input('post.goods.grade_price/a', []);
+        if ($grade_price) {
+            $grade_price_arr = [];
+            foreach ($grade_price as $key => $value) {
+                $grade_price_arr[] = [
+                    'goods_id'    => $goods_id,
+                    'grade_id'    => $key,
+                    'grade_price' => $value,
+                ];
+            }
+            $goodsGrade = new GoodsGrade();
+            $goodsGrade->where(['goods_id' => $goods_id])->delete();
+            if (!$goodsGrade->saveAll($grade_price_arr)) {
+                $goodsModel->rollback();
+                $result['msg'] = '会员价保存失败';
+                return $result;
+            }
+        }
+
         //保存图片
         if (isset($data['images']) && count($data['images']) >= 1) {
             $imgRelData = [];

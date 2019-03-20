@@ -4,6 +4,7 @@ namespace app\Manage\controller;
 use app\common\controller\Manage;
 use app\common\model\Balance;
 use app\common\model\GoodsComment;
+use app\common\model\UserGrade;
 use app\common\model\UserLog;
 use app\common\model\User as UserModel;
 use app\common\model\UserPointLog;
@@ -194,6 +195,9 @@ class User extends Manage
             $result    = $userModel->manageAdd($input);
             return $result;
         }
+        $gradeModel = new UserGrade();
+        $userGrade =$gradeModel->getAll();
+        $this->assign('grade',$userGrade);
         return $this->fetch('addUser');
     }
 
@@ -218,6 +222,9 @@ class User extends Manage
         $user_id = Request::param('user_id');
         $info    = $userModel->getUserInfo($user_id);
         $this->assign('info', $info);
+        $gradeModel = new UserGrade();
+        $userGrade =$gradeModel->getAll();
+        $this->assign('grade',$userGrade);
         return $this->fetch('editUser');
     }
 
@@ -273,28 +280,71 @@ class User extends Manage
     }
 
 
-
-
-    public function moneyLog()
-    {
-        $this->view->engine->layout(false);
-        $user_id = input('user_id');
-        $flag = input('flag', 'false');
-
-        if($flag == 'true')
-        {
-            $userPointLog = new Balance();
-            $post['user_id'] = $user_id;
-            $post['page'] = Request::param('page', 1);
-            $post['limit'] = Request::param('limit', 20);
-            $post['datetime'] = Request::param('datetime', '');
-            $res = $userPointLog->tableData($post);
-            return $res;
-        }
-        else
-        {
-            $this->assign('user_id', $user_id);
-            return $this->fetch('moneyLog');
+    //用户等级列表
+    public function grade(){
+        if(Request::isAjax()){
+            $userGradeModel = new UserGrade();
+            return $userGradeModel->tableData(input('param.'));
+        }else{
+            return $this->fetch('grade_index');
         }
     }
+
+    //用户等级新增和编辑，都走这里
+    public function gradeAdd(){
+        $this->view->engine->layout(false);
+        $result = [
+            'status' => false,
+            'data' => '',
+            'msg' => ''
+        ];
+
+        $userGradeModel = new UserGrade();
+        if(Request::isPost()){
+            $validate = new \app\common\validate\UserGrade();
+
+            if (!$validate->check(input('param.'))) {
+                $result['msg'] = $validate->getError();
+                return $result;
+            }
+
+            return $userGradeModel->toEdit(input('param.id'),input('param.name'),input('param.is_def',2));
+        }
+        if(input('?param.id')){
+            $info = $userGradeModel->where('id',input('param.id'))->find();
+            if(!$info){
+                $result['msg'] = "没有此条记录";
+            }
+            $this->assign('data',$info);
+        }
+        return $this->fetch('grade_edit');
+    }
+    //用户等级删除
+    public function gradeDel(){
+        $result = [
+            'status' => false,
+            'data' => '',
+            'msg' => ''
+        ];
+
+        $userGradeModel = new UserGrade();
+        if(!input('?param.id')){
+            return error_code(10000);
+        }
+
+        $info = $userGradeModel->where('id',input('param.id'))->find();
+        if(!$info){
+            $result['msg'] = "没有此用户等级";
+            return $result;
+        }
+        $re = $userGradeModel->where('id',input('param.id'))->delete();
+        if($re){
+            $result['status'] = true;
+        }else{
+            $result['msg'] = "删除失败";
+        }
+        return $result;
+
+    }
+
 }

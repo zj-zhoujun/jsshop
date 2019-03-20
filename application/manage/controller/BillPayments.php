@@ -16,6 +16,8 @@ class BillPayments extends Manage
             $data = input('param.');
             return $BillPaymentsModel->tableData($data);
         }
+        $bill_payments_type = config('params.bill_payments')['type'];
+        $this->assign('bill_payments_type', $bill_payments_type);
         return $this->fetch('index');
     }
     //后台管理员进行支付操作。
@@ -103,7 +105,7 @@ class BillPayments extends Manage
         }
 
         //支付单支付
-        return $BillPaymentsModel->toUpdate($result['data']['payment_id'], $BillPaymentsModel::STATUS_PAYED, $result['data']['payment_code']);
+        return $BillPaymentsModel->toUpdate($result['data']['payment_id'], $BillPaymentsModel::STATUS_PAYED, $result['data']['payment_code'],$result['data']['money'],"后台手动支付");
     }
     //支付单查看
     public function view()
