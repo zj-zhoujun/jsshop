@@ -25,7 +25,7 @@ use app\common\model\GoodsTypeParams;
 use think\Queue;
 use app\common\validate\Goods as GoodsValidate;
 use app\common\validate\Products as ProductsValidate;
-
+use think\Db;
 /***
  * 商品
  * Class Goods
@@ -320,6 +320,7 @@ class Goods extends Manage
         $data['goods']['marketable']    = input('post.goods.marketable', '2');
         $data['goods']['is_recommend']  = input('post.goods.is_recommend', '2');
         $data['goods']['is_hot']        = input('post.goods.is_hot', '2');
+        $data['goods']['ship_id']        = input('post.goods.ship_id',0);
         $open_spec                      = input('post.open_spec', 0);
         $specdesc                       = input('post.spec/a', []);
         if ($specdesc && $open_spec) {
@@ -659,6 +660,9 @@ class Goods extends Manage
             }
         }
         $this->assign('gradelist', $gradelist);
+        //运费模板
+        $ship_list = Db::name('ship')->where('status',1)->field('id,name')->select();
+        $this->assign('ship_list',$ship_list);
         return $this->fetch('edit');
     }
 

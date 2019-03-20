@@ -118,19 +118,6 @@ class Ship extends Common
         return $result;
     }
 
-
-    /**
-     * 获取配送费用
-     * @param int $area_id 地区id
-     * @param int $weight 重量，单位g
-     * @return string
-     * User: wjima
-     * Email:1457529125@qq.com
-     * Date: 2018-02-01 15:31
-     *      $shiModel = new ShipModel();
-     *      $shiModel->getShipCost(1,1600);
-     *      die();
-     */
     /**
      * 获取配送费用
      * @param int $area_id 地区id
@@ -146,6 +133,7 @@ class Ship extends Common
      */
     public function getShipCost($area_id = 0, $weight = 0, $totalmoney = 0)
     {
+
         $postfee = '0.00';
         //先判断是否子地区满足条件
         $def = $this->where([
@@ -167,7 +155,6 @@ class Ship extends Common
         }
         if ($def['type'] == self::TYPE_PART) {
             $area_fee = json_decode($def['area_fee'], true);
-
             if ($area_fee) {
                 $isIn = false;
                 foreach ($area_fee as $key => $val) {

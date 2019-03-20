@@ -125,16 +125,16 @@ class User extends Common
             return $result;
         }
         //校验验证码
-        if(session('?login_fail_num')){
-            if(session('login_fail_num') >= config('jshop.login_fail_num')){
-                if(!isset($data['captcha']) || $data['captcha'] == ''){
-                    return error_code(10013);
-                }
-                if(!captcha_check($data['captcha'])){
-                    return error_code(10012);
-                };
-            }
-        }
+//        if(session('?login_fail_num')){
+//            if(session('login_fail_num') >= config('jshop.login_fail_num')){
+//                if(!isset($data['captcha']) || $data['captcha'] == ''){
+//                    return error_code(10013);
+//                }
+//                if(!captcha_check($data['captcha'])){
+//                    return error_code(10012);
+//                };
+//            }
+//        }
 
         $userInfo = $this->where(array('username'=>$data['mobile']))->whereOr(array('mobile'=>$data['mobile']))->find();
         if(!$userInfo){
@@ -188,10 +188,10 @@ class User extends Common
         //判断是否是用户名登陆
         $smsModel = new Sms();
         $userWxModel = new UserWx();
-        if(!$smsModel->check($data['mobile'], $data['code'], 'login')){
-            $result['msg'] = '短信验证码错误';
-            return $result;
-        }
+//        if(!$smsModel->check($data['mobile'], $data['code'], 'login')){
+//            $result['msg'] = '短信验证码错误';
+//            return $result;
+//        }
 
         $userInfo = $this->where(array('mobile'=>$data['mobile']))->find();
         if(!$userInfo){

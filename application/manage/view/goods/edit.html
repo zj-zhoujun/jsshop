@@ -174,6 +174,19 @@
         </div>
     </div>
     <div class="layui-form-item" pane>
+        <label class="layui-form-label">运费模板：</label>
+        <div class="layui-input-inline">
+            <select name="goods[ship_id]">
+                <option value="">请选择运费模板</option>
+                {if condition="count($ship_list)>0"}
+                {volist name="ship_list" id="ship"}
+                <option value="{$ship.id}" {if condition="$ship.id eq $data.ship_id"} selected {/if}>{$ship.name}</option>
+                {/volist}
+                {/if}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item" pane>
         <label class="layui-form-label">上架：</label>
         <div class="layui-input-block">
             <input type="checkbox" {if condition="$data.marketable eq 1"} checked="" {/if} value="1" name="goods[marketable]" lay-skin="switch" lay-filter="switchTest" title="开关"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em></em><i></i></div>

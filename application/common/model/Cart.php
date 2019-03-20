@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 
 namespace app\common\model;
-
+use think\Db;
 /**
  * 购物车
  * Class Cart
@@ -231,6 +231,33 @@ class Cart extends Common
         {
             if($area_id)
             {
+                $map = [];
+                $map[] = ['id','in',$id];
+                $map[] = ['ship_id','neq',0];
+                $product_info = Db::name('goods')->where($map)->field('name,ship_id')->select();
+               // dump($product_info);
+                if($product_info){
+                    $ship_arr = array_column($product_info,'ship_id');
+                    if(count($ship_arr)>1){
+                        $result['msg'] = '所选产品配送区域不同，不可同时购买';
+                        return $result;
+                    }
+                    //dump($ship_arr);
+                    //判断下单地址是否在配送区域内
+                    $ship_area_str = Db::name('ship')->where('id',$ship_arr[0])->value('area_fee');
+                    // dump($ship_area_str);exit;
+                    if($ship_area_str){
+                        $ship_area_arr = json_decode($ship_area_str,true);
+                        $ship_area = explode(',',$ship_area_arr['area']);
+                        if(!in_array($area_id,$ship_area)){
+                            $result['msg'] = '收货地址不在配送区域内，感谢您的支持！';
+                            return $result;
+                        }
+                    }
+                }
+
+
+
                 $shipModel = new Ship();
                 $result['data']['cost_freight'] = $shipModel->getShipCost($area_id, $result['data']['weight'],$result['data']['goods_amount']);
                 $result['data']['amount'] += $result['data']['cost_freight'];

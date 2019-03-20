@@ -2,11 +2,11 @@
 <view class='member-content'>
   <view class='content-header'>
     <view class='header-top'>
-      <view class='top-left'>
+      <!-- <view class='top-left'>
         <text class='remaining-sum'>余额</text>
-        <text class='remainingsum-num'>{{balance}}</text>
+        <text class='remainingsum-num'>{{balance}}</text> -->
         <!-- <navigator class='recharge'>充值</navigator> -->
-      </view>
+      <!-- </view> -->
       <!-- 头像昵称 -->
       <view class='top-mid'>
         <open-data class='head-sculpture' type="userAvatarUrl"></open-data>
@@ -82,10 +82,10 @@
   </view>
   
   <!-- 余额提现 -->
-   <view class='content-view' bindtap='withdrawCash'>
+   <!-- <view class='content-view' bindtap='withdrawCash'>
     <image class='member-icon' src='../../image/remainingsum.png'></image>
     <text class='member-text'>我的余额</text>
-  </view>
+  </view> -->
 
   <!-- 积分签到 -->
   <view class='sign-in content-view' bindtap='myPoint' wx:if="{{isPoint}}">
