@@ -186,10 +186,10 @@ class User extends Common
         //判断是否是用户名登陆
         $smsModel = new Sms();
         $userWxModel = new UserWx();
-        if(!$smsModel->check($data['mobile'], $data['code'], 'login')){
-            $result['msg'] = '短信验证码错误';
-            return $result;
-        }
+        //if(!$smsModel->check($data['mobile'], $data['code'], 'login')){
+        //    $result['msg'] = '短信验证码错误';
+        //    return $result;
+        //}
 
         $userInfo = $this->where(array('mobile'=>$data['mobile']))->find();
         if(!$userInfo){
