@@ -14,15 +14,19 @@
             </div>
         </div>
         <div class="withdrawcash-mid">
-            <p>提现金额</p>
+            <p>
+                <span v-if="!tocashMoneyLow">提现金额</span>
+                <span v-else>最低提现金额 {{ tocashMoneyLow }} 元</span>
+                <span v-if="tocashMoneyRate">(手续费 {{ tocashMoneyRate }} %)</span>
+            </p>
             <div class="withdrawcash-input">
-                <span>￥</span><input type="number" v-model="money"/>
+                <span>￥</span><input type="number" v-model="money" ref="money"/>
             </div>
             <p v-show="!showError">可用余额 {{ available }} 元</p>
-            <p v-show="showError" style="color: #f00;">金额已超过可用余额</p>
+            <p v-show="showError" style="color: #f00;">金额超过可提现余额</p>
         </div>
         <div class="withdrawcash-bottom">
-            <div style="margin: 15px">
+            <div>
                 <yd-button size="large" type="danger" v-show="isSubmit" @click.native="submitHandler">确认提现</yd-button>
                 <yd-button size="large" type="disabled" disabled v-show="!isSubmit">确认提现</yd-button>
             </div>
@@ -43,15 +47,16 @@
                 <div v-else style="text-align: center">
                     没有银行卡
                 </div>
-                <div style="margin: 15px">
+                <!--<div>-->
                     <yd-button size="large" type="danger" @click.native="addCard">添加银行卡</yd-button>
-                </div>
+                <!--</div>-->
             </div>
         </yd-popup>
     </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
     data () {
         return {
@@ -64,9 +69,18 @@ export default {
             available: '' // 用户可用余额 最大提现额不得超过此余额
         }
     },
+    computed: {
+        ...mapGetters([
+            'tocashMoneyLow',
+            'tocashMoneyRate'
+        ])
+    },
     mounted () {
         this.defaultCard()
         this.getBalance()
+        this.$nextTick(function () {
+            this.$refs.money.focus()
+        })
     },
     methods: {
         // 获取默认的银行卡
@@ -125,17 +139,18 @@ export default {
     watch: {
         // 监听用户输出金额 更新渲染
         money () {
+            // 比较用户的输入金额 如果大于可用金额
             if (this.money === '') {
                 this.isSubmit = false
-            } else {
-                this.isSubmit = true
-            }
-            // 比较用户的输入金额 如果大于可用金额
-            if (Number(this.money) > Number(this.available)) {
+            } else if (Number(this.money) > Number(this.available)) {
                 this.showError = true
+                this.isSubmit = false
+            } else if (Number(this.money) < Number(this.tocashMoneyLow)) {
+                this.showError = false
                 this.isSubmit = false
             } else {
                 this.showError = false
+                this.isSubmit = true
             }
         }
     }

@@ -26,7 +26,7 @@
 	padding: 0;
 }
 .iconfont{
-	font-size: 20px;
+	font-size: 20px !important;
 	margin-right: 10px;
 }
 .layui-nav .layui-nav-item a{
@@ -396,4 +396,12 @@
     padding-top: 10px;
     margin-bottom: 10px;
     text-align: center;
+}
+
+/* 报表页面样式 */
+.report_table_bar {
+    text-align:right;
+}
+.report_table_bar span {
+    cursor: pointer;
 }

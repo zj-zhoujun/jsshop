@@ -1,5 +1,5 @@
 <?php
-namespace addons\trustlogin;
+namespace addons\Trustlogin;
 
 use myxland\addons\Addons;
 use app\common\model\Addons as addonsModel;
@@ -10,7 +10,7 @@ class Trustlogin extends Addons
 {
     // 该插件的基础信息
     public $info = [
-        'name' => 'trustlogin',
+        'name' => 'Trustlogin',
         'title' => 'H5信任登录插件',
         'description' => '信任登录插件，目前只有微信快捷登录，后续增加其他快捷登录',
         'status' => 0,
@@ -42,7 +42,7 @@ class Trustlogin extends Addons
         $trustData = [];
         foreach($setting as $key=>$value){
             if($value){
-                $class = "\\addons\\trustlogin\\lib\\$key";
+                $class = "\\addons\\Trustlogin\\lib\\$key";
                 $lib = new $class();
                 $trustData[$key] = [
                     'url'=>$lib->getOauthUrl($params['url'].'?type='.$key,$params['uuid']),
@@ -63,7 +63,7 @@ class Trustlogin extends Addons
         if (!isset($params['type']) && !$params['type']) {
             return $data;
         }
-        $class = "\\addons\\trustlogin\\lib\\" . $params['type'];
+        $class = "\\addons\\Trustlogin\\lib\\" . $params['type'];
         $lib = new $class();
         $res = $lib->getUserInfo($params);
         if (!$res) {

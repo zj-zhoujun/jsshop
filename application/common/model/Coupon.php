@@ -167,7 +167,8 @@ class Coupon extends Common
                 'list' => [],
                 'count' => 0,
                 'page' => $page,
-                'limit' => $limit
+                'limit' => $limit,
+                'q_type' => $display
             ]
         ];
         $where[] = ['c.user_id', 'eq', $user_id];
@@ -230,6 +231,7 @@ class Coupon extends Common
                     }
                     $return['data']['list'][$k]['expression1'] = $expression1;
                     $return['data']['list'][$k]['expression2'] = $expression2;
+                    $return['data']['list'][$k]['is_expire'] = $v['etime'] > time() ? 1 : 2;
                     $return['data']['list'][$k]['stime'] = date('Y-m-d', $v['stime']);
                     $return['data']['list'][$k]['etime'] = date('Y-m-d', $v['etime']);
                 }

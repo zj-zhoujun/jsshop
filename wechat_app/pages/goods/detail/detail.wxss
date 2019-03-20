@@ -145,7 +145,8 @@ swiper{
   display: inline-block; 
 }
 .sales-promotion .salespromotion-service-body{
-  margin: auto;
+  /* margin: auto; */
+  max-width: 600rpx;
 }
 .sales-promotion text.salespromotion-service-body{
   background-color:#FF3B44;
@@ -156,6 +157,7 @@ swiper{
   height:28rpx;
   line-height:28rpx;
   padding:0 10rpx;
+  margin-right: 6rpx;
   
 }
 .salespromotion-service-body view{ 
@@ -218,7 +220,7 @@ swiper{
 .nav{width:100%;height:100rpx;display:flex;flex-direction:row;}
 .default{line-height:100rpx;text-align:center;flex:1;color:#999;font-size:32rpx;background-color: #F8F8F8;}
 .red{line-height:100rpx;text-align:center;color:#FF3B44;flex:1;font-size:32rpx;}
-.show{display:block;font-size: 30rpx;color: #999;width: 750rpx;}
+.show{display:block;font-size: 30rpx;color: #999;width: 750rpx;padding-bottom: 100rpx;}
 .hidden{display:none;text-align:center;line-height:200px;}
 .detail-footer{
   overflow: hidden;
@@ -445,8 +447,9 @@ swiper{
   margin: 0;
 }
 .wxParse-p {
-  padding-bottom: 100rpx;
+  /* padding-bottom: 100rpx; */
   width: 750rpx;
+  overflow: hidden;
 }
 .commentLoading{
   text-align:center;
@@ -474,11 +477,14 @@ swiper{
 }
 .lable_green{
   display: inline-block;
-  padding: 2rpx 12rpx;
   background-color: #009688;
   color: #fff;
-  font-size: 24rpx;
-  margin-right: 18rpx;
+  font-size:18rpx;
+  margin-right:18rpx;
+  border-radius:10rpx;
+  height:28rpx;
+  line-height:28rpx;
+  padding:0 10rpx;
 }
 .lable_orange{
   color: #fff;
@@ -645,4 +651,7 @@ swiper{
 }
 .quickbtn{
   z-index: 99;
+}
+.sales-promotion .no-promotion{
+    background-color:#ccc !important;
 }

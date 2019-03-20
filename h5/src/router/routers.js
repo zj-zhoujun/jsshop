@@ -134,6 +134,18 @@ const routers = [
         }
     },
     {
+        path: '/payresult',
+        component: resolve => require(['../pages/order/PayResult'], resolve),
+        name: 'PayResult',
+        meta: {
+            tabShow: false,
+            navShow: true,
+            title: '支付结果',
+            keepAlive: false,
+            isLogin: true
+        }
+    },
+    {
         path: '/allorder',
         component: resolve => require(['../pages/order/AllOrder'], resolve),
         name: 'AllOrder',
@@ -150,8 +162,21 @@ const routers = [
         component: resolve => require(['../pages/order/OrderDetail'], resolve),
         name: 'OrderDetail',
         meta: {
+            navShow: true,
             tabShow: false,
             title: '订单详情',
+            keepAlive: false,
+            isLogin: true
+        }
+    },
+    {
+        path: '/express',
+            component: resolve => require(['../pages/order/Express'], resolve),
+        name: 'Express',
+        meta: {
+            navShow: true,
+            tabShow: false,
+            title: '物流信息',
             keepAlive: false,
             isLogin: true
         }
@@ -444,7 +469,7 @@ const routers = [
             tabShow: false,
             title: '店铺提货订单',
             keepAlive: false
-        },
+        }
     },
     {
         path: '/orderverification',
@@ -476,6 +501,17 @@ const routers = [
             navShow: false,
             tabShow: false,
             title: '团购活动',
+            keepAlive: false
+        }
+    },
+    {
+        path: '/invoice',
+        component: resolve => require(['../pages/order/Invoice'], resolve),
+        name: 'GroupBuying',
+        meta: {
+            navShow: true,
+            tabShow: false,
+            title: '发票',
             keepAlive: false
         }
     }

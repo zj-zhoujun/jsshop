@@ -5,7 +5,7 @@ const app = getApp(); //获取全局app.js
 Page({
   //页面使用的数据
   data: {
-    appTitle: '', //小程序标题
+    appTitle: 'Jshop小程序商城——致力于为客户创造有价值的产品。', //小程序标题
     imageUrl: '/static/images/share.png', //分享封面图
     indicatorDots: true, //商品轮播图底部圆点
     autoplay: true, //商品轮播图自动播放
@@ -207,6 +207,7 @@ Page({
       app.common.groupCountDown(page);
     });
   },
+
   //获取秒杀数据
   seckillList: function (flag = false) {
     var page = this;
@@ -255,7 +256,10 @@ Page({
     var val = e.target.dataset.val;
     if (types == 1) {
       //URL
-
+      let ins = encodeURIComponent(val);
+      wx.navigateTo({
+        url: '../other/special/special?url=' + ins,
+      });
     } else if (types == 2) {
         //商品
         let ins = encodeURIComponent('id=' + val);
@@ -271,6 +275,10 @@ Page({
         wx.navigateTo({
             url: '../other/articleList/articleList?id=' + val,
         });
+    } else if (types == 5) {
+      wx.navigateTo({
+        url: '../form/detail/form?id=' + val,
+      });
     }
   },
 
@@ -279,7 +287,6 @@ Page({
 
   //领取优惠券
   getCoupon: function (e) {
-    app.db.userToken(function (token) {
       var data = {
         promotion_id: e.currentTarget.dataset.id
       }
@@ -288,7 +295,6 @@ Page({
           title: res.msg,
         });
       });
-    });
   },
 
   //前往全部分类
@@ -370,6 +376,7 @@ Page({
     wx.stopPullDownRefresh();
     this.groupList(); //获取精品团购数据
     this.seckillList(); //获取限时秒杀数据
+    app.db.del('all_cat');
   },
   
     //转发分享

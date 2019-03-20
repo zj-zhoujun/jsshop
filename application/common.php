@@ -103,7 +103,15 @@ function get_sn($type){
             $str = $type.substr(msectime().rand(0,9),1);
             break;
         case 9:         //提货单号
-            $str = 'T'.$type.substr(msectime().rand(0,5), 1);
+            //$str = 'T'.$type.substr(msectime().rand(0,5), 1);
+            $chars = ['Q','W','E','R','T','Y','U','P','A','S','D','F','G','H','J','K','L','Z','X','C','V','B','N','M','2','3','4','5','6','7','8','9'];
+            $charsLen = count($chars) - 1;
+            shuffle($chars);
+            $str = '';
+            for($i = 0; $i < 6; $i++)
+            {
+                $str .= $chars[mt_rand(0, $charsLen)];
+            }
             break;
         default:
             $str = substr(msectime().rand(0,9),1);
@@ -148,7 +156,7 @@ function get_file_extension($filename)
 function get_hash_dir($name='default')
 {
     $ident = sha1(uniqid('',true) . $name . microtime());
-    $dir   = DIRECTORY_SEPARATOR . $ident{0} . $ident{1} . DIRECTORY_SEPARATOR . $ident{2} . $ident{3} . DIRECTORY_SEPARATOR . $ident{4} . $ident{5} . DIRECTORY_SEPARATOR;
+    $dir   = '/' . $ident{0} . $ident{1} . '/' . $ident{2} . $ident{3} . '/' . $ident{4} . $ident{5} . '/';
     return $dir;
 }
 
@@ -175,14 +183,17 @@ function mkdirs($dir,$mode = 0777)
 /**
  * 返回图片地址
  * TODO 水印，裁剪，等操作
- * @param $image_id
- * @param $type
- * @return string
+ * @param string $image_id
+ * @param string $type
+ * @return array|mixed|string
+ * @throws \think\db\exception\DataNotFoundException
+ * @throws \think\db\exception\ModelNotFoundException
+ * @throws \think\exception\DbException
  * User: wjima
  * Email:1457529125@qq.com
  * Date: 2018-01-09 18:34
  */
-function _sImage($image_id, $type = 's')
+function _sImage($image_id = '', $type = 's')
 {
     if (!$image_id) {
         $image_id = getSetting('shop_default_image');//系统默认图片
@@ -206,7 +217,7 @@ function _sImage($image_id, $type = 's')
             return request()->domain() . str_replace("\\", "/", $image['url']);
         }
     } else {
-        return request()->domain() . '/' . config('jshop.default_image');//默认图片
+        return config('jshop.default_image');//默认图片
     }
 }
 
@@ -293,29 +304,6 @@ function get_user_id($mobile)
     }
 }
 
-/**
- * 根据operation_id 取得链接地址
- * @param $id
- * @return string|Url
- */
-function get_operation_url($id)
-{
-    $operationModel = new Operation();
-    $actionInfo = $operationModel->where(array('id' => $id))->find();
-    if (!$actionInfo) {
-        return "";
-    }
-    $controllerInfo = $operationModel->where(array('id' => $actionInfo['parent_id']))->find();
-    if (!$controllerInfo) {
-        return "";
-    }
-
-    $modueInfo = $operationModel->where(array('id' => $controllerInfo['parent_id']))->find();
-    if (!$modueInfo) {
-        return "";
-    }
-    return url($modueInfo['code'] . '/' . $controllerInfo['code'] . '/' . $actionInfo['code']);
-}
 /**
  * 获取转换后金额
  * @param int $money
@@ -416,8 +404,9 @@ function delImage($image_id){
         //删除图片数据
         $res = $image_obj->where(['id'=>$image_id])->delete();
         if($image['type']=='local'){
-            $dd = @unlink($image['path']);
+            @unlink($image['path']);
         }
+        //todo 其它存储引擎不调整
         if($res){
             return true;
         }
@@ -882,7 +871,7 @@ function isjson($str){
  * @return bool
  */
 function isMobile($mobile = ''){
-    if (preg_match("/^1[345678]{1}\d{9}$/", $mobile)) {
+    if (preg_match("/^1[3456789]{1}\d{9}$/", $mobile)) {
         return true;
     } else {
         return false;
@@ -919,4 +908,77 @@ function secondConversion($second = 0)
         }
     }
     return $newtime;
+}
+
+
+/**
+ * 返回文件地址
+ * @param $file_id
+ * @param $type
+ * @return string
+ * User: wjima
+ * Email:1457529125@qq.com
+ * Date: 2018-01-15
+ */
+function _sFile($file_id, $type = 's')
+{
+    if (!$file_id) {
+        return false;
+    }
+    if (stripos($file_id, 'http') !== false || stripos($file_id, 'https') !== false) {
+        return $file_id;
+    }
+    $file_obj = new \app\common\model\Files();
+    $file     = $file_obj->where([
+        'id' => $file_id
+    ])->field('url')->find();
+    if ($file) {
+        if (stripos($file['url'], 'http') !== false || stripos($file['url'], 'https') !== false) {
+            return str_replace("\\", "/", $file['url']);
+        } else {
+            return request()->domain() . str_replace("\\", "/", $file['url']);
+        }
+    } else {
+        return false;
+    }
+}
+
+/**
+ * 验证是否邮箱
+ * @param $email
+ * @return bool
+ */
+function isEmail($email){
+    $pattern = '/^[a-z0-9]+([._-][a-z0-9]+)*@([0-9a-z]+\.[a-z]{2,14}(\.[a-z]{2})?)$/i';
+    if(preg_match($pattern,$email)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+/***
+ * 导出时字符串太长不显示时，处理
+ */
+function convertString($value = '')
+{
+    return $value."\t";
+}
+
+/**
+ * 根据token获取userid
+ * @param string $token
+ * @return int
+ */
+function getUserIdByToken($token = '')
+{
+    if (!$token) {
+        return 0;
+    }
+    $userTokenModel = new \app\common\model\UserToken();
+    $return_token   = $userTokenModel->checkToken($token);
+    if ($return_token['status'] == false) {
+        return 0;
+    }
+    return $return_token['data']['user_id'];
 }

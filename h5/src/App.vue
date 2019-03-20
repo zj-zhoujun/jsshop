@@ -16,40 +16,49 @@
 <script>
 import navbar from './components/NavBar.vue'
 import tabbar from './components/TabBar.vue'
+import {mapGetters} from 'vuex'
 
 export default {
     components: {
         navbar, tabbar
     },
+    computed: {
+        ...mapGetters([
+            'shopName',
+            'shopDesc',
+            'shopLogo',
+			'statistics'
+        ])
+    },
+    beforeMount () {
+        this.getShopSetting();
+    },
     methods: {
-        getShopName () {
-            var shop_name = ''
-            this.$api.getSetting({key: 'shop_name'}, res => {
-                if (res.data !== '') {
-                    this.GLOBAL.setStorage('shop_name', res.data)
+        // 获取店铺配置 存入vuex
+        getShopSetting () {
+            this.$api.shopConfig().then(res => {
+                this.$store.dispatch('shopConfig', res)
+                if (this.$route.path === '/index') {
+                    document.title = this.shopName
                 }
-                shop_name = res.data
-            })
-            return shop_name
+                //百度统计
+                if(res.statistics){
+                    var script=document.createElement("script");
+                    script.innerHTML = res.statistics;
+                    document.getElementsByTagName("body")[0].appendChild(script);
+                }
+            });
         }
     },
     watch: {
-        '$route' :{
+        '$route': {
             handler () {
-                if (this.$route.path === '/index') {
-                    document.title = this.GLOBAL.getStorage('shop_name')
-                    ? this.GLOBAL.getStorage('shop_name')
-                    : this.getShopName()
-                }
+                document.title = this.$route.path === '/index' ? this.shopName : this.$route.meta.title
             }
         }
-    },
-    beforeDestroy() {
-        this.GLOBAL.removeStorage('shop_name')
     }
 }
 </script>
-
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

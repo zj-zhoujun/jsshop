@@ -92,7 +92,8 @@ class BillRefund extends Common
             }
 
             $data['status'] = self::STATUS_REFUND;
-            $this->where($where)->data($data)->update();
+            $data['payment_code'] = $payment_code;
+            $this->save($data,$where);
             $result['msg'] = '退款单退款成功';
             if($result['status']){
                 //发送退款消息
@@ -104,7 +105,8 @@ class BillRefund extends Common
             //退款拒绝
 
             $data['status'] = $status;
-            $this->where($where)->data($data)->update();
+            $data['payment_code'] = $payment_code;
+            $this->save($data,$where);
             $result['status'] = true;
             $result['msg'] = '退款单拒绝成功';
             return $result;
@@ -202,9 +204,9 @@ class BillRefund extends Common
     protected function tableWhere($post)
     {
         $where = [];
-//        if(isset($post['source_id']) && $post['source_id'] != ""){      //这个得关联查询：：todo
-//            $where[] = ['order_id', 'like', '%'.$post['order_id'].'%'];
-//        }
+        if(isset($post['source_id']) && $post['source_id'] != ""){
+            $where[] = ['source_id', 'like', '%'.$post['source_id'].'%'];
+        }
         if(isset($post['refund_id']) && $post['refund_id'] != ""){
             $where[] = ['refund_id', 'like', '%'.$post['refund_id'].'%'];
         }

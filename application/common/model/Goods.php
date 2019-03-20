@@ -28,10 +28,6 @@ use app\common\model\Setting;
  */
 class Goods extends Common
 {
-
-    use SoftDelete;
-    protected $deleteTime = 'isdel';
-
     protected $autoWriteTimestamp = true;
     protected $createTime = 'ctime';
     protected $updateTime = 'utime';
@@ -40,6 +36,8 @@ class Goods extends Common
     const MARKETABLE_DOWN = 2;//下架
     const VIRTUAL_YES = 2;//虚拟商品
     const VIRTUAL_NO = 1;//普通商品
+    const HOT_YES = 1; //热卖
+    const HOT_NO = 2; //非热卖
 
     public function tableData($post,$isPage=true)
     {
@@ -71,6 +69,9 @@ class Goods extends Common
      * 默认排序
      * @param $post
      * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      * User: wjima
      * Email:1457529125@qq.com
      * Date: 2018-01-11 16:32
@@ -146,12 +147,9 @@ class Goods extends Common
      */
     public function doAdd($data = [])
     {
-        $result=$this->insert($data);
-        if($result)
-        {
-            return $this->getLastInsID();
-        }
-        return $result;
+        $goodsid = $this->allowField(true)->insertGetId($data);
+
+        return $goodsid ? $goodsid : 0;
     }
 
     protected function tableFormat($list)
@@ -188,6 +186,9 @@ class Goods extends Common
      * @param int    $page 当前页码
      * @param int    $limit 每页数量
      * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      * User: wjima
      * Email:1457529125@qq.com
      * Date: 2018-01-29 16:33
@@ -241,13 +242,15 @@ class Goods extends Common
         return $result;
     }
 
-
     /**
      * 获取商品详情
      * @param $gid
      * @param string $fields
      * @param string $token
      * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getGoodsDetial($gid,$fields = '*',$token = '')
     {
@@ -294,7 +297,8 @@ class Goods extends Common
             if(!$default_product){
                 return error_code(10000);
             }
-            $product_info = $productsModel->getProductInfo($default_product['id'],true);
+            $user_id = getUserIdByToken($token);//获取user_id
+            $product_info = $productsModel->getProductInfo($default_product['id'],true,$user_id);
             if(!$product_info['status']){
                 return $product_info;
             }
@@ -315,7 +319,6 @@ class Goods extends Common
                     $album[] = _sImage($v['image_id']);
                 }
             }
-
             $list['album']=$album;
 
             //取出销量
@@ -324,17 +327,21 @@ class Goods extends Common
             $list['buy_count'] = $count;
 
             //获取当前登录是否收藏
-            $list['isfav']=$this->getFav($list['id'],$token);
+
+            $list['isfav']=$this->getFav($list['id'],$user_id);
             $result['data'] = $list;
+
+            //图片处理
+            $list['intro'] = str_replace("<img","<img style='max-width: 100%'", $list['intro'] );
         }
         return $result;
     }
 
-    /***
+    /**
      * 获取默认规格
-     * @param $specDefault 默认规格
-     * @param $specKey 当前规格名称
-     * @param $specValue 当前规格值
+     * @param $specDefault //默认规格
+     * @param $specKey //当前规格名称
+     * @param $specValue //当前规格值
      * @return string
      * User: wjima
      * Email:1457529125@qq.com
@@ -353,8 +360,14 @@ class Goods extends Common
 
     /**
      * 获取商品下面所有货品
+     * @param $goods_id
+     * @param bool $isPromotion
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
-    public function products($goods_id,$isPromotion=true)
+    public function products($goods_id, $isPromotion=true)
     {
         $productModel = new Products();
         $pids         = $productModel->field('id')->where(['goods_id' => $goods_id])->select();
@@ -376,7 +389,7 @@ class Goods extends Common
 
     /**
      * 获取goods表图片对应图片地址
-     * @return $this
+     * @return \think\model\relation\HasOne
      * User: wjima
      * Email:1457529125@qq.com
      * Date: 2018-01-29 16:26
@@ -388,7 +401,7 @@ class Goods extends Common
 
     /**
      * 获取品牌信息
-     * @return $this
+     * @return \think\model\relation\HasOne
      * User: wjima
      * Email:1457529125@qq.com
      * Date: 2018-01-31 11:43
@@ -398,10 +411,9 @@ class Goods extends Common
         return $this->hasOne('Brand','id','brand_id')->field('id,name,logo')->bind([ 'brand_name' => 'name' ]);
     }
 
-
     /**
      * 获取分类名称
-     * @return $this
+     * @return \think\model\relation\HasOne
      * User: wjima
      * Email:1457529125@qq.com
      * Date: 2018-01-31 11:46
@@ -413,7 +425,7 @@ class Goods extends Common
 
     /**
      * 获取类型名称
-     * @return $this
+     * @return \think\model\relation\HasOne
      * User: wjima
      * Email:1457529125@qq.com
      * Date: 2018-02-03 8:55
@@ -422,15 +434,42 @@ class Goods extends Common
     {
         return $this->hasOne('GoodsType','id','goods_type_id')->field('id,name')->bind([ 'type_name' => 'name' ]);
     }
+
     /**
      * 获取销售价
+     * @param $product
+     * @return mixed
      * User: wjima
      * Email:1457529125@qq.com
      * Date: 2018-02-02 10:26
      */
-    public function getPrice($product)
+    public function getPrice($product, $user_id = '')
     {
-        return $product['price'];
+        $price = $product['price'];
+
+        //获取会员优惠
+        $user_grade                    = get_user_info($user_id, 'grade');
+        $priceData['grade_info']['id'] = $user_grade;
+        $goodsGradeModel               = new GoodsGrade();
+        $goodsGrade                    = $goodsGradeModel->getGradePrice($product['goods_id']);
+        $grade_price                   = [];
+        $userGradeModel                = new UserGrade();
+        if ($goodsGrade['status']) {
+            foreach ($goodsGrade['data'] as $key => $val) {
+                $grade_price[$key]               = $val;
+                $userGrade                       = $userGradeModel->where(['id' => $val['grade_id']])->field('name')->find();
+                $grade_price[$key]['grade_name'] = isset($userGrade['name']) ? $userGrade['name'] : '';
+                if ($user_grade && $user_grade == $val['grade_id']) {
+                    $price                           = ($product['price'] - $val['grade_price']) > 0 ? $product['price'] - $val['grade_price'] : 0;
+                    $priceData['grade_info']['name'] = $grade_price[$key]['grade_name'];
+                }
+                $grade_price[$key]['grade_price'] = ($product['price'] - $val['grade_price']) > 0 ? $product['price'] - $val['grade_price'] : 0;
+            }
+        }
+
+        $priceData['grade_price'] = $grade_price;
+        $priceData['price']       = $price;
+        return $priceData;
     }
 
     /**
@@ -448,10 +487,11 @@ class Goods extends Common
 
     /**
      * 库存改变机制。库存机制：商品下单 总库存不变，冻结库存加1， 商品发货：冻结库存减1，总库存减1，   商品退款&取消订单：总库存不变，冻结库存减1, 商品退货：总库存加1，冻结库存不变, 可销售库存：总库存-冻结库存
-     * @param        $product_id
+     * @param $product_id
      * @param string $type
      * @param int $num
      * @return array
+     * @throws \think\Exception
      * User: wjima
      * Email:1457529125@qq.com
      * Date: 2018-02-02 10:34
@@ -505,9 +545,15 @@ class Goods extends Common
         return $result;
     }
 
-    /*
+    /**
      * 无数据转换
-     * */
+     * @param $goods_id
+     * @param string $fields
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     public function getOne($goods_id,$fields='*')
     {
         $result = [
@@ -553,24 +599,18 @@ class Goods extends Common
     /**
      * 判断是否收藏过
      * @param int    $goods_id
-     * @param string $token
+     * @param string $user_id
      * @return string
      * User: wjima
      * Email:1457529125@qq.com
      * Date: 2018-02-03 8:36
      */
-    public function getFav($goods_id = 0,$token = '')
+    public function getFav($goods_id = 0,$user_id = '')
     {
         $favRes = 'false';
-        if($token) {
-            $userTokenModel = new UserToken();
-            $return_token   = $userTokenModel->checkToken($token);
-            if($return_token['status'] == false) {
-                return $favRes;
-            }
-            $tokenData            = $return_token['data'];
+        if($user_id) {
             $goodsCollectionModel = new GoodsCollection();
-            $isfav                = $goodsCollectionModel->check($tokenData['user_id'],$goods_id);
+            $isfav                = $goodsCollectionModel->check($user_id,$goods_id);
             if($isfav) {
                 $favRes = 'true';
             }
@@ -582,6 +622,8 @@ class Goods extends Common
      * 删除商品
      * @param int $goods_id
      * @return array
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function delGoods($goods_id = 0)
     {
@@ -597,7 +639,7 @@ class Goods extends Common
 
         $this->startTrans();
 
-        $res = self::destroy($goods_id);
+        $res = $this->where(['id'=>$goods_id])->delete();
         if (!$res) {
             $this->rollback();
             $result['msg'] = '商品删除失败';
@@ -605,22 +647,7 @@ class Goods extends Common
         }
         $productsModel = new Products();
         $delProduct = $productsModel->where(['goods_id' => $goods_id])->delete(true);
-        if (!$delProduct) {
-            $this->rollback();
-            $result['msg'] = '货品删除失败';
-            return $result;
-        }
-        //删除关联图片
-        $goodsImagesModel = new GoodsImages();
-        $delImages = $goodsImagesModel->delImages($goods_id);
-        if (!$delImages['status']) {
-            $this->rollback();
-            $result['msg'] = '图片删除失败';
-            return $result;
-        }
-        delImage($goods['image_id']);
         $this->commit();
-
         hook('deletegoodsafter', $goods);//删除商品后增加钩子
 
         $result['status'] = true;
@@ -652,6 +679,9 @@ class Goods extends Common
      * 获取csv数据
      * @param $post
      * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getCsvData($post)
     {
@@ -685,9 +715,9 @@ class Goods extends Common
                     }
                     $spes_desc = substr($spes_desc,1);
                     $val['spes_desc'] = $spes_desc;
+
                 }
                 if (count($product) > 1) {//多规格
-
                     foreach ($product as $productKey => $productVal) {
                         $i++;
                         if ($productKey != 0) {
@@ -700,6 +730,7 @@ class Goods extends Common
                         $val['stock'] = $productVal['stock'];
                         $val['product_spes_desc'] = $productVal['spes_desc'];
                         $val['is_defalut'] = $productVal['is_defalut'];
+                        $val['is_spec'] = '1';//多规格
                         foreach ($header as $hk => $hv) {
                             if ($val[$hv['id']] && isset($hv['modify'])) {
                                 if (function_exists($hv['modify'])) {
@@ -714,6 +745,7 @@ class Goods extends Common
 
                     }
                 } else {//单规格
+                    $val['is_spec'] = '2';
                     $i++;
                     $val['sn'] = $product[0]['sn'];
                     $val['price'] = $product[0]['price'];
@@ -744,6 +776,7 @@ class Goods extends Common
             return $result;
         }
     }
+
     /**
      * 设置csv header
      * @return array
@@ -758,13 +791,14 @@ class Goods extends Common
             [
                 'id' => 'bn',
                 'desc' => '商品编号',
+                'modify'=>'convertString'
             ],
             [
                 'id' => 'brief',
                 'desc' => '商品简介',
             ],
             [
-                'id' => 'image_url',
+                'id' => 'image_id',
                 'desc' => '商品主图',
             ],
             [
@@ -827,6 +861,11 @@ class Goods extends Common
 
             ],
             [
+                'id' => 'is_spec',
+                'desc' => '是否多规格',
+                'modify'=>'getBool'
+            ],
+            [
                 'id' => 'label_ids',
                 'desc' => '商品标签',
                 'modify'=>'getExportLabel'
@@ -848,6 +887,7 @@ class Goods extends Common
             [
                 'id' => 'sn',
                 'desc' => '货品编码',
+                'modify'=>'convertString'
             ],
             [
                 'id' => 'price',
@@ -904,8 +944,6 @@ class Goods extends Common
         ];
     }
 
-
-
     /**
      * 获取重量
      * @param $product_id
@@ -947,5 +985,49 @@ class Goods extends Common
             'msg'    => '参数丢失',
         ];
         return $result;
+    }
+
+    /**
+     * 获取某个分类的热卖商品
+     * @param $cat_id
+     * @param int $limit
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getGoodsCatHotGoods($cat_id, $limit = 6)
+    {
+        $return = [
+            'status' => false,
+            'msg' => '获取失败',
+            'data' => []
+        ];
+        $where[] = ['is_hot', 'eq', self::HOT_YES];
+        $where[] = ['marketable', 'eq', self::MARKETABLE_UP];
+        $where[] = ['goods_cat_id', 'eq', $cat_id];
+        $return['data']['list'] = $this->field('id,name,image_id,price,brief')
+            ->where($where)
+            ->limit(0, $limit)
+            ->order('ctime DESC')
+            ->select();
+
+        $catModel = new GoodsCat();
+        $catName = $catModel->getNameById($cat_id);
+        $return['data']['name'] = $catName['data'];
+
+        if($return['data']['list'] !== false)
+        {
+            if(count($return['data']['list']) > 0)
+            {
+                foreach($return['data']['list'] as $k => &$v)
+                {
+                    $v['image_url'] = _sImage($v['image_id']);
+                }
+            }
+            $return['status'] = true;
+            $return['msg'] = '获取成功';
+        }
+        return $return;
     }
 }

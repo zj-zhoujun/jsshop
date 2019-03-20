@@ -35,17 +35,13 @@
             <yd-tab-panel class="comment" label="买家评论">
                 <ul>
                     <li v-for="(item, index) in comment" :key="index">
-                        <div class="">
+                        <div class="comment-info">
                             <img :src="item.user.avatar" alt="" class="user-img">
                             <p class="user-name">{{ item.user.nickname }}</p>
                             <yd-rate slot="left" v-model="item.score" :readonly="true" size=".2rem"></yd-rate>
                         </div>
                         <p>{{ item.ctime }}  &nbsp;&nbsp;&nbsp;&nbsp;{{ item.addon }}</p>
                         <p>{{ item.content }}</p>
-                        <!--<div class="comment-imgs" v-if="item.hasOwnProperty('images_url')">-->
-                            <!--<div class="comment-img" v-for="(img, key) in item.images_url" :key="key">-->
-                            	<!--<img :src="img">-->
-                            <!--</div>-->
                             <yd-lightbox class="comment-imgs">
                                 <yd-lightbox-img class="comment-img" v-for="(img, key) in item.images_url" :key="key" :src="img"></yd-lightbox-img>
                                 <yd-lightbox-txt>
@@ -75,6 +71,7 @@
         </yd-tab>
         <goodsdetailfooter
             :is_fav="is_fav"
+            :cart_nums="cart_nums"
             @collection="collection"
             @addCart="add"
             @buyNow="buyNow"
@@ -103,8 +100,8 @@ export default {
             comment: [], // 商品的评论
             load: true, // 是否显示更多
             is_fav: false, // 是否收藏
-            num: 1 // 购买的商品数量 默认为1
-
+            num: 1, // 购买的商品数量 默认为1
+            cart_nums: 0 // 购物车数量
         }
     },
     components: {
@@ -114,6 +111,7 @@ export default {
         this.goodsDetail()
         this.goodsParams()
         this.goodsComment()
+        this.getCartNums()
     },
     computed: {
         // 促销信息重新计算满足的条件 如果存在不满足的条件 就不显示促销信息
@@ -121,7 +119,7 @@ export default {
             if (this.promotion) {
                 let arr = []
                 for (let k in this.promotion) {
-                    if (this.promotion[k].type === 2 || this.promotion[k].type === true) {
+                    if (this.promotion[k].type === 2 || this.promotion[k].type === 1) {
                         arr.push(this.promotion[k])
                     }
                 }
@@ -148,6 +146,8 @@ export default {
                     if (this.GLOBAL.getStorage('user_token')) {
                         this.goodsBrowsing()
                     }
+                    // 微信分享
+                    this.weixinConfig()
                 } else {
                     this.$dialog.alert({
                         mes: '该商品不存在',
@@ -175,10 +175,11 @@ export default {
             }, res => {
                 if (res.status) {
                     const _list = res.data.list
+                    let commentCount = res.data.count
                     for (let k in _list) {
                         _list[k].ctime = this.GLOBAL.timeToDate(_list[k].ctime)
                     }
-                    if (_list.length < this.pageSize) {
+                    if (_list.length >= commentCount) {
                         this.load = false
                     }
                     this.comment = [..._list]
@@ -193,15 +194,34 @@ export default {
             }, res => {
                 if (res.status) {
                     const _list = res.data.list
+                    let commentCount = res.data.count
                     for (let k in _list) {
                         _list[k].ctime = this.GLOBAL.timeToDate(_list[k].ctime)
                     }
-                    if (_list.length < this.pageSize) {
+                    this.comment = [...this.comment, ..._list]
+                    if (this.comment.length >= commentCount) {
                         this.load = false
                     }
-                    this.comment = [...this.comment, ..._list]
                 }
             })
+        },
+        // 获取微信分享配置参数
+        weixinConfig () {
+            let isWeiXinBrowser = this.GLOBAL.isWeiXinBrowser()
+            if (isWeiXinBrowser) {
+                this.$api.weixinShare(this.goodsData.name, this.goodsData.image_url, this.goodsData.brief)
+            }
+        },
+        // 获取购物车数量
+        getCartNums () {
+            let userToken = this.GLOBAL.getStorage('user_token')
+            if (userToken) {
+                this.$api.getCartNum({token: userToken}, res => {
+                    if (res.status) {
+                        this.cart_nums = res.data
+                    }
+                })
+            }
         },
         // 更改默认货品
         changeSpes (id) {
@@ -232,6 +252,7 @@ export default {
         add () {
             this.$api.addCart({product_id: this.productSpes.id, nums: this.num}, res => {
                 if (res.status) {
+                    this.getCartNums()
                     this.$dialog.toast({mes: res.msg, timeout: 1000, icon: 'success'})
                 }
             })
@@ -247,7 +268,7 @@ export default {
         },
         goBack () {
             if (window.history.length <= 1) {
-                this.$router.push({path:'/'})
+                this.$router.push({path: '/'})
                 return false
             } else {
                 this.$router.go(-1)
@@ -265,6 +286,24 @@ export default {
 <style>
     .comment{
         text-align: left;
+    }
+    .comment-info{
+        height: 30px;
+        /*position: relative;*/
+    }
+    .comment p{
+        float: none !important;
+    }
+    .comment-info p{
+        float: left !important;
+    }
+    .comment-info .yd-rate{
+        float: left;
+        position: relative;
+        top: 50%;
+        /*left: 10px;*/
+        
+        transform: translateY(-50%);
     }
     .comment ul{
         padding: 10px;
@@ -284,6 +323,7 @@ export default {
         left: 10px;
         transform: translateY(-50%);
         color: #a0a0a0;
+        margin-right: 15px;
     }
     .goodsdetail-back {
         position: absolute;

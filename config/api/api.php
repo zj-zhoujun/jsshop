@@ -5,6 +5,7 @@
 // +----------------------------------------------------------------------
 
 return [
+    //用户
     'user'    => [
         'code' => 'User',
         'method' => [
@@ -124,19 +125,11 @@ return [
                 'code' => 'sign',
                 'is_login' => true
             ],
-            'pointlog' => [
-                'code' => 'pointLog',
-                'is_login' => true
-            ],
             'getuserpoint' => [
                 'code' => 'getUserPoint',
                 'is_login' => true
             ],
             'getsetting' => [
-                'code' => 'getSetting',
-                'is_login' => false
-            ],
-            'getsellersetting' => [
                 'code' => 'getSetting',
                 'is_login' => false
             ],
@@ -219,19 +212,27 @@ return [
             'activationinvite' => [
                 'code' => 'activationInvite',
                 'is_login' => true
+            ],
+            'userpointlog' => [
+                'code' => 'userPointLog',
+                'is_login' => true
+            ],
+            'getsigninfo' => [
+                'code' => 'getSignInfo',
+                'is_login' => true
             ]
         ]
     ],
 
     'advert' => [
-        'code' => 'Advert',
+        'code' => 'Carousel',
         'method' => [
             'positionList' => [
-                'code' => 'positionList',
+                'code' => 'carouselSeatList',
                 'is_login' => false
             ],
             'getAdvertList' => [
-                'code' => 'getAdvertList',
+                'code' => 'getList',
                 'is_login' => false
             ]
         ],
@@ -327,6 +328,10 @@ return [
             ],
             'setnums' => [
                 'code' => 'setNums',
+                'is_login' => true
+            ],
+            'getnumber' => [
+                'code' => 'getNumber',
                 'is_login' => true
             ]
         ]
@@ -430,6 +435,10 @@ return [
             'getcashpooling' => [
                 'code' => 'getCashPooling',
                 'is_login' => false
+            ],
+            'gettaxcode' => [
+                'code' => 'getTaxCode',
+                'is_login' => false
             ]
         ]
     ],
@@ -460,6 +469,10 @@ return [
             ],
             'getgoodscomment' => [
                 'code' => 'getGoodsComment',
+                'is_login' => false
+            ],
+            'getgoodscathotgoods' => [
+                'code' => 'getGoodsCatHotGoods',
                 'is_login' => false
             ]
         ]
@@ -529,6 +542,10 @@ return [
             'getinviteqrcode' => [
                 'code' => 'getInviteQRCode',
                 'is_login' => false
+            ],
+            'getrecommendkeys' => [
+                'code' => 'getRecommendKeys',
+                'is_login' => false
             ]
         ]
     ],
@@ -546,5 +563,32 @@ return [
                 'is_login'=>false
             ]
         ]
+    ],
+
+    // h5 微信浏览器里分享
+    'weixinshare' => [
+        'code' => 'WeiXinShare',
+        'method' => [
+            'share' => [
+                'code' => 'share',
+                'is_login' => false
+            ]
+        ]
+    ],
+
+    // 表单
+    'form'=>[
+        'code'=>'Form',
+        'method'=>[
+            'getformdetial'=>[
+                'code'=>'getFormDetial',
+                'is_login' => false
+            ],
+            'addsubmit'=>[
+                'code'=>'addSubmit',
+                'is_login' => false
+            ],
+
+        ],
     ]
 ];

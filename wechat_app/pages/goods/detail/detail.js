@@ -41,7 +41,8 @@ Page({
     painting: {}, //海报生成参数
     share: false,
     nickname: '',
-    avatar: ''
+    avatar: '',
+    cnumber: 0
   },
 
   //商品减一
@@ -183,6 +184,18 @@ Page({
         }
     },
 
+    //获取购物车数量
+    getCartNumber: function () {
+        let page = this;
+        app.api.getCartNumber(function (res) {
+            if(res.status){
+                page.setData({
+                    cnumber: res.data
+                });
+            }
+        });
+    },
+
     //获取用户信息
     getUserInfo: function () {
         let page = this;
@@ -214,6 +227,7 @@ Page({
         }
         this.getGoodsInfo();
         this.getGoodsComment();
+        this.getCartNumber();
     },
 
   //页面首次渲染完成执行
@@ -609,8 +623,7 @@ Page({
 
   //收藏和取消收藏商品
   goodsCollection: function () {
-    var page = this;
-    app.db.userToken(function (token) {
+      var page = this;
       var data = {
         goods_id: page.data.goodsId
       }
@@ -626,7 +639,6 @@ Page({
           title: res.msg
         });
       });
-    });
   },
 
   //前往购物车
@@ -639,7 +651,6 @@ Page({
   //加入购物车
   goodsAddCart: function () {
     var page = this;
-    app.db.userToken(function (token) {
       //page.getNowProduct(); //获取当前选中的货品信息
       var data = {
         product_id: page.data.productId,
@@ -649,8 +660,8 @@ Page({
         wx.showToast({
           title: res.msg
         });
+        page.getCartNumber();
       });
-    });
   },
 
   //获取当前选中的货品
@@ -683,23 +694,27 @@ Page({
   //   }
   // },
 
-  //立即购买
-  buyNow: function () {
-    var page = this;
-    app.db.userToken(function (token) {
-      //page.getNowProduct(); //获取当前选中的货品信息
-      var data = {
-        product_id: page.data.productId,
-        nums: page.data.nums,
-        type: 2
-      }
-      app.api.goodsAddCart(data, function (res) {
-        wx.navigateTo({
-          url: '../../cart/firmOrder/firmOrder?data=' + JSON.stringify(res.data),
+    //立即购买
+    buyNow: function () {
+        var page = this;
+        //page.getNowProduct(); //获取当前选中的货品信息
+        var data = {
+            product_id: page.data.productId,
+            nums: page.data.nums,
+            type: 2
+        }
+        app.api.goodsAddCart(data, function (res) {
+            if(res.status){
+                wx.navigateTo({
+                    url: '../../cart/firmOrder/firmOrder?data=' + JSON.stringify(res.data),
+                });
+            }else{
+                wx.showToast({
+                    title: res.msg
+                });
+            }
         });
-      });
-    });
-  },
+    },
   
   //规格选择
   selectSku: function (obj) {
@@ -764,6 +779,33 @@ Page({
   
   //客服功能
   customerService: function (e) {},
+
+
+  // 主图点击放大
+  previewImg: function (e) {
+    var index = e.currentTarget.dataset.index;
+    var goodsImg = this.data.goodsImg;
+    wx.previewImage({
+      current: goodsImg[index],     //当前图片地址
+      urls: goodsImg,               //所有要预览的图片的地址集合 数组形式
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+  },
+
+  // 评论图片点击放大
+  commentImg: function (e) {
+    var index = e.currentTarget.dataset.index;
+    // var goodsImg = this.data.goodsImg;
+    // wx.previewImage({
+    //   current: goodsImg[index],     //当前图片地址
+    //   urls: goodsImg,               //所有要预览的图片的地址集合 数组形式
+    //   success: function (res) { },
+    //   fail: function (res) { },
+    //   complete: function (res) { },
+    // })
+  },
 
   //展示工具条
   showbtn: function () {

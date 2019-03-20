@@ -15,9 +15,15 @@ Page({
     isLoad: false,
     cartNums: 0,
     editStatus: false,
-    shopName: app.config.app_title
+    shopName: app.config.shop_name,
+    bHeight: 0
   },
 
+  onLoad:function(){
+    this.setData({
+      shopName: app.config.shop_name
+    });
+  },
   //获取购物车数据
   getCartData: function () {
     var page = this;
@@ -393,24 +399,22 @@ Page({
   //收藏
   collection: function (e) {
     var page = this;
-    app.db.userToken(function (token) {
-      var data = {
+    var data = {
         goods_id: e.currentTarget.dataset.goodsid
-      }
-      app.api.goodsCollection(data, function (res) {
+    }
+    app.api.goodsCollection(data, function (res) {
         for (var k in page.data.cartData.list) {
-          if (page.data.cartData.list[k].products.goods_id == e.currentTarget.dataset.goodsid) {
+            if (page.data.cartData.list[k].products.goods_id == e.currentTarget.dataset.goodsid) {
             if (res.msg == '收藏成功') {
-              page.data.cartData.list[k].isCollection = true;
+                page.data.cartData.list[k].isCollection = true;
             } else {
-              page.data.cartData.list[k].isCollection = false;
+                page.data.cartData.list[k].isCollection = false;
             }
-          }
+            }
         }
         wx.showToast({
-          title: res.msg
+            title: res.msg
         });
-      });
     });
   },
 
@@ -498,11 +502,9 @@ Page({
   //页面加载
   onShow: function () {
     var page = this;
-    app.db.userToken(function (token) {
-      page.getCartData(); //获取购物车数据
-    });
+    page.getCartData(); //获取购物车数据
     this.setData({
-      editStatus: false
+        editStatus: false
     });
   }
 });

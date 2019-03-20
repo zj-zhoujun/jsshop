@@ -5,7 +5,7 @@
   autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
   <block wx:for="{{goodsImg}}" wx:key="{{index}}">
     <swiper-item>
-      <image src="{{item}}" class="slide-image" />
+      <image src="{{item}}" mode='aspectFill' class="slide-image" bindtap='previewImg'/>
     </swiper-item>
   </block>  
 </swiper>
@@ -44,8 +44,10 @@
       <!-- 促销信息 -->
       <view class='sales-promotion' wx:if="{{goodsInfo.product.promotion_list.length !== 0}}">
         <text class='salespromotion-service-name'>促销</text>
-        <text wx:for="{{goodsInfo.product.promotion_list}}" wx:key="inde" wx:for-item="items" class='salespromotion-service-body' wx:if="{{items.type}}">{{items.name}}</text>
-        
+        <view class='salespromotion-service-body'>
+            <text class='salespromotion-service-body' wx:for="{{goodsInfo.product.promotion_list}}" wx:key="inde" wx:for-item="items"  wx:if="{{items.type == 2}}">{{items.name}}</text>
+        <text wx:for="{{goodsInfo.product.promotion_list}}" wx:key="inde" wx:for-item="items" class='no-promotion salespromotion-service-body' wx:if="{{items.type == 1}}">{{items.name}}</text>
+        </view>
       </view>
       <!-- 服务信息 -->
       <view class='service'>
@@ -149,7 +151,7 @@
               {{item.content}}
             </view>
             <view class='comment-img'>
-                <image wx:for="{{item.images_url}}" wx:if="{{vo != '/pages/image/default_avatar.png'}}" wx:key="indexs" wx:for-item="vo"  mode="{{mode}}" src='{{vo}}'></image>
+                <image wx:for="{{item.images_url}}" wx:if="{{vo != '/pages/image/default_avatar.png'}}" wx:key="indexs" wx:for-item="vo"  mode="{{mode}}" src='{{vo}}' bindtap='commentImg'></image>
             </view>
           </view>
         </view>

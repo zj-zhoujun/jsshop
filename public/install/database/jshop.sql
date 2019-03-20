@@ -1,9 +1,17 @@
 /*
+ Navicat Premium Data Transfer
+
+ Source Server         : jshop
+ Source Server Type    : MySQL
+ Source Server Version : 50557
+ Source Host           : 127.0.0.1:3306
+ Source Schema         : clean_b2c
+
  Target Server Type    : MySQL
- Target Server Version : 50554
+ Target Server Version : 50557
  File Encoding         : 65001
 
- Date: 29/12/2018 22:48:39
+ Date: 16/03/2019 17:13:13
 */
 
 SET NAMES utf8mb4;
@@ -25,14 +33,14 @@ CREATE TABLE `jshop_addons`  (
   `ctime` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '安装时间',
   `utime` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '插件表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '插件表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of jshop_addons
 -- ----------------------------
-INSERT INTO `jshop_addons` VALUES (3, 'appletmessage', '微信小程序模板消息', '微信小程序模板消息', 1, '{\"display\":\"1\",\"template\":{\"create_order\":{\"title\":\"\\u4e0b\\u5355\\u6210\\u529f\",\"data\":[{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\"},{\"title\":\"\\u5546\\u6237\\u540d\",\"code\":\"seller_name\"},{\"title\":\"\\u8ba2\\u5355\\u7f16\\u53f7\",\"code\":\"order_id\"},{\"title\":\"\\u4e0b\\u5355\\u65f6\\u95f4\",\"code\":\"ctime\"},{\"title\":\"\\u8ba2\\u5355\\u72b6\\u6001\",\"code\":\"status\"},{\"title\":\"\\u8ba2\\u5355\\u91d1\\u989d\",\"code\":\"order_amount\"}]},\"order_payed\":{\"title\":\"\\u652f\\u4ed8\\u6210\\u529f\",\"data\":[{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\"},{\"title\":\"\\u5546\\u6237\\u540d\",\"code\":\"seller_name\"},{\"title\":\"\\u8ba2\\u5355\\u7f16\\u53f7\",\"code\":\"order_id\"},{\"title\":\"\\u4e0b\\u5355\\u65f6\\u95f4\",\"code\":\"ctime\"},{\"title\":\"\\u8ba2\\u5355\\u72b6\\u6001\",\"code\":\"status\"},{\"title\":\"\\u8ba2\\u5355\\u91d1\\u989d\",\"code\":\"order_amount\"}]},\"delivery_notice\":{\"title\":\"\\u8ba2\\u5355\\u53d1\\u8d27\",\"data\":[{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\"},{\"title\":\"\\u4f1a\\u5458\\u540d\\u79f0\",\"code\":\"user_name\"},{\"title\":\"\\u8ba2\\u5355\\u7f16\\u53f7\",\"code\":\"order_id\"},{\"title\":\"\\u4e0b\\u5355\\u65f6\\u95f4\",\"code\":\"ctime\"},{\"title\":\"\\u7269\\u6d41\\u516c\\u53f8\",\"code\":\"logi_name\"},{\"title\":\"\\u7269\\u6d41\\u5355\\u53f7\",\"code\":\"logi_no\"},{\"title\":\"\\u6536\\u8d27\\u5730\\u5740\",\"code\":\"rec_address\"},{\"title\":\"\\u5907\\u6ce8\",\"code\":\"memo\"}]},\"refund_success\":{\"title\":\"\\u8ba2\\u5355\\u9000\\u6b3e\",\"data\":[{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\"},{\"title\":\"\\u8ba2\\u5355\\u7f16\\u53f7\",\"code\":\"order_id\"},{\"title\":\"\\u9000\\u6b3e\\u91d1\\u989d\",\"code\":\"refund_money\"},{\"title\":\"\\u9000\\u6b3e\\u65f6\\u95f4\",\"code\":\"refund_time\"},{\"title\":\"\\u9000\\u6b3e\\u539f\\u56e0\",\"code\":\"refund_reason\"},{\"title\":\"\\u9000\\u6b3e\\u72b6\\u6001\",\"code\":\"refund_status\"}]}}}', 'mark', '0.1', 1538029414, 1538029414);
-INSERT INTO `jshop_addons` VALUES (6, 'aliyunsms', '阿里云短信通道', '阿里云发送短信插件，请勿和其它短信通道一起使用', 1, '{\"accessKeyId\":\"\",\"accessKeySecret\":\"\",\"aliyunPrefix\":\"\",\"template\":{\"login\":{\"title\":\"\\u7528\\u6237\\u767b\\u5f55\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u9a8c\\u8bc1\\u7801:${code}\",\"variable\":{\"code\":\"code\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u60a8\\u6b63\\u5728\\u767b\\u9646\\u8d26\\u53f7\\uff0c\\u9a8c\\u8bc1\\u7801\\u662f${code}\\uff0c\\u8bf7\\u52ff\\u544a\\u8bc9\\u4ed6\\u4eba\\u3002\"}}},\"reg\":{\"title\":\"\\u7528\\u6237\\u6ce8\\u518c\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u9a8c\\u8bc1\\u7801:${code}\",\"variable\":{\"code\":\"code\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u60a8\\u6b63\\u5728\\u6ce8\\u518c\\u8d26\\u53f7\\uff0c\\u9a8c\\u8bc1\\u7801\\u662f${code}\\uff0c\\u8bf7\\u52ff\\u544a\\u8bc9\\u4ed6\\u4eba\\u3002\"}}},\"veri\":{\"title\":\"\\u7528\\u6237\\u9a8c\\u8bc1\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u9a8c\\u8bc1\\u7801:${code}\",\"variable\":{\"code\":\"code\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u60a8\\u7684\\u9a8c\\u8bc1\\u7801\\u662f${code}\\uff0c\\u8bf7\\u52ff\\u544a\\u8bc9\\u4ed6\\u4eba\\u3002\"}}},\"create_order\":{\"title\":\"\\u4e0b\\u5355\\u6210\\u529f\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u8ba2\\u5355\\u53f7 :${order_id}\\uff0c\\u603b\\u4ef7 :${order_amount}\\uff0c\\u914d\\u9001\\u65b9\\u5f0f :${ship_id}\\u6536\\u8d27\\u4eba\\u624b\\u673a :${ship_mobile}\\uff0c\\u6536\\u8d27\\u4eba\\u5730\\u5740 :${ship_addr}\\uff0c\\u6536\\u8d27\\u4eba\\u59d3\\u540d :${ship_name}\",\"variable\":{\"order_id\":\"order_id\",\"order_amount\":\"order_amount\",\"ship_id\":\"ship_id\",\"ship_mobile\":\"ship_mobile\",\"ship_addr\":\"ship_addr\",\"ship_name\":\"ship_name\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u606d\\u559c\\u60a8\\uff0c\\u8ba2\\u5355\\u521b\\u5efa\\u6210\\u529f,\\u795d\\u60a8\\u8d2d\\u7269\\u6109\\u5feb\\u3002\"}}},\"order_payed\":{\"title\":\"\\u652f\\u4ed8\\u6210\\u529f\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u8ba2\\u5355\\u53f7 :${order_id}>,\\u4ed8\\u6b3e\\u4eba :${user_name},\\u4ed8\\u6b3e\\u65f6\\u95f4 :${pay_time},\\u4ed8\\u6b3e\\u91d1\\u989d :${money}\",\"variable\":{\"order_id\":\"order_id\",\"user_name\":\"user_name\",\"pay_time\":\"pay_time\",\"money\":\"money\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u606d\\u559c\\u60a8\\uff0c\\u8ba2\\u5355\\u652f\\u4ed8\\u6210\\u529f,\\u795d\\u60a8\\u8d2d\\u7269\\u6109\\u5feb\\u3002\"}}},\"remind_order_pay\":{\"title\":\"\\u50ac\\u4ed8\\u63d0\\u9192\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u8ba2\\u5355\\u53f7:${order_id},\\u914d\\u9001\\u65b9\\u5f0f:${ship_id},\\u7269\\u6d41\\u516c\\u53f8:${logistics_name},\\u7269\\u6d41\\u5355\\u53f7:${ship_no},\\u6536\\u8d27\\u4eba\\u59d3\\u540d:${ship_name},\\u6536\\u8d27\\u4eba\\u5730\\u5740:${ship_addr},\\u6536\\u8d27\\u4eba\\u624b\\u673a:${ship_mobile},\\u5907\\u6ce8:${memo}\",\"variable\":{\"order_id\":\"order_id\",\"ship_id\":\"ship_id\",\"logistics_name\":\"logistics_name\",\"ship_no\":\"ship_no\",\"ship_name\":\"ship_name\",\"ship_addr\":\"ship_addr\",\"ship_mobile\":\"ship_mobile\",\"memo\":\"memo\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u606d\\u559c\\u60a8\\uff0c\\u8ba2\\u5355\\u521b\\u5efa\\u6210\\u529f,\\u795d\\u60a8\\u8d2d\\u7269\\u6109\\u5feb\\u3002\"}}},\"delivery_notice\":{\"title\":\"\\u8ba2\\u5355\\u53d1\\u8d27\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u8ba2\\u5355\\u53f7:${order_id},\\u914d\\u9001\\u65b9\\u5f0f:${ship_id},\\u7269\\u6d41\\u516c\\u53f8:${logistics_name},\\u7269\\u6d41\\u5355\\u53f7:${ship_no},\\u6536\\u8d27\\u4eba\\u59d3\\u540d:${ship_name},\\u6536\\u8d27\\u4eba\\u5730\\u5740:${ship_addr},\\u6536\\u8d27\\u4eba\\u624b\\u673a:${ship_mobile},\\u5907\\u6ce8:${memo}\",\"variable\":{\"order_id\":\"order_id\",\"ship_id\":\"ship_id\",\"logistics_name\":\"logistics_name\",\"ship_no\":\"ship_no\",\"ship_name\":\"ship_name\",\"ship_addr\":\"ship_addr\",\"ship_mobile\":\"ship_mobile\",\"memo\":\"memo\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u606d\\u559c\\u60a8\\uff0c\\u8ba2\\u5355\\u521b\\u5efa\\u6210\\u529f,\\u795d\\u60a8\\u8d2d\\u7269\\u6109\\u5feb\\u3002\"}}},\"aftersales_pass\":{\"title\":\"\\u552e\\u540e\\u5ba1\\u6838\\u901a\\u8fc7\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u8ba2\\u5355\\u53f7:${order_id},\\u552e\\u540e\\u5355\\u53f7:${aftersales_id},\\u5ba1\\u6838\\u72b6\\u6001:${aftersales_status},\\u5ba1\\u6838\\u5907\\u6ce8${mark}\",\"variable\":{\"order_id\":\"order_id\",\"aftersales_id\":\"aftersales_id\",\"status\":\"aftersales_status\",\"mark\":\"mark\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u606d\\u559c\\u60a8\\uff0c\\u8ba2\\u5355\\u521b\\u5efa\\u6210\\u529f,\\u795d\\u60a8\\u8d2d\\u7269\\u6109\\u5feb\\u3002\"}}},\"refund_success\":{\"title\":\"\\u9000\\u6b3e\\u6210\\u529f\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u8ba2\\u5355\\u53f7 :${order_id}\\uff0c\\u9000\\u6b3e\\u7f16\\u53f7 :${refund_id},\\u9000\\u6b3e\\u91d1\\u989d :${refund}\",\"variable\":{\"order_id\":\"source_id\",\"refund_id\":\"refund_id\",\"refund\":\"money\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u606d\\u559c\\u60a8\\uff0c\\u8ba2\\u5355\\u521b\\u5efa\\u6210\\u529f,\\u795d\\u60a8\\u8d2d\\u7269\\u6109\\u5feb\\u3002\"}}}}}', 'mark', '0.1', 1541147133, 1541147133);
-INSERT INTO `jshop_addons` VALUES (7, 'trustlogin', 'H5信任登录插件', '信任登录插件，目前只有微信快捷登录，后续增加其他快捷登录', 1, '{\"weixin\":\"1\"}', 'mark', '0.1', 1541772405, 1541772405);
+INSERT INTO `jshop_addons` VALUES (3, 'Appletmessage', '微信小程序模板消息', '微信小程序模板消息', 1, '{\"display\":\"1\",\"template\":{\"create_order\":{\"title\":\"\\u4e0b\\u5355\\u6210\\u529f\",\"data\":[{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\"},{\"title\":\"\\u5546\\u6237\\u540d\",\"code\":\"seller_name\"},{\"title\":\"\\u8ba2\\u5355\\u7f16\\u53f7\",\"code\":\"order_id\"},{\"title\":\"\\u4e0b\\u5355\\u65f6\\u95f4\",\"code\":\"ctime\"},{\"title\":\"\\u8ba2\\u5355\\u72b6\\u6001\",\"code\":\"status\"},{\"title\":\"\\u8ba2\\u5355\\u91d1\\u989d\",\"code\":\"order_amount\"}]},\"order_payed\":{\"title\":\"\\u652f\\u4ed8\\u6210\\u529f\",\"data\":[{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\"},{\"title\":\"\\u5546\\u6237\\u540d\",\"code\":\"seller_name\"},{\"title\":\"\\u8ba2\\u5355\\u7f16\\u53f7\",\"code\":\"order_id\"},{\"title\":\"\\u4e0b\\u5355\\u65f6\\u95f4\",\"code\":\"ctime\"},{\"title\":\"\\u8ba2\\u5355\\u72b6\\u6001\",\"code\":\"status\"},{\"title\":\"\\u8ba2\\u5355\\u91d1\\u989d\",\"code\":\"order_amount\"}]},\"delivery_notice\":{\"title\":\"\\u8ba2\\u5355\\u53d1\\u8d27\",\"data\":[{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\"},{\"title\":\"\\u4f1a\\u5458\\u540d\\u79f0\",\"code\":\"user_name\"},{\"title\":\"\\u8ba2\\u5355\\u7f16\\u53f7\",\"code\":\"order_id\"},{\"title\":\"\\u4e0b\\u5355\\u65f6\\u95f4\",\"code\":\"ctime\"},{\"title\":\"\\u7269\\u6d41\\u516c\\u53f8\",\"code\":\"logi_name\"},{\"title\":\"\\u7269\\u6d41\\u5355\\u53f7\",\"code\":\"logi_no\"},{\"title\":\"\\u6536\\u8d27\\u5730\\u5740\",\"code\":\"rec_address\"},{\"title\":\"\\u5907\\u6ce8\",\"code\":\"memo\"}]},\"refund_success\":{\"title\":\"\\u8ba2\\u5355\\u9000\\u6b3e\",\"data\":[{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\"},{\"title\":\"\\u8ba2\\u5355\\u7f16\\u53f7\",\"code\":\"order_id\"},{\"title\":\"\\u9000\\u6b3e\\u91d1\\u989d\",\"code\":\"refund_money\"},{\"title\":\"\\u9000\\u6b3e\\u65f6\\u95f4\",\"code\":\"refund_time\"},{\"title\":\"\\u9000\\u6b3e\\u539f\\u56e0\",\"code\":\"refund_reason\"},{\"title\":\"\\u9000\\u6b3e\\u72b6\\u6001\",\"code\":\"refund_status\"}]}}}', 'mark', '0.1', 1538029414, 1538029414);
+INSERT INTO `jshop_addons` VALUES (6, 'Aliyunsms', '阿里云短信通道', '阿里云发送短信插件，请勿和其它短信通道一起使用', 1, '{\"accessKeyId\":\"\",\"accessKeySecret\":\"\",\"aliyunPrefix\":\"\",\"template\":{\"login\":{\"title\":\"\\u7528\\u6237\\u767b\\u5f55\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u9a8c\\u8bc1\\u7801:${code}\",\"variable\":{\"code\":\"code\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u60a8\\u6b63\\u5728\\u767b\\u9646\\u8d26\\u53f7\\uff0c\\u9a8c\\u8bc1\\u7801\\u662f${code}\\uff0c\\u8bf7\\u52ff\\u544a\\u8bc9\\u4ed6\\u4eba\\u3002\"}}},\"reg\":{\"title\":\"\\u7528\\u6237\\u6ce8\\u518c\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u9a8c\\u8bc1\\u7801:${code}\",\"variable\":{\"code\":\"code\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u60a8\\u6b63\\u5728\\u6ce8\\u518c\\u8d26\\u53f7\\uff0c\\u9a8c\\u8bc1\\u7801\\u662f${code}\\uff0c\\u8bf7\\u52ff\\u544a\\u8bc9\\u4ed6\\u4eba\\u3002\"}}},\"veri\":{\"title\":\"\\u7528\\u6237\\u9a8c\\u8bc1\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u9a8c\\u8bc1\\u7801:${code}\",\"variable\":{\"code\":\"code\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u60a8\\u7684\\u9a8c\\u8bc1\\u7801\\u662f${code}\\uff0c\\u8bf7\\u52ff\\u544a\\u8bc9\\u4ed6\\u4eba\\u3002\"}}},\"create_order\":{\"title\":\"\\u4e0b\\u5355\\u6210\\u529f\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u8ba2\\u5355\\u53f7 :${order_id}\\uff0c\\u603b\\u4ef7 :${order_amount}\\uff0c\\u914d\\u9001\\u65b9\\u5f0f :${ship_id}\\u6536\\u8d27\\u4eba\\u624b\\u673a :${ship_mobile}\\uff0c\\u6536\\u8d27\\u4eba\\u5730\\u5740 :${ship_addr}\\uff0c\\u6536\\u8d27\\u4eba\\u59d3\\u540d :${ship_name}\",\"variable\":{\"order_id\":\"order_id\",\"order_amount\":\"order_amount\",\"ship_id\":\"ship_id\",\"ship_mobile\":\"ship_mobile\",\"ship_addr\":\"ship_addr\",\"ship_name\":\"ship_name\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u606d\\u559c\\u60a8\\uff0c\\u8ba2\\u5355\\u521b\\u5efa\\u6210\\u529f,\\u795d\\u60a8\\u8d2d\\u7269\\u6109\\u5feb\\u3002\"}}},\"order_payed\":{\"title\":\"\\u652f\\u4ed8\\u6210\\u529f\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u8ba2\\u5355\\u53f7 :${order_id}>,\\u4ed8\\u6b3e\\u4eba :${user_name},\\u4ed8\\u6b3e\\u65f6\\u95f4 :${pay_time},\\u4ed8\\u6b3e\\u91d1\\u989d :${money}\",\"variable\":{\"order_id\":\"order_id\",\"user_name\":\"user_name\",\"pay_time\":\"pay_time\",\"money\":\"money\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u606d\\u559c\\u60a8\\uff0c\\u8ba2\\u5355\\u652f\\u4ed8\\u6210\\u529f,\\u795d\\u60a8\\u8d2d\\u7269\\u6109\\u5feb\\u3002\"}}},\"remind_order_pay\":{\"title\":\"\\u50ac\\u4ed8\\u63d0\\u9192\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u8ba2\\u5355\\u53f7:${order_id},\\u914d\\u9001\\u65b9\\u5f0f:${ship_id},\\u7269\\u6d41\\u516c\\u53f8:${logistics_name},\\u7269\\u6d41\\u5355\\u53f7:${ship_no},\\u6536\\u8d27\\u4eba\\u59d3\\u540d:${ship_name},\\u6536\\u8d27\\u4eba\\u5730\\u5740:${ship_addr},\\u6536\\u8d27\\u4eba\\u624b\\u673a:${ship_mobile},\\u5907\\u6ce8:${memo}\",\"variable\":{\"order_id\":\"order_id\",\"ship_id\":\"ship_id\",\"logistics_name\":\"logistics_name\",\"ship_no\":\"ship_no\",\"ship_name\":\"ship_name\",\"ship_addr\":\"ship_addr\",\"ship_mobile\":\"ship_mobile\",\"memo\":\"memo\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u606d\\u559c\\u60a8\\uff0c\\u8ba2\\u5355\\u521b\\u5efa\\u6210\\u529f,\\u795d\\u60a8\\u8d2d\\u7269\\u6109\\u5feb\\u3002\"}}},\"delivery_notice\":{\"title\":\"\\u8ba2\\u5355\\u53d1\\u8d27\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u8ba2\\u5355\\u53f7:${order_id},\\u914d\\u9001\\u65b9\\u5f0f:${ship_id},\\u7269\\u6d41\\u516c\\u53f8:${logistics_name},\\u7269\\u6d41\\u5355\\u53f7:${ship_no},\\u6536\\u8d27\\u4eba\\u59d3\\u540d:${ship_name},\\u6536\\u8d27\\u4eba\\u5730\\u5740:${ship_addr},\\u6536\\u8d27\\u4eba\\u624b\\u673a:${ship_mobile},\\u5907\\u6ce8:${memo}\",\"variable\":{\"order_id\":\"order_id\",\"ship_id\":\"ship_id\",\"logistics_name\":\"logistics_name\",\"ship_no\":\"ship_no\",\"ship_name\":\"ship_name\",\"ship_addr\":\"ship_addr\",\"ship_mobile\":\"ship_mobile\",\"memo\":\"memo\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u606d\\u559c\\u60a8\\uff0c\\u8ba2\\u5355\\u521b\\u5efa\\u6210\\u529f,\\u795d\\u60a8\\u8d2d\\u7269\\u6109\\u5feb\\u3002\"}}},\"aftersales_pass\":{\"title\":\"\\u552e\\u540e\\u5ba1\\u6838\\u901a\\u8fc7\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u8ba2\\u5355\\u53f7:${order_id},\\u552e\\u540e\\u5355\\u53f7:${aftersales_id},\\u5ba1\\u6838\\u72b6\\u6001:${aftersales_status},\\u5ba1\\u6838\\u5907\\u6ce8${mark}\",\"variable\":{\"order_id\":\"order_id\",\"aftersales_id\":\"aftersales_id\",\"status\":\"aftersales_status\",\"mark\":\"mark\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u606d\\u559c\\u60a8\\uff0c\\u8ba2\\u5355\\u521b\\u5efa\\u6210\\u529f,\\u795d\\u60a8\\u8d2d\\u7269\\u6109\\u5feb\\u3002\"}}},\"refund_success\":{\"title\":\"\\u9000\\u6b3e\\u6210\\u529f\",\"data\":{\"title\":{\"title\":\"\\u6a21\\u677fID\",\"code\":\"template_id\",\"value\":\"\"},\"template\":{\"title\":\"\\u6a21\\u677f\\u53d8\\u91cf\",\"content\":\"\\u8ba2\\u5355\\u53f7 :${order_id}\\uff0c\\u9000\\u6b3e\\u7f16\\u53f7 :${refund_id},\\u9000\\u6b3e\\u91d1\\u989d :${refund}\",\"variable\":{\"order_id\":\"source_id\",\"refund_id\":\"refund_id\",\"refund\":\"money\"}},\"content\":{\"title\":\"\\u6a21\\u677f\\u5185\\u5bb9\",\"value\":\"\\u606d\\u559c\\u60a8\\uff0c\\u8ba2\\u5355\\u521b\\u5efa\\u6210\\u529f,\\u795d\\u60a8\\u8d2d\\u7269\\u6109\\u5feb\\u3002\"}}}}}', 'mark', '0.1', 1541147133, 1541147133);
+INSERT INTO `jshop_addons` VALUES (7, 'Trustlogin', 'H5信任登录插件', '信任登录插件，目前只有微信快捷登录，后续增加其他快捷登录', 1, '{\"weixin\":\"1\"}', 'mark', '0.1', 1541772405, 1541772405);
 
 -- ----------------------------
 -- Table structure for jshop_advert_position
@@ -47,7 +55,7 @@ CREATE TABLE `jshop_advert_position`  (
   `state` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '1 启用  2禁用',
   `sort` tinyint(3) UNSIGNED NULL DEFAULT 0 COMMENT '排序',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '广告位置表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '广告位置表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_advertisement
@@ -66,7 +74,7 @@ CREATE TABLE `jshop_advertisement`  (
   `type` tinyint(3) UNSIGNED NULL DEFAULT NULL COMMENT '类型  1url  2商品  3文章',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '广告表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '广告表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_area
@@ -3616,7 +3624,7 @@ CREATE TABLE `jshop_article`  (
   `isdel` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '软删除位置  有时间代表删除',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `isdel`(`isdel`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_article_type
@@ -3627,7 +3635,7 @@ CREATE TABLE `jshop_article_type`  (
   `pid` int(11) NULL DEFAULT NULL COMMENT '父id',
   `type_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '分类名称',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_backstage_notice
@@ -3643,7 +3651,7 @@ CREATE TABLE `jshop_backstage_notice`  (
   `is_pub` smallint(1) UNSIGNED NULL DEFAULT NULL COMMENT '1 发布  2 不发布',
   `isdel` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '软删除位置  有时间代表删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_balance
@@ -3659,7 +3667,7 @@ CREATE TABLE `jshop_balance`  (
   `memo` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '描述',
   `ctime` bigint(12) UNSIGNED NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户余额表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户余额表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_bill_aftersales
@@ -3707,7 +3715,7 @@ CREATE TABLE `jshop_bill_aftersales_items`  (
   `addon` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '货品明细序列号存储',
   `utime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '售后单明细表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '售后单明细表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_bill_delivery
@@ -3744,7 +3752,7 @@ CREATE TABLE `jshop_bill_delivery_items`  (
   `nums` smallint(5) UNSIGNED NULL DEFAULT NULL COMMENT '发货数量',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '发货单详情表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '发货单详情表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_bill_lading
@@ -3860,7 +3868,7 @@ CREATE TABLE `jshop_bill_reship_items`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `reship_id`(`reship_id`) USING BTREE,
   INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '退货单明细表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '退货单明细表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_brand
@@ -3877,7 +3885,7 @@ CREATE TABLE `jshop_brand`  (
   INDEX `id`(`id`) USING BTREE,
   INDEX `sort`(`sort`) USING BTREE,
   INDEX `isdel`(`isdel`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '品牌表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '品牌表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_cart
@@ -3890,7 +3898,7 @@ CREATE TABLE `jshop_cart`  (
   `nums` smallint(5) UNSIGNED NULL DEFAULT 0 COMMENT '货品数量',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '购物车表（每个用户最多加100条信息）' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '购物车表（每个用户最多加100条信息）' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_clerk
@@ -3904,7 +3912,7 @@ CREATE TABLE `jshop_clerk`  (
   `utime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '更新时间',
   `isdel` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '店铺店员关联表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '店铺店员关联表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_coupon
@@ -3920,6 +3928,99 @@ CREATE TABLE `jshop_coupon`  (
   `utime` bigint(12) UNSIGNED NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`coupon_code`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '优惠券表' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for jshop_files
+-- ----------------------------
+DROP TABLE IF EXISTS `jshop_files`;
+CREATE TABLE `jshop_files`  (
+  `id` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '视频ID',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '视频名称',
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '绝对地址',
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '物理地址',
+  `type` enum('web','local') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'local' COMMENT '存储引擎',
+  `file_type` enum('video') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'video' COMMENT '文件类型',
+  `ctime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
+  `isdel` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '删除标志 有数据代表删除',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `id`(`id`) USING BTREE,
+  INDEX `id_2`(`id`) USING BTREE,
+  INDEX `isdel`(`isdel`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文件表' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for jshop_form
+-- ----------------------------
+DROP TABLE IF EXISTS `jshop_form`;
+CREATE TABLE `jshop_form`  (
+  `id` bigint(12) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '表单名称',
+  `type` tinyint(1) UNSIGNED NOT NULL DEFAULT 2 COMMENT '1订单、2留言、3反馈、4登记、5调研',
+  `sort` int(5) UNSIGNED NULL DEFAULT 100 COMMENT '表单排序',
+  `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '表单描述',
+  `head_type` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '1图片2轮播3视频',
+  `head_type_value` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '表单头值',
+  `head_type_video` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `button_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '表单提交按钮名称',
+  `button_color` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '表单按钮颜色',
+  `is_login` tinyint(1) UNSIGNED NULL DEFAULT 2 COMMENT '是否需要登录1需要2不需要',
+  `qrcode` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '二维码图片地址',
+  `return_msg` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '提交后提示语',
+  `end_date` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '到期时间',
+  `ctime` bigint(12) UNSIGNED NULL DEFAULT 0 COMMENT '创建时间',
+  `utime` bigint(12) UNSIGNED NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for jshop_form_item
+-- ----------------------------
+DROP TABLE IF EXISTS `jshop_form_item`;
+CREATE TABLE `jshop_form_item`  (
+  `id` bigint(12) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字段名称',
+  `type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字段类型',
+  `validation_type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '验证类型',
+  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '表单值',
+  `default_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '默认值',
+  `form_id` bigint(12) UNSIGNED NULL DEFAULT 0 COMMENT '表单id',
+  `required` tinyint(1) UNSIGNED NULL DEFAULT 2 COMMENT '是否必填，1必填，2不必填',
+  `sort` int(5) UNSIGNED NULL DEFAULT 100 COMMENT '排序',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '表单项表' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for jshop_form_submit
+-- ----------------------------
+DROP TABLE IF EXISTS `jshop_form_submit`;
+CREATE TABLE `jshop_form_submit`  (
+  `id` bigint(12) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `form_id` bigint(12) NOT NULL DEFAULT 0 COMMENT '表单id',
+  `form_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '表单名称',
+  `user_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '会员id',
+  `money` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '总金额',
+  `pay_status` tinyint(1) UNSIGNED NOT NULL DEFAULT 2 COMMENT '2未支付，1已支付。支付状态',
+  `status` tinyint(1) NULL DEFAULT 2 COMMENT '表单状态，1已处理，2未处理',
+  `feedback` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '表单反馈',
+  `ip` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '提交人ip',
+  `ctime` bigint(12) UNSIGNED NULL DEFAULT 0 COMMENT '创建时间',
+  `utime` bigint(12) UNSIGNED NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 137 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户对表的提交记录' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for jshop_form_submit_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `jshop_form_submit_detail`;
+CREATE TABLE `jshop_form_submit_detail`  (
+  `id` bigint(12) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `submit_id` bigint(12) NULL DEFAULT 0 COMMENT '提交表单id',
+  `form_id` bigint(12) UNSIGNED NULL DEFAULT 0 COMMENT '表单id',
+  `form_item_id` bigint(12) NULL DEFAULT NULL COMMENT '表单项id',
+  `form_item_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '表单项名称',
+  `form_item_value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '表单项值',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 219 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '提交表单保存大文本值表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_goods
@@ -3964,7 +4065,7 @@ CREATE TABLE `jshop_goods`  (
   INDEX `is_recommend`(`is_recommend`) USING BTREE,
   INDEX `sort`(`sort`) USING BTREE,
   INDEX `mktprice`(`mktprice`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_goods_browsing
@@ -3980,7 +4081,7 @@ CREATE TABLE `jshop_goods_browsing`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE,
   INDEX `isdel`(`isdel`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品浏览记录表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品浏览记录表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_goods_cat
@@ -3997,7 +4098,7 @@ CREATE TABLE `jshop_goods_cat`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `id`(`id`) USING BTREE,
   INDEX `seller_id`(`parent_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品分类' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品分类' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_goods_collection
@@ -4012,7 +4113,7 @@ CREATE TABLE `jshop_goods_collection`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE,
   INDEX `goods_id`(`goods_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品收藏表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品收藏表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_goods_comment
@@ -4035,7 +4136,19 @@ CREATE TABLE `jshop_goods_comment`  (
   INDEX `user_id`(`user_id`) USING BTREE,
   INDEX `display`(`display`) USING BTREE,
   INDEX `goods_id`(`goods_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品评价表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品评价表' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for jshop_goods_grade
+-- ----------------------------
+DROP TABLE IF EXISTS `jshop_goods_grade`;
+CREATE TABLE `jshop_goods_grade`  (
+  `id` bigint(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `goods_id` bigint(10) UNSIGNED NULL DEFAULT 0 COMMENT '商品id',
+  `grade_id` tinyint(2) UNSIGNED NULL DEFAULT 1 COMMENT '会员等级id',
+  `grade_price` decimal(10, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '会员价',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品会员价表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_goods_images
@@ -4060,7 +4173,7 @@ CREATE TABLE `jshop_goods_params`  (
   `ctime` bigint(12) NULL DEFAULT NULL COMMENT '创建时间',
   `utime` bigint(12) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品参数表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品参数表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_goods_type
@@ -4072,7 +4185,7 @@ CREATE TABLE `jshop_goods_type`  (
   `params` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '参数序列号存储 array(参数组名=>array(\'参数1\',\'参数二\'))',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品类型' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品类型' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_goods_type_params
@@ -4093,7 +4206,7 @@ CREATE TABLE `jshop_goods_type_spec`  (
   `sort` smallint(5) UNSIGNED NULL DEFAULT 100 COMMENT '商品类型属性排序 越小越靠前',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `sort`(`sort`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品类型属性表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品类型属性表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_goods_type_spec_rel
@@ -4116,7 +4229,7 @@ CREATE TABLE `jshop_goods_type_spec_value`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `spec_id`(`spec_id`) USING BTREE,
   INDEX `sort`(`sort`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品类型属性值表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品类型属性值表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_hooks
@@ -4131,7 +4244,7 @@ CREATE TABLE `jshop_hooks`  (
   `ctime` int(10) NULL DEFAULT NULL COMMENT '创建时间',
   `utime` int(11) NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10005 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of jshop_hooks
@@ -4149,6 +4262,11 @@ INSERT INTO `jshop_hooks` VALUES (10, 'editgoodsview', '编辑商品页面', 2, 
 INSERT INTO `jshop_hooks` VALUES (11, 'trustlogin', '信任登录', 1, 'trustlogin', 1541771962, 1541771962);
 INSERT INTO `jshop_hooks` VALUES (12, 'trustcallback', '信任登录返回', 1, 'trustlogin', 1541771974, 1541771974);
 INSERT INTO `jshop_hooks` VALUES (14, 'orderpayed', '订单支付', 1, 'test', 1542349293, 1542349507);
+INSERT INTO `jshop_hooks` VALUES (10000, 'printOrder', '打印订单埋点', 1, 'PrintExpress,KdniaoExpress', 1552448691, 1552448691);
+INSERT INTO `jshop_hooks` VALUES (10001, 'getPrintExpressInfo', '获取打印信息', 1, 'KdniaoExpress', 1552557472, 1552557472);
+INSERT INTO `jshop_hooks` VALUES (10002, 'orderExtJs', '订单扩展js', 2, 'KdniaoExpress', 1552558689, 1552559645);
+INSERT INTO `jshop_hooks` VALUES (10003, 'orderExtBtn', '订单扩展按钮', 2, 'KdniaoExpress', 1552558705, 1552559662);
+INSERT INTO `jshop_hooks` VALUES (10004, 'logisticsQuery', '快递查询', 1, 'KdniaoExpress', 1552704811, 1552704811);
 
 -- ----------------------------
 -- Table structure for jshop_ietask
@@ -4168,7 +4286,7 @@ CREATE TABLE `jshop_ietask`  (
   `file_size` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件大小',
   `file_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件路径',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '导入导出任务表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '导入导出任务表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_images
@@ -4189,6 +4307,18 @@ CREATE TABLE `jshop_images`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '图片表' ROW_FORMAT = Compact;
 
 -- ----------------------------
+-- Table structure for jshop_invoice_record
+-- ----------------------------
+DROP TABLE IF EXISTS `jshop_invoice_record`;
+CREATE TABLE `jshop_invoice_record`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发票抬头',
+  `code` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发票税号',
+  `frequency` mediumint(6) UNSIGNED NULL DEFAULT 1 COMMENT '被使用次数',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '发票信息记录' ROW_FORMAT = Compact;
+
+-- ----------------------------
 -- Table structure for jshop_jobs
 -- ----------------------------
 DROP TABLE IF EXISTS `jshop_jobs`;
@@ -4202,7 +4332,7 @@ CREATE TABLE `jshop_jobs`  (
   `available_at` int(10) UNSIGNED NOT NULL,
   `created_at` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '队列表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '队列表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_label
@@ -4213,7 +4343,7 @@ CREATE TABLE `jshop_label`  (
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标签名称',
   `style` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'hot' COMMENT '标签样式',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '标签表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '标签表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_login_log
@@ -4227,7 +4357,7 @@ CREATE TABLE `jshop_login_log`  (
   `city` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '地点城市',
   `ip` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'ip地址',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_logistics
@@ -5362,7 +5492,7 @@ CREATE TABLE `jshop_manage`  (
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '1 = 正常 2 = 停用',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '管理员表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '管理员表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_manage_role
@@ -5374,7 +5504,7 @@ CREATE TABLE `jshop_manage_role`  (
   `utime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '总后台角色表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '总后台角色表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_manage_role_operation_rel
@@ -5409,7 +5539,7 @@ CREATE TABLE `jshop_message`  (
   `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '1未查看，2已查看',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '站内信' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '站内信' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_message_center
@@ -5422,7 +5552,7 @@ CREATE TABLE `jshop_message_center`  (
   `message` tinyint(1) UNSIGNED NOT NULL COMMENT '站内消息',
   `wx_tpl_message` tinyint(1) UNSIGNED NOT NULL COMMENT '微信模板消息',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '消息中心表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '消息中心表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_notice
@@ -5439,7 +5569,7 @@ CREATE TABLE `jshop_notice`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `isdel`(`isdel`) USING BTREE,
   INDEX `sort`(`sort`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '公告表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '公告表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_operation
@@ -5459,7 +5589,7 @@ CREATE TABLE `jshop_operation`  (
   INDEX `id`(`id`) USING BTREE,
   INDEX `parent_menu_id`(`parent_menu_id`) USING BTREE,
   INDEX `sort`(`sort`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 535 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 559 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of jshop_operation
@@ -5495,12 +5625,12 @@ INSERT INTO `jshop_operation` VALUES (267, 266, '公告列表', 'index', 'a', 26
 INSERT INTO `jshop_operation` VALUES (268, 266, '公告添加', 'add', 'a', 267, 2, 100);
 INSERT INTO `jshop_operation` VALUES (269, 266, '公告修改', 'edit', 'a', 267, 2, 100);
 INSERT INTO `jshop_operation` VALUES (270, 266, '公告删除', 'del', 'a', 267, 2, 100);
-INSERT INTO `jshop_operation` VALUES (271, 2, '广告位管理', 'AdvertPosition', 'c', 2, 3, 100);
+INSERT INTO `jshop_operation` VALUES (271, 2, '广告位管理', 'CarouselSeat', 'c', 2, 3, 100);
 INSERT INTO `jshop_operation` VALUES (272, 271, '广告位列表', 'index', 'a', 266, 1, 100);
 INSERT INTO `jshop_operation` VALUES (273, 271, '广告位添加', 'add', 'a', 272, 2, 100);
 INSERT INTO `jshop_operation` VALUES (274, 271, '广告位修改', 'edit', 'a', 272, 2, 100);
 INSERT INTO `jshop_operation` VALUES (275, 271, '广告位删除', 'del', 'a', 272, 2, 100);
-INSERT INTO `jshop_operation` VALUES (277, 2, '广告管理', 'Advertisement', 'c', 2, 3, 100);
+INSERT INTO `jshop_operation` VALUES (277, 2, '广告管理', 'Carousel', 'c', 2, 3, 100);
 INSERT INTO `jshop_operation` VALUES (278, 277, '广告列表', 'index', 'a', 266, 1, 100);
 INSERT INTO `jshop_operation` VALUES (279, 277, '广告添加', 'add', 'a', 278, 2, 100);
 INSERT INTO `jshop_operation` VALUES (280, 277, '广告修改', 'edit', 'a', 278, 2, 100);
@@ -5716,6 +5846,30 @@ INSERT INTO `jshop_operation` VALUES (531, 238, '余额修改', 'editmoney', 'a'
 INSERT INTO `jshop_operation` VALUES (532, 238, '余额明细', 'moneylog', 'a', 239, 2, 100);
 INSERT INTO `jshop_operation` VALUES (533, 238, '添加会员', 'adduser', 'a', 239, 2, 100);
 INSERT INTO `jshop_operation` VALUES (534, 335, '选择地区', 'getarea', 'a', 336, 3, 100);
+INSERT INTO `jshop_operation` VALUES (535, 2, '报表统计', 'Report', 'c', 2, 1, 210);
+INSERT INTO `jshop_operation` VALUES (536, 535, '订单销量', 'order', 'a', 535, 1, 100);
+INSERT INTO `jshop_operation` VALUES (537, 535, '财务收款', 'payments', 'a', 535, 1, 100);
+INSERT INTO `jshop_operation` VALUES (538, 535, '商品销量', 'goods', 'a', 535, 1, 100);
+INSERT INTO `jshop_operation` VALUES (539, 390, '删除图片', 'del', 'a', 391, 2, 100);
+INSERT INTO `jshop_operation` VALUES (540, 392, '删除任务', 'del', 'a', 393, 1, 100);
+INSERT INTO `jshop_operation` VALUES (541, 2, '智能表单', 'Form', 'c', 2, 1, 300);
+INSERT INTO `jshop_operation` VALUES (542, 541, '表单列表', 'index', 'a', 541, 1, 100);
+INSERT INTO `jshop_operation` VALUES (543, 541, '添加表单', 'add', 'a', 542, 2, 100);
+INSERT INTO `jshop_operation` VALUES (544, 541, '编辑表单', 'edit', 'a', 542, 2, 100);
+INSERT INTO `jshop_operation` VALUES (545, 541, '删除表单', 'del', 'a', 542, 2, 100);
+INSERT INTO `jshop_operation` VALUES (546, 541, '小程序码', 'generate', 'a', 542, 2, 100);
+INSERT INTO `jshop_operation` VALUES (547, 541, '提交列表', 'formsubmit', 'a', 541, 1, 100);
+INSERT INTO `jshop_operation` VALUES (548, 541, '表单报表', 'report', 'a', 542, 2, 100);
+INSERT INTO `jshop_operation` VALUES (549, 541, '表单统计', 'statistics', 'a', 542, 2, 100);
+INSERT INTO `jshop_operation` VALUES (550, 541, '删除提交', 'delsubmit', 'a', 547, 2, 100);
+INSERT INTO `jshop_operation` VALUES (551, 541, '提交明细', 'formsubmitdetail', 'a', 547, 2, 100);
+INSERT INTO `jshop_operation` VALUES (552, 541, '反馈', 'editformsubmit', 'a', 547, 2, 100);
+INSERT INTO `jshop_operation` VALUES (553, 238, '用户等级', 'grade', 'a', 238, 1, 150);
+INSERT INTO `jshop_operation` VALUES (554, 238, '添加&修改', 'gradeadd', 'a', 553, 2, 100);
+INSERT INTO `jshop_operation` VALUES (555, 238, '删除', 'gradedel', 'a', 553, 3, 100);
+INSERT INTO `jshop_operation` VALUES (556, 296, '订单打印', 'print_tpl', 'a', 297, 3, 100);
+INSERT INTO `jshop_operation` VALUES (557, 296, '打印选择快递', 'print_form', 'a', 297, 3, 100);
+INSERT INTO `jshop_operation` VALUES (558, 535, '用户收藏统计', 'goodscollection', 'a', 535, 1, 100);
 
 -- ----------------------------
 -- Table structure for jshop_operation_log
@@ -5731,7 +5885,7 @@ CREATE TABLE `jshop_operation_log`  (
   `ip` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作IP',
   `ctime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '后台操作记录表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '后台操作记录表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_order
@@ -5794,12 +5948,12 @@ CREATE TABLE `jshop_order_items`  (
   `sn` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '货品编码',
   `bn` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商品编码',
   `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商品名称',
-  `price` decimal(10, 2) UNSIGNED NULL DEFAULT NULL COMMENT '货品价格单价',
-  `costprice` decimal(10, 2) UNSIGNED NULL DEFAULT NULL COMMENT '货品成本价单价',
+  `price` decimal(10, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '货品价格单价',
+  `costprice` decimal(10, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '货品成本价单价',
   `mktprice` decimal(10, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '市场价',
   `image_url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图片',
   `nums` smallint(5) UNSIGNED NULL DEFAULT NULL COMMENT '数量',
-  `amount` decimal(10, 2) UNSIGNED NULL DEFAULT NULL COMMENT '总价',
+  `amount` decimal(10, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '总价',
   `promotion_amount` decimal(10, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '商品优惠总金额',
   `promotion_list` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '促销信息',
   `weight` decimal(10, 2) NULL DEFAULT NULL COMMENT '总重量',
@@ -5807,7 +5961,7 @@ CREATE TABLE `jshop_order_items`  (
   `addon` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '货品明细序列号存储',
   `utime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单明细表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单明细表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_order_log
@@ -5822,7 +5976,7 @@ CREATE TABLE `jshop_order_log`  (
   `data` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求的数据json',
   `ctime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单记录表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单记录表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_payments
@@ -5840,7 +5994,7 @@ CREATE TABLE `jshop_payments`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `status`(`status`) USING BTREE,
   INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付方式表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付方式表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of jshop_payments
@@ -5872,7 +6026,7 @@ CREATE TABLE `jshop_products`  (
   INDEX `isdel`(`isdel`) USING BTREE,
   INDEX `goods_id`(`goods_id`) USING BTREE,
   INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '货品表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '货品表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_promotion
@@ -5895,7 +6049,7 @@ CREATE TABLE `jshop_promotion`  (
   INDEX `sort`(`sort`) USING BTREE,
   INDEX `status`(`status`) USING BTREE,
   INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '促销表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '促销表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_promotion_condition
@@ -5908,7 +6062,7 @@ CREATE TABLE `jshop_promotion_condition`  (
   `params` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '支付配置参数序列号存储',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `promotion_id`(`promotion_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '促销条件表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '促销条件表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_promotion_result
@@ -5921,7 +6075,7 @@ CREATE TABLE `jshop_promotion_result`  (
   `params` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '支付配置参数序列号存储',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `promotion_id`(`promotion_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '促销结果表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '促销结果表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_setting
@@ -5979,7 +6133,7 @@ CREATE TABLE `jshop_sms`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `mobile`(`mobile`) USING BTREE,
   INDEX `status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_store
@@ -5997,7 +6151,7 @@ CREATE TABLE `jshop_store`  (
   `ctime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
   `utime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_template
@@ -6020,7 +6174,7 @@ CREATE TABLE `jshop_template`  (
   `ctime` int(10) NULL DEFAULT NULL COMMENT '数据创建时间',
   `utime` int(10) NULL DEFAULT NULL COMMENT '数据更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '模板列表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '模板列表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_template_message
@@ -6036,7 +6190,7 @@ CREATE TABLE `jshop_template_message`  (
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '发送状态 1=未发送 2=已发送',
   `isdel` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '删除标识',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_template_order
@@ -6049,7 +6203,7 @@ CREATE TABLE `jshop_template_order`  (
   `ctime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
   `utime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '模板订购记录表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '模板订购记录表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_user
@@ -6066,13 +6220,14 @@ CREATE TABLE `jshop_user`  (
   `nickname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '昵称',
   `balance` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '余额',
   `point` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '积分',
+  `grade` tinyint(2) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户等级',
   `ctime` bigint(12) UNSIGNED NULL DEFAULT NULL,
   `utime` bigint(12) UNSIGNED NULL DEFAULT NULL,
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '1 = 正常 2 = 停用',
-  `pid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '推荐人',
+  `pid` int(10) UNSIGNED NULL DEFAULT 0 COMMENT '推荐人',
   `isdel` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '删除标志 有数据就是删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_user_bankcards
@@ -6092,7 +6247,24 @@ CREATE TABLE `jshop_user_bankcards`  (
   `ctime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
   `utime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for jshop_user_grade
+-- ----------------------------
+DROP TABLE IF EXISTS `jshop_user_grade`;
+CREATE TABLE `jshop_user_grade`  (
+  `id` tinyint(2) UNSIGNED NOT NULL COMMENT 'id',
+  `name` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
+  `is_def` tinyint(1) NOT NULL DEFAULT 2 COMMENT '1默认，2不默认',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `id`(`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户等级表' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of jshop_user_grade
+-- ----------------------------
+INSERT INTO `jshop_user_grade` VALUES (1, '普通等级', 1);
 
 -- ----------------------------
 -- Table structure for jshop_user_log
@@ -6106,7 +6278,7 @@ CREATE TABLE `jshop_user_log`  (
   `params` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '参数',
   `ip` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'ip地址',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_user_point_log
@@ -6121,7 +6293,7 @@ CREATE TABLE `jshop_user_point_log`  (
   `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `ctime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户积分记录表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户积分记录表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_user_ship
@@ -6137,7 +6309,7 @@ CREATE TABLE `jshop_user_ship`  (
   `utime` bigint(12) NOT NULL COMMENT '更新时间',
   `is_def` tinyint(1) UNSIGNED NULL DEFAULT NULL COMMENT '是否默认 1=默认 2=不默认',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_user_tocash
@@ -6153,11 +6325,12 @@ CREATE TABLE `jshop_user_tocash`  (
   `account_bank` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '开户行',
   `account_name` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '账户名',
   `card_number` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '卡号',
+  `withdrawals` decimal(8, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '提现服务费',
   `type` smallint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '1默认，2提现成功，3提现失败',
   `ctime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
   `utime` bigint(12) UNSIGNED NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_user_token
@@ -6194,7 +6367,7 @@ CREATE TABLE `jshop_user_wx`  (
   `ctime` bigint(12) UNSIGNED NULL DEFAULT NULL,
   `utime` bigint(12) UNSIGNED NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_weixin_author
@@ -6224,7 +6397,7 @@ CREATE TABLE `jshop_weixin_author`  (
   `ctime` int(10) UNSIGNED NULL DEFAULT 0 COMMENT '小程序授权时间',
   `utime` int(10) UNSIGNED NULL DEFAULT 0 COMMENT '小程序更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '获取授权方的帐号基本信息表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '获取授权方的帐号基本信息表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_weixin_media_message
@@ -6241,7 +6414,7 @@ CREATE TABLE `jshop_weixin_media_message`  (
   `ctime` bigint(12) NULL DEFAULT 0 COMMENT '创建时间',
   `utime` bigint(12) NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信图文消息表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信图文消息表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_weixin_menu
@@ -6253,9 +6426,9 @@ CREATE TABLE `jshop_weixin_menu`  (
   `pid` int(10) NOT NULL DEFAULT 0 COMMENT '父级菜单',
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单名称',
   `type` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单类型',
-  `params` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单参数',
+  `params` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单参数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号菜单表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号菜单表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_weixin_message
@@ -6272,7 +6445,7 @@ CREATE TABLE `jshop_weixin_message`  (
   `is_default` tinyint(1) NULL DEFAULT 2 COMMENT '是否默认回复，1是，2不是',
   `enable` tinyint(1) NULL DEFAULT 1 COMMENT '1启用，2禁用',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信消息表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信消息表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_weixin_publish
@@ -6293,7 +6466,7 @@ CREATE TABLE `jshop_weixin_publish`  (
   `appid` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '授权appid',
   `qrcode` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预览二维码',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '小程序发布审核表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '小程序发布审核表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_worksheet
@@ -6309,7 +6482,7 @@ CREATE TABLE `jshop_worksheet`  (
   `title` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jshop_wsdetail
@@ -6322,6 +6495,6 @@ CREATE TABLE `jshop_wsdetail`  (
   `create_time` int(11) NOT NULL,
   `pic_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;

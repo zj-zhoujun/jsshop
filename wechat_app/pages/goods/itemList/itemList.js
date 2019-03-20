@@ -16,11 +16,11 @@ Page({
     toView: "",
     searchData: {
       where: {},
-      limit: app.config.list_limit,
+      limit: 10,
       page: 1,
       order: {
-        key:'id',
-        sort:'desc'
+        key:'sort',
+        sort:'asc'
       }
     },
     alllist: true,
@@ -40,6 +40,9 @@ Page({
       where = {
         search_name: options.key
       }
+      this.setData({
+        searchKey: options.key
+      });
     }
     if (options.type) {
       if (options.type == 'hot') {
@@ -90,8 +93,8 @@ Page({
   comprehensive:function() {
     this.setSearchData({
       order: {
-        key: 'id',
-        sort: 'desc'
+        key: 'sort',
+        sort: 'asc'
       },
       page:1
     },true);
@@ -244,7 +247,6 @@ Page({
         if (page.data.searchData.page == 1 && res.data.list.length == 0){
           isEmpty = true;
         }
-        console.log(res.data.list);
         page.setData({
           goodsList: page.data.goodsList.concat(res.data.list),
           ajaxStatus: false,

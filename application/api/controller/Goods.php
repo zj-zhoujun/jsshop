@@ -3,7 +3,8 @@
 namespace app\api\controller;
 
 use app\common\controller\Api;
-use Request;
+use app\common\model\GoodsComment;
+use think\facade\Request;
 use app\common\model\Goods as GoodsModel;
 use app\common\model\Products;
 use app\common\model\Brand;
@@ -127,45 +128,48 @@ class Goods extends Api
             'msg'    => '查询失败',
             'data'   => []
         ];
-        $field       = input('field','*');
-        $page        = input('page/d',1);
+        $field       = input('field', '*');
+        $page        = input('page/d', 1);
         $limit       = input('limit/d');
-        $order       = input('order','sort asc');
+        $order       = input('order', 'sort asc');
 
-        if(input('?param.where')){
-            $postWhere = json_decode(input('param.where'),true);
+        if (input('?param.where')) {
+            $postWhere = json_decode(input('param.where'), true);
             //判断商品搜索,
-            if(isset($postWhere['search_name'])){
-                $where[] = ['name|bn|brief','LIKE', '%'.$postWhere['search_name'].'%'];
+            if (isset($postWhere['search_name']) && $postWhere['search_name']) {
+                $where[] = ['name|bn|brief', 'LIKE', '%' . $postWhere['search_name'] . '%'];
+            }
+            if (isset($postWhere['bn']) && $postWhere['bn']) {
+                $where[] = ['bn', '=', $postWhere['bn']];
             }
             //商品分类
-            if(isset($postWhere['cat_id'])){
-                $where[] = ['goods_cat_id','eq', $postWhere['cat_id']];
+            if (isset($postWhere['cat_id'])) {
+                $where[] = ['goods_cat_id', 'eq', $postWhere['cat_id']];
             }
             //价格区间
-            if(isset($postWhere['price_f']) && $postWhere['price_f']){
-                $where[] = ['price','>=',$postWhere['price_f']];
+            if (isset($postWhere['price_f']) && $postWhere['price_f']) {
+                $where[] = ['price', '>=', $postWhere['price_f']];
             }
-            if(isset($postWhere['price_t']) && $postWhere['price_t']){
-                $where[] = ['price','<',$postWhere['price_t']];
+            if (isset($postWhere['price_t']) && $postWhere['price_t']) {
+                $where[] = ['price', '<', $postWhere['price_t']];
             }
-            if(isset($postWhere['recommend'])) {
+            if (isset($postWhere['recommend'])) {
                 $where[] = ['is_recommend', 'eq', '1'];
             }
-            if(isset($postWhere['hot'])){
-                $where[] = ['is_hot','eq', '1'];
+            if (isset($postWhere['hot'])) {
+                $where[] = ['is_hot', 'eq', '1'];
             }
         }
         $goodsModel = new GoodsModel();
-        $where[] = ['marketable', 'eq',$goodsModel::MARKETABLE_UP];
+        $where[]    = ['marketable', 'eq', $goodsModel::MARKETABLE_UP];
 
 
         $return_data = $this->allowedField($field);
-        if(!$return_data['status']) {
+        if (!$return_data['status']) {
             return $return_data;
         }
         $return_data = $this->allowedOrder($order);
-        if(!$return_data['status']) {
+        if (!$return_data['status']) {
             return $return_data;
         }
 
@@ -173,11 +177,11 @@ class Goods extends Api
         $page_limit = config('jshop.page_limit');
         $limit      = $limit ? $limit : $page_limit;
 
-        $returnGoods = $goodsModel->getList($field,$where,$order,$page,$limit);
+        $returnGoods = $goodsModel->getList($field, $where, $order, $page, $limit);
 
-        if($returnGoods['status']) {
-            $return_data ['msg']          = '查询成功';
-            $return_data ['data']['list'] = $returnGoods['data'];
+        if ($returnGoods['status']) {
+            $return_data ['msg']                = '查询成功';
+            $return_data ['data']['list']       = $returnGoods['data'];
             $return_data ['data']['total_page'] = $returnGoods['total'];
         }
 
@@ -185,7 +189,6 @@ class Goods extends Api
         $return_data['data']['limit'] = $limit;
         $return_data['data']['where'] = $where;
         $return_data['data']['order'] = $order;
-        $return_data['sql'] = $returnGoods['sql'];
 
         return $return_data;
     }
@@ -202,22 +205,22 @@ class Goods extends Api
         $return_data = [
             'status' => false,
             'msg'    => '查询失败',
-            'data'   => [ ]
+            'data'   => []
         ];
-        $goods_id    = input('id/d',0);//商品ID
-        $token    = input('token','');//token值 会员登录后传
-        if(!$goods_id) {
+        $goods_id    = input('id/d', 0);//商品ID
+        $token       = input('token', '');//token值 会员登录后传
+        if (!$goods_id) {
             return $return_data;
         }
-        $field       = input('field','*');
+        $field       = input('field', '*');
         $return_data = $this->allowedField($field);
         $goodsModel  = new GoodsModel();
-        $returnGoods = $goodsModel->getGoodsDetial($goods_id,$field,$token);
-        if($returnGoods['status']) {
+        $returnGoods = $goodsModel->getGoodsDetial($goods_id, $field, $token);
+        if ($returnGoods['status']) {
             $return_data ['msg']  = '查询成功';
             $return_data ['data'] = $returnGoods['data'];
-        }else{
-            $return_data['msg'] = $returnGoods['msg'];
+        } else {
+            $return_data['msg']    = $returnGoods['msg'];
             $return_data['status'] = false;
         }
         return $return_data;
@@ -237,8 +240,10 @@ class Goods extends Api
             'msg'    => '无此规格信息',
             'data'   => [ ]
         ];
-        $spec_value  = input('spec','');
-        $goods_id    = input('id/d',0);//商品ID
+        $spec_value  = input('spec', '');
+        $goods_id    = input('id/d', 0);//商品ID
+        $token       = input('token', '');//token值 会员登录后传
+
         if(!$goods_id) {
             return $return_data;
         }
@@ -246,7 +251,7 @@ class Goods extends Api
             return $return_data;
         }
         $goodsModel  = new GoodsModel();
-        $returnGoods = $goodsModel->getGoodsDetial($goods_id,'id,bn,name,image_id,goods_cat_id,goods_type_id,brand_id,spes_desc');
+        $returnGoods = $goodsModel->getGoodsDetial($goods_id,'id,bn,name,image_id,goods_cat_id,goods_type_id,brand_id,spes_desc',$token);
         if($returnGoods['status']) {
             $goods = $returnGoods['data'];
             if($goods['products']) {
@@ -278,81 +283,79 @@ class Goods extends Api
         $return_data = [
             'status' => false,
             'msg'    => '无参数相关信息',
-            'data'   => [ ]
+            'data'   => []
         ];
-        $goods_id    = input('id/d',0);//商品ID
+        $goods_id    = input('id/d', 0);//商品ID
         $goodsModel  = new GoodsModel();
         $brandModel  = new Brand();
-        $returnGoods = $goodsModel->getOne($goods_id,'id,bn,name,brand_id,image_id,params,spes_desc');
+        $returnGoods = $goodsModel->getOne($goods_id, 'id,bn,name,brand_id,image_id,params,spes_desc');
 
-        if($returnGoods['status']){
+        if ($returnGoods['status']) {
             $params = [];
-            $data = $returnGoods['data'];
-            if(isset($data['brand_id']))
-            {
-                $brand = $brandModel::get($data['brand_id']);
+            $data   = $returnGoods['data'];
+            if (isset($data['brand_id'])) {
+                $brand    = $brandModel::get($data['brand_id']);
                 $params[] = [
-                    'name'=>'品牌',
-                    'value'=>$brand['name'],
+                    'name'  => '品牌',
+                    'value' => $brand['name'],
                 ];
 
             }
-            if($data['params'])
-            {
-                $goodsParams=unserialize($data['params']);
+            if ($data['params']) {
+                $goodsParams = unserialize($data['params']);
                 $goodsParams = array_filter($goodsParams);
-                if($goodsParams){
-                    foreach($goodsParams as $key=>$val){
-                        if(is_array($val)){
-                            $val = implode('、',$val);
-                            $params[]=[
-                                'name'=>$key,
-                                'value'=>$val
+                if ($goodsParams) {
+                    foreach ($goodsParams as $key => $val) {
+                        if (is_array($val)) {
+                            $val      = implode('、', $val);
+                            $params[] = [
+                                'name'  => $key,
+                                'value' => $val
                             ];
-                        }else{
-                            $params[]=[
-                                'name'=>$key,
-                                'value'=>$val
+                        } else {
+                            $params[] = [
+                                'name'  => $key,
+                                'value' => $val
                             ];
                         }
 
                     }
                 }
             }
-            $return_data['data'] = $params;
+            $return_data['data']   = $params;
             $return_data['status'] = true;
-            $return_data['msg'] = '查询成功';
+            $return_data['msg']    = '查询成功';
         }
         return $return_data;
     }
 
     /**
      * 获取该货品相关信息
+     * @param int $user_id
      * @return array
-     * User: wjima
-     * Email:1457529125@qq.com
-     * Date: 2018-02-08 10:18
      */
     public function getProductInfo()
     {
         $return_data = [
             'status' => false,
             'msg'    => '无参数相关信息',
-            'data'   => [ ]
+            'data'   => []
         ];
-        $product_id  = input('id/d',0);//货品ID
-        if(!$product_id) {
+        $product_id  = input('id/d', 0);//货品ID
+        $token       = input('token', '');//token值 会员登录后传
+        if (!$product_id) {
             $return_data['msg'] = '货品ID缺失';
             return $return_data;
         }
 
-        $productsModel = new Products();
-        $product       = $productsModel->getProductInfo($product_id);
+        $productsModel      = new Products();
+        $user_id            = getUserIdByToken($token);//获取user_id
+        $product            = $productsModel->getProductInfo($product_id, true, $user_id);
         $return_data['msg'] = $product['msg'];
-        if(!$product['status']){
+        if (!$product['status']) {
             return $return_data;
         }
-        $return_data['data'] = $product['data'];
+        $return_data['data']   = $product['data'];
         $return_data['status'] = true;
         return $return_data;
     }
@@ -360,6 +363,10 @@ class Goods extends Api
 
     /**
      * 获取商品评价
+     * @return array|mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getGoodsComment()
     {
@@ -369,7 +376,25 @@ class Goods extends Api
         if (empty($goods_id)) {
             return error_code(13403);
         }
-        $res = model('common/GoodsComment')->getList($goods_id, $page, $limit, 1);
+        $model = new GoodsComment();
+        $res = $model->getList($goods_id, $page, $limit, 1);
+        return $res;
+    }
+
+
+    /**
+     * 获取某个分类的热卖商品
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getGoodsCatHotGoods()
+    {
+        $cat_id = Request::param('cat_id');
+        $limit = Request::param('limit', 6);
+        $model = new GoodsModel();
+        $res = $model->getGoodsCatHotGoods($cat_id, $limit);
         return $res;
     }
 }

@@ -29,6 +29,7 @@ class User extends Common
         'sex' => 'in:1,2,3',
         'nickname' => 'length:2,50',
         'password' => 'length:6,20',
+        'p_mobile' => ['regex' => '^1[3|4|5|7|8][0-9]\d{4,8}$'],
     ];
     protected $msg = [
         //'username.length' => '用户名长度6~20位',
@@ -37,6 +38,7 @@ class User extends Common
         'sex' => '请选择合法的性别',
         'nickname' => '昵称长度为2-50个字符',
         'password' => '密码长度6-20位',
+        'p_mobile' => '邀请人栏请输入一个合法的手机号码',
     ];
 
     /**
@@ -186,10 +188,10 @@ class User extends Common
         //判断是否是用户名登陆
         $smsModel = new Sms();
         $userWxModel = new UserWx();
-        //if(!$smsModel->check($data['mobile'], $data['code'], 'login')){
-        //    $result['msg'] = '短信验证码错误';
-        //    return $result;
-        //}
+        if(!$smsModel->check($data['mobile'], $data['code'], 'login')){
+            $result['msg'] = '短信验证码错误';
+            return $result;
+        }
 
         $userInfo = $this->where(array('mobile'=>$data['mobile']))->find();
         if(!$userInfo){
@@ -234,6 +236,14 @@ class User extends Common
             if(isset($data['password'])){
                 $userData['password'] = $this->enPassword($data['password'], $userData['ctime']);
             }
+
+            //取默认的用户等级
+            $userGradeModel = new UserGrade();
+            $userGradeInfo = $userGradeModel->where('is_def',$userGradeModel::IS_DEF_YES)->find();
+            if($userGradeInfo){
+                $userData['grade'] = $userGradeInfo['id'];
+            }
+
 
             $user_id = $this->insertGetId($userData);
             if(!$user_id){
@@ -366,16 +376,18 @@ class User extends Common
             $data['avatar'] = $avatar;
         }
         $re = $this->save($data,['id'=>$id]);
-        if($re){
+        if($re !== false)
+        {
             //$userLogModel = new UserLog();
             //$userLogModel->setLog($id,$userLogModel::USER_EDIT);
             $result['status'] = true;
             $result['msg'] = '保存成功';
             return $result;
-        }else{
+        }
+        else
+        {
             return error_code(10005);
         }
-
     }
 
 
@@ -480,6 +492,7 @@ class User extends Common
         $data = $this->where('id',$user_id)->find();
         if($data){
             $data['status'] = config('params.user')['status'][$data['status']];
+            $data['p_mobile'] = $this->getUserMobile($data['pid']);
             return $data;
         }else{
             return "";
@@ -918,16 +931,9 @@ class User extends Common
             $return['msg'] = '不能关联这个邀请人，因为他是你的下级或者下下级';
             return $return;
         }
-
-        $data['pid'] = $inviteInfo['id'];
-        $wheres[] = ['id', 'eq', $id];
-        $return['data'] = $this->save($data, $wheres);
-        if($return['data'] !== false)
-        {
-            $return['status'] = true;
-            $return['msg'] = '操作成功';
-        }
-
+        $return['status'] = true;
+        $return['msg'] = '操作成功';
+        $return['data'] = $inviteInfo['id'];
         return $return;
     }
 
@@ -983,6 +989,7 @@ class User extends Common
         $newData['utime']    = $time;
         $newData['status']   = isset($data['status']) ? $data['status'] : self::STATUS_NORMAL;
         $newData['pid']      = 0;
+        $newData['grade']      = $data['grade'];
 
         $result         = $this->save($newData);
         $return['data'] = $this->id;
@@ -1020,7 +1027,18 @@ class User extends Common
             $return['msg'] = $validate->getError();
             return $return;
         }
-
+        if(isset($data['p_mobile'])&& $data['p_mobile']!=''){
+            $p = $this->editInvite($data['id'],$data['p_mobile']);
+            if($p['status'] === false){
+                $return['msg'] = $p['msg'];
+                return $return;
+            }else{
+                $data['pid'] = $p['data'];
+            }
+        }
+        if($data['p_mobile']==''){
+            $data['pid'] = '';
+        }
         //输入密码时修改密码
         if(isset($data['password'])&&$data['password']!=''){
             if (strlen($data['password']) < 6 || strlen($data['password']) > 20) {
@@ -1042,7 +1060,8 @@ class User extends Common
         $newData['birthday'] = $data['birthday'] ? $data['birthday'] : null;
         $newData['avatar']   = $data['avatar'];
         $newData['status']   = $data['status'];
-
+        $newData['pid']   = $data['pid'];
+        $newData['grade']      = $data['grade'];
         $result         = $this->save($newData, $where);
         $return['data'] = $result;
 
@@ -1078,10 +1097,6 @@ class User extends Common
                 'desc' => '手机号',
             ],
             [
-                'id' => 'user_type_name',
-                'desc' => '用户类型',
-            ],
-            [
                 'id' => 'sex',
                 'desc' => '性别',
             ],
@@ -1111,18 +1126,19 @@ class User extends Common
                 'desc' => '状态',
                 //'modify'=>'getMarketable',
             ],
+//            [
+//                'id' => 'pid_name',
+//                'desc' => '邀请人',
+//            ],
+//            [
+//                'id' => 'ctime',
+//                'desc' => '创建时间',
+//            ],
             [
-                'id' => 'review_status_name',
-                'desc' => '审核状态',
+                'id' => 'username',
+                'desc' => '用户名',
             ],
-            [
-                'id' => 'pid_name',
-                'desc' => '邀请人',
-            ],
-            [
-                'id' => 'ctime',
-                'desc' => '创建时间',
-            ]
+//
         ];
     }
 
@@ -1143,7 +1159,7 @@ class User extends Common
         $tableWhere = $this->tableWhere($post);
         $list = [];
         if($isPage){
-            $list = $this->field($tableWhere['field'])->where($tableWhere['where'])->order($tableWhere['order'])->paginate($limit);
+            $list = $this->with('grade')->field($tableWhere['field'])->where($tableWhere['where'])->order($tableWhere['order'])->paginate($limit);
             $data = $this->tableFormat($list->getCollection());         //返回的数据格式化，并渲染成table所需要的最终的显示数据类型
             $re['count'] = $list->total();
         }else{
@@ -1205,6 +1221,19 @@ class User extends Common
             //失败，导出失败
             return $result;
         }
+    }
+
+    public function doAdd($data = [])
+    {
+        $result=$this->insert($data);
+        if($result)
+        {
+            return $this->getLastInsID();
+        }
+        return $result;
+    }
+    public function grade(){
+        return $this->hasOne("UserGrade",'id','grade')->bind(['grade_name'	=> 'name']);
     }
 
 }

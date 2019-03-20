@@ -25,6 +25,10 @@ class PromotionCondition extends Common
             'name' => '订单满XX金额满足条件',
             'type' => 'order',
         ],
+        'USER_GRADE' => [
+            'name' => '用户符合指定等级',
+            'type' => 'user'
+        ]
     ];
 
 
@@ -193,12 +197,13 @@ class PromotionCondition extends Common
 
     //所有商品满足条件
     private function condition_GOODS_ALL($params,$goods_id,$nums){
-        return true;
+        return 2;
     }
 
     //指定某些商品满足条件
     private function condition_GOODS_IDS($params,$goods_id,$nums){
-        if($goods_id == $params['goods_id']){
+        $goods_ids = explode(',',$params['goods_id']);
+        if(in_array($goods_id, $goods_ids)){
             if($nums>= $params['nums']){
                 return 2;
             }else{
@@ -358,16 +363,14 @@ class PromotionCondition extends Common
         }
         $result['status'] = false;          //重新置成false
 
-
         $data['params'] = json_encode($data['params']);
-
         if($data['id'] != ''){
             //更新
             $info = $this->getInfo($data['id']);
-            if($info){
-                if($this->allowField(true)->save($data,['id'=>$data['id']])){
+            if ($info) {
+                if ($this->allowField(true)->save($data, ['id' => $data['id']]) !== false) {
                     $result['status'] = true;
-                }else{
+                } else {
                     $result['msg'] = "保存失败";
                 }
                 return $result;

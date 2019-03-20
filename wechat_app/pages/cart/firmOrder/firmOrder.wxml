@@ -98,7 +98,7 @@
     <view class='order-list'>
       <view wx:for="{{productData}}" wx:key="{{index}}">
         <view class='list-details'>
-          <image class='thumbnail' src='{{item.products.image_path}}'></image>
+          <image class='thumbnail' mode='aspectFill' src='{{item.products.image_path}}'></image>
           <view class='order-details'>
             <text class='name'>{{item.products.name}}</text>
             <view class='size-style'>
@@ -117,13 +117,17 @@
       <view class='goods-foot'><text class='goods-foot-l'>共{{goodsNums}}件商品</text><text class='goods-foot-mid'>小计：</text><text class='goods-foot-r'>￥{{goodsAmount}}</text></view>
     </view>
     <view class='price-list'>
-      <view class='price-details'>
+      <view class='price-details' wx:if="{{cartData.promotion_list && cartData.promotion_list.length > 0}}">
         <text class='price-details-left'>订单活动</text>
-        <text class='price-details-right'><text wx:for="{{cartData.promotion_list}}" wx:for-item="vv" wx:key="ind" class="{{vv.type==2?'promotion_on':'promotion_off'}}">{{vv.name}}</text></text>
+        <text class='price-details-right'>
+            <text wx:for="{{cartData.promotion_list}}" wx:for-item="vv" wx:key="ind" class="{{vv.type==2?'promotion_on':'promotion_off'}}">{{vv.name}}</text>
+        </text>
       </view>
       <view class='price-details' bindtap="couponbtn" data-statu="open"> 
         <text class='price-details-left'>优惠券</text>
+        <image class='order-top-right-img right-arrow' src='../../image/right.png'></image>
         <text class='price-details-right'>{{usedCouponName}}</text>
+        
       </view> 
     </view>
     <view class='price-list'> 
@@ -134,6 +138,17 @@
           </checkbox-group>
         </view>
         <view class='integral-details'>可用{{available_point}}积分，可抵扣{{pointRmb}}元，共有{{point}}积分。</view>
+      </view>
+      <view class='order-discount'> 
+        <text class='price-details-left'>订单优惠</text>
+        <view class='price-details-right'>
+            <view wx:for="{{orderPromotionList}}" class='promotion' wx:key="index" wx:if="{{item.type == 2}}">{{item.name}}</view>
+        </view>
+      </view>
+      <view class='price-details'> 
+        <text class='price-details-left'>发票</text>
+        <image class='order-top-right-img right-arrow' src='../../image/right.png'></image>
+        <text class='price-details-right' bindtap='invoice'>{{tax_name}}</text>
       </view>
       <view class='price-details buyer'>
         <text class='price-details-left'>买家留言</text>
@@ -159,7 +174,7 @@
         </view>
         <view wx:if="{{costFreight !== '0.00'}}">
           <text class='price-details-left'>运费</text>
-          <text class='price-details-right'>+¥{{costFreight}}</text>
+          <text class='price-details-right'>¥{{costFreight}}</text>
         </view>        
       </view>
       

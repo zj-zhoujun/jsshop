@@ -12,9 +12,9 @@
                             <h3 class="goodsname" @click="showDetail(item.products.goods_id)">{{ item.products.name }}</h3>
                             <p class="standard" @click="showDetail(item.products.goods_id)">{{ item.products.spes_desc }}</p>
                             <ul class="btn-numbox">
-                                <li>
+                                <!--<li>-->
                                 <p class="price" @click="showDetail(item.products.goods_id)">￥{{ item.products.price }}</p>
-                                </li>
+                                <!--</li>-->
                                 <li class="spinner">
                                     <ul class="count">
                                         <li @click="minus(item.id,item.nums)"><button id="num-jian" class="num-jian">－</button></li>
@@ -23,7 +23,7 @@
                                     </ul>
                                 </li>
                             </ul>
-                            <div v-if="item.products.promotion_list">
+                            <div class="goods-tip" v-if="item.products.promotion_list">
                                 <div v-for="(val, key) in item.products.promotion_list" :key="key">
                                     <yd-badge shape="square" type="danger" v-if="val.type">{{ val.name }}</yd-badge>
                                     <yd-badge shape="square" type="square" v-else>{{ val.name }}</yd-badge>
@@ -44,8 +44,8 @@
                     <p>促销</p>
                 </div>
                 <div v-for="(val, key) in promotion" :key="key">
-                    <yd-badge shape="square" type="danger" v-if="val.type === 2">{{ val.name }}</yd-badge>
-                    <yd-badge shape="square" type="square" v-else>{{ val.name }}</yd-badge>
+                    <yd-badge shape="square" :type="val.type === 2 ? 'danger' : ''">{{ val.name }}</yd-badge>
+                    <!--<yd-badge shape="square" type="square" v-else>{{ val.name }}</yd-badge>-->
                 </div>
             </div>
             <div class="cartfooter-right-price">
@@ -112,7 +112,7 @@ export default {
         // 获取选中的商品重新 返回购物车数据
         selectedHandler () {
             let ids = []
-            this.list.forEach (item => {
+            this.list.forEach(item => {
                 if (item.is_select) {
                     ids.push(item.id)
                 }
@@ -179,8 +179,8 @@ export default {
             this.$api.cartList(data, res => {
                 if (res.status) {
                     const _list = res.data.list
-                    this.total = this.GLOBAL.formatMoney(res.data.amount, 2, '')    // 总金额
-                    this.promotion = res.data.promotion_list    // 促销信息
+                    this.total = this.GLOBAL.formatMoney(res.data.amount, 2, '') // 总金额
+                    this.promotion = res.data.promotion_list // 促销信息
                     this.goods_pmt = this.GLOBAL.formatMoney(res.data.goods_pmt, 2, '') // 商品名优惠
                     this.order_pmt = this.GLOBAL.formatMoney(res.data.order_pmt, 2, '') // 订单优惠
                     this.list = [..._list]
@@ -198,7 +198,7 @@ export default {
         // 去结算
         balance () {
             let ids = []
-            this.list.forEach (item => {
+            this.list.forEach(item => {
                 if (item.is_select) {
                     ids.push(item.id)
                 }
@@ -278,7 +278,7 @@ export default {
             handler () {
                 let length = this.list.length
                 let ids = []
-                this.list.forEach(item=> {
+                this.list.forEach(item => {
                     if (item.is_select) {
                         ids.push(item.id)
                     }
@@ -359,5 +359,13 @@ export default {
     .not-click {
         background-color: #eee;
         color: #999 !important;
+    }
+    .goods-tip{
+        margin-top: .1rem;
+    }
+    .goods-tip>div{
+        display: inline-block;
+        margin-bottom: .1rem;
+        margin-left: .1rem;
     }
 </style>

@@ -25,7 +25,14 @@ class Logistics extends Common
 
     protected function tableWhere($post)
     {
-        $result['where'] = [];
+        $where = [];
+        if(isset($post['name']) && $post['name']){
+            $where[] = ['logi_name','=',$post['name']];
+        }
+        if(isset($post['code']) && $post['code']){
+            $where[] = ['logi_code','=',$post['code']];
+        }
+        $result['where'] = $where;
         $result['field'] = "*";
         $result['order'] = ['sort'=>'asc'];
         return $result;
@@ -68,5 +75,13 @@ class Logistics extends Common
         return $this->where([])
             ->order('sort asc')
             ->select();
+    }
+
+
+    public function getNameByCode($code)
+    {
+        $where[] = ['logi_code', 'eq', $code];
+        $info = $this->field('logi_name')->where($where)->find();
+        return $info['logi_name']?$info['logi_name']:'';
     }
 }

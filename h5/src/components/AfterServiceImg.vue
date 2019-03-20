@@ -8,7 +8,7 @@
             <!--</div>-->
         </div>
         <div class="uploadimg" v-show="upload">
-            <input name="file" type="file" accept="image/png,image/gif,image/jpeg" @change="uploadImg"/>
+            <input name="file" type="file" accept="image/png,image/gif,image/jpeg" @change="uploadImg" ref="file"/>
             <img slot="icon" src="../../static/image/addimg.png">
         </div>
     </div>
@@ -25,6 +25,11 @@ export default {
             }
         }
     },
+    computed: {
+        uploadImageMax () {
+            return this.$store.state.config.upload_image_max
+        }
+    },
     methods: {
         uploadImg (e) {
             let file = e.target.files[0]
@@ -35,6 +40,8 @@ export default {
                     this.imgs.push(res.data)
                 }
             })
+            // 上传完成后清空input 的值
+            this.$refs.file[0].value = ''
         },
         remove (index) {
             this.imgs.splice(index, 1)
@@ -43,7 +50,7 @@ export default {
     watch: {
         imgs () {
             this.$emit('images', this.imgs)
-            if (this.imgs.length >= 4) {
+            if (this.imgs.length >= this.uploadImageMax) {
                 this.upload = false
             } else {
                 this.upload = true

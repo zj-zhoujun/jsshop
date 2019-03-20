@@ -1,7 +1,7 @@
 <template>
     <div class="firmorder">
         <openstore
-            v-if="openStore"
+            v-if="isOpenStore === 1"
             :storeTab="storeTab"
             :store="storeInfo"
             :ship="shipInfo"
@@ -63,6 +63,14 @@
             :point_money="point_money"
             @isUsePoint="isUsePoint"
         ></ordercell>
+        <div class="invoice-item">
+            <yd-cell-group>
+                <yd-cell-item arrow type="link">
+                    <span slot="left">发票</span>
+                    <span slot="right">本次不开具发票，继续下单</span>
+                </yd-cell-item>
+            </yd-cell-group>
+        </div>
         <orderinput
             @msg="sendMsg"
         ></orderinput>
@@ -74,7 +82,6 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
 import orderadd from '../../components/OrderAdd.vue'
 import orderlist from '../../components/OrderList.vue'
 import ordercell from '../../components/OrderCell.vue'
@@ -114,9 +121,8 @@ export default {
                 point: 0 // 抵扣积分额
             },
             storeTab: 0,
-            shipInfo: '', // 收货地址id
-            storeInfo: '', // 门店id
-            openStore: false, // 是否开启门店自提
+            shipInfo: {}, // 收货地址id
+            storeInfo: {}, // 门店id
             ladingName: '', // 提货人姓名
             ladingMobile: '', // 提货人联系方式
             point_open: false, // 判断后台是否开启积分抵扣
@@ -129,24 +135,25 @@ export default {
     },
     mounted () {
         this.params.ids = this.cartIds
-        this.isOpenStore() // 判断是否开启门店
         this.userDefaultShip() // 获取默认收货地址
         this.orderUsablePoint()
     },
-    methods: {
-        // 判断是否开启门店
+    computed: {
+        // 从vuex 中取门店开启状态
         isOpenStore () {
-            this.$api.switchStore({}, res => {
+            let status = this.$store.state.config.store_switch
+            if (status === 1) {
+                this.getDefaultStore()
+            }
+            return status
+        }
+    },
+    methods: {
+        // 获取默认门店
+        getDefaultStore () {
+            this.$api.defaultStore({}, res => {
                 if (res.status) {
-                    res.data === 1 ? this.openStore = true : this.openStore = false
-                }
-                if (this.openStore) {
-                    // 请求获取默认门店
-                    this.$api.defaultStore({}, res => {
-                        if (res.status) {
-                            this.storeInfo = res.data
-                        }
-                    })
+                    this.storeInfo = res.data
                 }
             })
         },
@@ -224,7 +231,7 @@ export default {
         },
         // 判断是否开启积分和 可兑换的积分金额
         orderUsablePoint (money) {
-            this.$api.usablePoint({order_money: money},  res => {
+            this.$api.usablePoint({order_money: money}, res => {
                 if (res.status) {
                     if (res.switch === 1) {
                         this.point_open = true
@@ -258,7 +265,7 @@ export default {
             //     return false
             // }
             let data = {
-                cart_ids : this.cartIds,
+                cart_ids: this.cartIds,
                 memo: this.msg,
                 coupon_code: this.usedCouponCode ? this.usedCouponCode : '',
                 point: this.use_point ? this.usable_point : '',
@@ -268,7 +275,7 @@ export default {
                 // 快递配送
                 data['uship_id'] = this.shipInfo.id
                 data['area_id'] = this.shipInfo.area_id
-            }  else {
+            } else {
                 // 门店自提
                 data['store_id'] = this.storeInfo.id
                 data['area_id'] = this.storeInfo.area_id
@@ -291,7 +298,7 @@ export default {
             this.receiptType = key
             if (this.receiptType === 1) {
                 this.params.area_id = this.userShip.area_id
-            }  else {
+            } else {
                 this.params.area_id = ''
             }
         },
@@ -303,9 +310,9 @@ export default {
         },
         // 获取优惠券列表
         getCouponList () {
-            this.$api.userCoupon({}, res => {
+            this.$api.userCoupon({display: 'no_used'}, res => {
                 if (res.status) {
-                    this.userCoupon = res.data
+                    this.userCoupon = res.data.list
                     this.userCoupon.forEach(item => {
                         if (this.usedCouponCode) {
                             if (this.usedCouponCode === item.coupon_code) {

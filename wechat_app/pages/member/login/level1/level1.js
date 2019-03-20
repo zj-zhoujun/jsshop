@@ -1,7 +1,7 @@
 var app = getApp(); //全局APP
 Page({
   data: {
-    logo:'../../../image/default_avatar.png',
+    logo:app.config.shop_logo,
     open_id:""
   },
   //页面加载处理
@@ -25,18 +25,11 @@ Page({
           })
         }else{
           page.setData({
-            open_id: res.data
+            open_id: res.data,
+            logo: app.config.shop_logo
           });
         }
       });
-    });
-    //取店铺的配置信息，拿到店铺logo
-    app.api.getSellerSetting('shop_logo',function(res){
-      if(res.status){
-        page.setData({
-          logo:res.data
-        });
-      }
     });
   },
   //微信授权用户取得信息

@@ -15,19 +15,23 @@ class Categories extends Api
     //不需要登录的方法
     protected $noLoginAction = ['getTopCat', 'getChildCat', 'getAllCat'];
 
+
     /**
      * 获取顶级分类
      * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getTopCat()
     {
-        $data = model('common/GoodsCat')->getChildClass();
+        $model = new GoodsCat();
+        $data = $model->getChildClass();
         $return = array(
             'status' => false,
             'msg' => '',
             'data' => array(),
         );
-        $return['cate_style'] = getSetting('cate_style'); //新增分类样式
         if($data)
         {
             $return['status'] = true;
@@ -45,11 +49,15 @@ class Categories extends Api
     /**
      * 获取顶级分类下的子分类
      * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getChildCat()
     {
         $parent_id = input('parent_id');
-        $data = model('common/GoodsCat')->getChildClass($parent_id);
+        $model = new GoodsCat();
+        $data = $model->getChildClass($parent_id);
         $return = array(
             'status' => false,
             'msg' => '',
@@ -73,10 +81,14 @@ class Categories extends Api
     /**
      * 获取全部分类树状形式
      * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getAllCat()
     {
-        $data = model('common/GoodsCat')->getAllCat();
+        $model = new GoodsCat();
+        $data = $model->getAllCat();
         $return = array(
             'status' => false,
             'msg' => '',
