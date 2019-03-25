@@ -2,6 +2,7 @@
 namespace app\common\model;
 use think\model\concern\SoftDelete;
 use think\Db;
+use app\common\model\Cart as cartModel;
 
 /**
  * 订单主表
@@ -1238,6 +1239,41 @@ class Order extends Common
         ];
         if($receipt_type == 1)
         {
+            $cart_model = new cartModel();
+            $cartList = $cart_model->getList($user_id, $cart_ids, '');
+            if(!$cartList['status']){
+                $result['msg'] = '获取购物车信息失败';
+                return $result;
+            }
+            $product_ids = [];
+            foreach($cartList['data']['list'] as $v){
+                $product_ids[] = $v['products']['goods_id'];
+            }
+            $map = [];
+            $map[] = ['id','in',$product_ids];
+            $map[] = ['ship_id','neq',0];
+            $product_info = Db::name('goods')->where($map)->field('name,ship_id')->select();
+            if($product_info){
+                $ship_arr = array_column($product_info,'ship_id');
+                if(count($ship_arr)>1){
+                    $result['msg'] = '所选产品配送区域不同，不可同时购买';
+                    return $result;
+                }
+                //dump($ship_arr);
+                //判断下单地址是否在配送区域内
+                $ship_area_str = Db::name('ship')->where('id',$ship_arr[0])->value('area_fee');
+                // dump($ship_area_str);exit;
+                if($ship_area_str){
+                    $ship_area_arr = json_decode($ship_area_str,true);
+                    $area_arr = array_column($ship_area_arr,'area');
+                    $area_str = implode(',',$area_arr);
+                    $ship_area = explode(',',$area_str);
+                    if(!in_array($area_id,$ship_area)){
+                        $result['msg'] = '收货地址不在配送区域内，请选择其他区域，感谢您的支持！';
+                        return $result;
+                    }
+                }
+            }
             //快递邮寄
             $ushopModel = new UserShip();
             $ushopInfo = $ushopModel->getShipById($uship_id,$user_id);

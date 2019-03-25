@@ -158,11 +158,11 @@
                     var html='<a href="{:url("order/print_tpl")}?order_id='+data.order_id+'&type=1" target="_blank">购</a>&nbsp;';
                     html+='<a href="{:url("order/print_tpl")}?order_id='+data.order_id+'&type=2"  target="_blank">配</a>&nbsp;';
                     html+='<a href="{:url("order/print_tpl")}?order_id='+data.order_id+'&type=3"  target="_blank">联</a>&nbsp;';
-                    if(data.print){
-                        html+='<a href="javascript:void(0);" style="color: green;" onclick="printExpress('+data.order_id+')">递</a>';
-                    }else{
-                        html+='<a href="javascript:void(0);"  onclick="printExpress('+data.order_id+')">递</a>';
-                    }
+//                    if(data.print){
+//                        html+='<a href="javascript:void(0);" style="color: green;" onclick="printExpress('+data.order_id+')">递</a>';
+//                    }else{
+//                        html+='<a href="javascript:void(0);"  onclick="printExpress('+data.order_id+')">递</a>';
+//                    }
                     return html;
                 }},
                 {field: 'ctime', title: '下单时间', width:160, align: 'center'},
