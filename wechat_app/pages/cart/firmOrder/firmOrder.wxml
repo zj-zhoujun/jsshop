@@ -154,6 +154,10 @@
         <text class='price-details-left'>买家留言</text>
         <input placeholder-class='buyer-input' type='text' bindchange="buyerMessage" placeholder='50字以内（选填）'></input>
       </view>
+      <view class='price-details buyer'>
+        <text class='price-details-left'>货到付款</text>
+        <input placeholder-class='buyer-input' type='text' bindchange="buyerMessage" placeholder='50字以内（选填）'></input>
+      </view>
       <view class='price-calculation'>
         
         <view>

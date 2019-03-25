@@ -683,7 +683,7 @@ class User extends Api
         {
             return error_code(10051);
         }
-
+        $is_offline = input('param.is_offline');
         //支付的时候，有一些特殊的参数需要传递到支付里面，这里就是干这个事情的,key=>value格式的一维数组
         $data = input('param.');
         if(!isset($data['params']))
@@ -697,7 +697,7 @@ class User extends Api
 
         $billPaymentsModel = new BillPayments();
         //生成支付单,并发起支付
-        return $billPaymentsModel->pay(input('param.ids'),input('param.payment_code'),$this->userId,input('param.payment_type'),$params);
+        return $billPaymentsModel->pay(input('param.ids'),input('param.payment_code'),$this->userId,input('param.payment_type'),$params,$is_offline);
     }
 
 

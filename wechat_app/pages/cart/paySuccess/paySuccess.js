@@ -70,6 +70,9 @@ Page({
       case 'balancepay':
         name = '余额支付';
         break;
+      case 'offlinepay':
+        name = '线下支付';
+        break;
       default:
         name = '未知支付方式';
         break;

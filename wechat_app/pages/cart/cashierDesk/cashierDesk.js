@@ -109,22 +109,23 @@ Page({
 
   //线下支付触发
   offline: function () {
-    var page = this;
-    wx.showModal({
-      title: '线下支付说明',
-      content: '请联系客服进行线下支付',
-      cancelText: '订单详情',
-      confirmText: '继续购物',
-      success: function (res) {
-        if (res.confirm) {
-          wx.switchTab({
-            url: '/pages/index/index'
-          });
-        } else if (res.cancel) {
-          wx.redirectTo({
-            url: '../../member/order/orderDetail/orderDetail?order_id=' + page.data.orderId
-          });
-        }
+    //要支付的订单号
+    var data = {
+      ids: this.data.orderId,
+      payment_code: 'offline',
+      payment_type: 1,
+      is_offline: 1,//线下支付标识
+      params: { formid: this.data.formId }
+    };
+    //去支付
+    app.api.pay(data, function (res) {
+      if (res.status) {
+        app.common.errorToShow(res.msg);
+        wx.redirectTo({
+          url: '../../cart/paySuccess/paySuccess?payment_id=' + res.data.payment_id
+        });
+      } else {
+        app.common.errorToShow(res.msg);
       }
     });
   },
@@ -135,6 +136,7 @@ Page({
       ids: this.data.orderId,
       payment_code: 'balancepay',
       payment_type: 1,
+      is_offline: 0,
       params: { formid: this.data.formId }
     };
     //去支付

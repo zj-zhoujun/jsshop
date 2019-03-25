@@ -146,7 +146,7 @@ class BillPayments extends Common
      * @param $params           支付的时候用到的参数，如果是微信支付的话，这里可以传trade_type=>'JSAPI'(小程序支付),或者'MWEB'(h5支付),当是JSPI的时候，可以不传其他参数了，默认就可以，默认的这个值就是JSAPI，如果是MWEB的话，需要传wap_url(网站url地址)参数和wap_name（网站名称）参数，其他支付方式需要传什么参数这个以后再说
      * @return mixed
      */
-    public function pay($source_str, $payment_code, $user_id = '', $type = self::TYPE_ORDER,$params = []){
+    public function pay($source_str, $payment_code, $user_id = '', $type = self::TYPE_ORDER,$params = [],$is_offline=0){
 
         //判断支付方式是否开启
         $paymentsModel = new Payments();
@@ -155,10 +155,11 @@ class BillPayments extends Common
             return error_code(10050);
         }
 
-        $result = $this->toAdd($source_str, $payment_code, $user_id, $type,$params);
+        $result = $this->toAdd($source_str, $payment_code, $user_id, $type,$params,$is_offline);
         if(!$result['status']){
             return $result;
         }
+
 
 
         $conf = json_decode($paymentInfo['params'],true);
@@ -187,7 +188,7 @@ class BillPayments extends Common
      * @param int $type             支付类型
      * @return array
      */
-    public function toAdd($source_str, $payment_code, $user_id = '', $type = self::TYPE_ORDER, $params = [])
+    public function toAdd($source_str, $payment_code, $user_id = '', $type = self::TYPE_ORDER, $params = [],$is_offline=0)
     {
         $result = [
             'status' => false,
@@ -242,6 +243,10 @@ class BillPayments extends Common
             $this->toUpdate($data['payment_id'], SELF::STATUS_PAYED, $data['payment_code'],$data['money'], '金额为0，自动支付成功', '');
             return error_code(10059);
         }
+        //线下付款直接支付成功
+        if($is_offline){
+            $this->toUpdate($data['payment_id'], SELF::STATUS_PAYED, $data['payment_code'],$data['money'], '线下付款，自动支付成功', '',$is_offline);
+        }
         $result['status'] = true;
         $result['data']   = $data;
         return $result;
@@ -259,7 +264,7 @@ class BillPayments extends Common
      * @param string $trade_no      第三方支付单号
      * @return array
      */
-    public function toUpdate($payment_id, $status, $payment_code,$money, $payed_msg='', $trade_no='')
+    public function toUpdate($payment_id, $status, $payment_code,$money, $payed_msg='', $trade_no='',$is_offline=0)
     {
         $result = [
             'status' => false,
@@ -270,7 +275,10 @@ class BillPayments extends Common
         $data['payment_code'] = $payment_code;
         $data['payed_msg'] = $payed_msg;
         $data['trade_no'] = $trade_no;
-
+        //线下支付状态
+        if($is_offline){
+            $data['offline_status'] = $is_offline;
+        }
         $where[] = ['payment_id','eq', $payment_id];
         $where[] = ['money','eq',$money];
         $where[] = ['status','neq',self::STATUS_PAYED];
