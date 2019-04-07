@@ -2,7 +2,7 @@
 module.exports = {
   api_url: 'http://jsshop.com/',
   shop_logo: 'http://jsshop.com/static/images/default.png',
-  shop_name: 'jshop云商',
+  shop_name: '苏鲜',
   image_max: 5,           //上传图片的时候，最多能够上传几张
   cate_style: 3,          //商品分类页样式，1一级大图，2一级小图，3二级小图
   payment_type: {      //支付单类型

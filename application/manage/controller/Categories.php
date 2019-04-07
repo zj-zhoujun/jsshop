@@ -82,7 +82,8 @@ class Categories extends Manage
                 'type_id' => input('type_id'),
                 'name' => input('name'),
                 'image_id' => input('image_id'),
-                'sort' => input('sort')
+                'sort' => input('sort'),
+                'is_nav'=>input('is_nav'),
             );
             $result = model('common/GoodsCat')->add($data);
             if($result !== false)
@@ -134,7 +135,8 @@ class Categories extends Manage
                 'type_id' => input('type_id'),
                 'name' => input('name'),
                 'image_id' => input('image_id'),
-                'sort' => input('sort')
+                'sort' => input('sort'),
+                'is_nav' => input('is_nav'),
             );
             $result = model('common/GoodsCat')->edit($data);
             return $result;

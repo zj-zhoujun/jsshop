@@ -5,13 +5,14 @@ const app = getApp(); //获取全局app.js
 Page({
   //页面使用的数据
   data: {
-    appTitle: 'Jshop小程序商城——致力于为客户创造有价值的产品。', //小程序标题
+    appTitle: '商城——致力于为客户创造有价值的产品。', //小程序标题
     imageUrl: '/static/images/share.png', //分享封面图
     indicatorDots: true, //商品轮播图底部圆点
     autoplay: true, //商品轮播图自动播放
     interval: 3000, //商品轮播图切换间隔
     duration: 500, //商品轮播图切换动画时间
     slideImg: [], //幻灯片广告数据
+    catNav: [], //分类导航数据
     notice: [], //公告数据
     coupon: [], //优惠券数据
     recommend: [], //店家推荐数据
@@ -42,6 +43,7 @@ Page({
     }
 
     this.slideImg(); //获取幻灯片广告数据
+    this.catNav(); //获取分类数据
     this.notice(); //获取公告数据
     this.coupon(); //获取优惠券数据
     this.recommend(); //获取店家推荐数据
@@ -90,6 +92,19 @@ Page({
     app.api.adList('tpl1_slider', function (res) {
       page.setData({
         slideImg: res.data.list
+      });
+    });
+  },
+  //获取分类导航数据
+  catNav: function () {
+    var page = this;
+    //异步获取幻灯片广告数据
+    console.log(1);
+    app.api.getCatNav(0,function (res) {
+      console.log(2);
+      console.log(res);
+      page.setData({
+        catNav: res.data.list
       });
     });
   },

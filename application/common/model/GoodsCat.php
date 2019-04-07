@@ -41,7 +41,7 @@ class GoodsCat extends Common
     public function getList()
     {
 
-        $data = $this->field('id, parent_id, name, type_id, sort, image_id')
+        $data = $this->field('id, parent_id, name, type_id, sort, image_id,is_nav')
             ->order([ 'sort' => 'asc'])
             ->select();
 
@@ -71,6 +71,7 @@ class GoodsCat extends Common
                 $new_data[$v['id']]['type_id'] = $v['type_id'];
                 $new_data[$v['id']]['image_id'] = $v['image_id'];
                 $new_data[$v['id']]['sort'] = $v['sort'];
+                $new_data[$v['id']]['is_nav'] = $v['is_nav']==1?'是':'否';
                 $new_data[$v['id']]['operating'] = $this->getOperating($v['id'], self::TOP_CLASS);
             }
             else
@@ -82,6 +83,7 @@ class GoodsCat extends Common
                     'type_id' => $v['type_id'],
                     'image_id' => $v['image_id'],
                     'sort' => $v['sort'],
+                    'is_nav' => $v['is_nav']==1?'是':'否',
                     'operating' => $this->getOperating($v['id'], self::SUB_CLASS)
                 );
             }
@@ -97,6 +99,7 @@ class GoodsCat extends Common
                 'type_id' => $this->getTypeName($v['type_id']),
                 'image_id' => $this->getImage($v['image_id']),
                 'sort' => $v['sort'],
+                'is_nav' => $v['is_nav'],
                 'operating' => $v['operating']
             );
             if(isset($v['subclass']) && count($v['subclass']) > 0)
@@ -110,6 +113,7 @@ class GoodsCat extends Common
                         'type_id' => $this->getTypeName($vv['type_id']),
                         'image_id' => $this->getImage($vv['image_id']),
                         'sort' => $vv['sort'],
+                        'is_nav' => $v['is_nav'],
                         'operating' => $vv['operating']
                     );
                 }
@@ -324,7 +328,7 @@ class GoodsCat extends Common
     public function getCatInfo($id)
     {
         $where[] = ['id', 'eq', $id];
-        $data = $this->field('id, name, parent_id, type_id, sort, image_id')
+        $data = $this->field('id, name, parent_id, type_id, sort, image_id,is_nav')
             ->where($where)
             ->find();
         if($data)
@@ -575,5 +579,32 @@ class GoodsCat extends Common
         }
 
         return $return;
+    }
+
+    /**
+     * 获取分类导航
+     * @param $parent_id
+     * @return array|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getNavChild()
+    {
+        //$where[] = array('parent_id', 'eq', $parent_id);
+        $where[] = array('is_nav',1);
+        $data = $this->field('id, name, sort, image_id')
+            ->where($where)
+            ->order('sort asc')
+            ->select();
+
+        foreach($data as &$v)
+        {
+            if($v['image_id'])
+            {
+                $v['image_url'] = _sImage($v['image_id']);
+            }
+        }
+        return $data;
     }
 }

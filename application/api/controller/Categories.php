@@ -13,7 +13,7 @@ use think\facade\Request;
 class Categories extends Api
 {
     //不需要登录的方法
-    protected $noLoginAction = ['getTopCat', 'getChildCat', 'getAllCat'];
+    protected $noLoginAction = ['getTopCat', 'getChildCat', 'getAllCat','getNavCat'];
 
 
     /**
@@ -121,5 +121,34 @@ class Categories extends Api
         $model = new GoodsCat();
         $id = Request::param('id');
         return $model->getNameById($id);
+    }
+
+    /**
+     * 获取导航分类
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getNavCat()
+    {
+        $model = new GoodsCat();
+        $data = $model->getNavChild();
+        $return = array(
+            'status' => false,
+            'msg' => '',
+            'data' => array(),
+        );
+        if($data)
+        {
+            $return['status'] = true;
+            $return['data'] = $data;
+        }
+        else
+        {
+            $return['msg'] = '获取导航分类失败';
+        }
+
+        return $return;
     }
 }

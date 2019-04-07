@@ -69,12 +69,17 @@
     <view class='button-list-mid'>
       <view class='nav' bindtap='allCategories'><image src='../image/group10.png'></image><text>全部分类</text></view>
       <view class='nav' bindtap='hotSale'><image src='../image/group11.png'></image><text>热卖商品</text></view>
-      <!-- <view class='nav' bindtap='balance'><image src='../image/group12.png'></image><text>余额提现</text></view> -->
-      <!-- <view class='nav' bindtap='myInformation'><image src='../image/group13.png'></image><text>我的资料</text></view> -->
       <view class='nav' bindtap='myOrder'><image src='../image/group14.png'></image><text>我的订单</text></view>
       <view class='nav' bindtap='myCollection'><image src='../image/group15.png'></image><text>我的收藏</text></view>
-      <!-- <view class='nav' bindtap='fineBalance'><image src='../image/group16.png'></image><text>余额明细</text></view> -->
-      <!-- <view class='nav' bindtap='recharge'><image src='../image/group17.png'></image><text>会员充值</text></view> -->
+    </view>
+  </view>
+   <view class='button-list'>
+    <view class='button-list-mid'>
+      <view class='nav' bindtap='allCategories'>
+      <image src='../image/group10.png'></image>
+      <text>全部分类</text>
+      </view>
+      
     </view>
   </view>
 

@@ -679,6 +679,13 @@ function sharecode(callback) {
     }); 
   }
 }
+//获取分类导航
+function getCatNav(data,callback) {
+  api('Categories.getNavCat', data, function (res) {
+    console.log(res);
+      callback(res);
+    });
+  }
 //获取文章列表
 function getarticleList(data,callback){
   api('articles.getArticleList', data, function (res) {
@@ -945,6 +952,7 @@ module.exports = {
   recommendList: recommendList,
   sharecode: sharecode,
   getarticleList: getarticleList,
+  getCatNav: getCatNav,
   getUserShip: getUserShip,
   addSaveAddress: addSaveAddress,
   removeship: removeship,
