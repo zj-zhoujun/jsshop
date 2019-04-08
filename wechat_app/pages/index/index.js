@@ -100,7 +100,7 @@ Page({
     var page = this;
     //异步获取幻灯片广告数据
     console.log(1);
-    app.api.getCatNav(0,function (res) {
+    app.api.getCatNav(function (res) {
       console.log(2);
       console.log(res);
       page.setData({

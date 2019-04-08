@@ -592,7 +592,7 @@ class GoodsCat extends Common
     public function getNavChild()
     {
         //$where[] = array('parent_id', 'eq', $parent_id);
-        $where[] = array('is_nav',1);
+        $where = ['is_nav'=>1];
         $data = $this->field('id, name, sort, image_id')
             ->where($where)
             ->order('sort asc')

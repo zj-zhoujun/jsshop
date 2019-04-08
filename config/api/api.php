@@ -356,7 +356,11 @@ return [
             'getname' => [
                 'code' => 'getName',
                 'is_login' => false
-            ]
+            ],
+            'getnavcat' => [
+                'code' => 'getNavCat',
+                'is_login' => false
+            ],
         ]
     ],
 

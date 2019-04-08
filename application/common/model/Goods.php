@@ -93,8 +93,8 @@ class Goods extends Common
             $goods_stocks_warn = $SettingModel->getValue('goods_stocks_warn');
             $goods_stocks_warn = $goods_stocks_warn?$goods_stocks_warn:'10';
             $productModel = new Products();
-            $baseFilter[] = ['(stock - freeze_stock)', 'lt', $goods_stocks_warn];
-            $goodsIds    = $productModel->field('goods_id')->where($baseFilter)->group('goods_id')->select();
+           // $baseFilter = '(stock - freeze_stock)<'. $goods_stocks_warn;
+            $goodsIds    = $productModel->field('goods_id')->where('(stock - freeze_stock)<'. $goods_stocks_warn)->group('goods_id')->select();
             if(!$goodsIds->isEmpty()){
                 $goodsIds = array_column($goodsIds->toArray(),'goods_id');
                 $where[] = ['id', 'in', $goodsIds];
@@ -508,9 +508,10 @@ class Goods extends Common
             return $result;
         }
         $productModel = new Products();
-        $where        = [];
-        $where[]      = ['id', 'eq', $product_id];
-        $where[]      = ['(stock-freeze_stock)-'.$num, '>', 0];
+//        $where        = [];
+//        $where[]      = ['id', 'eq', $product_id];
+//        $where[]      = ['(stock-freeze_stock)-'.$num, '>', 0];
+        $where = 'id='.$product_id.' and (stock-freeze_stock)-'.$num.'>0';
         switch ($type) {
             case 'order': //下单
                 $res = $productModel->where($where)->setInc('freeze_stock', $num);
@@ -934,8 +935,8 @@ class Goods extends Common
         $goods_stocks_warn = $goods_stocks_warn ? $goods_stocks_warn : '10';
         unset($baseFilter['marketable']);
         $productModel = new Products();
-        $baseFilter[] = ['(stock - freeze_stock)', 'lt', $goods_stocks_warn];
-        $totalWarn    = $productModel->where($baseFilter)->group('goods_id')->count('id');
+        //$baseFilter[] = ['(stock - freeze_stock)', 'lt', $goods_stocks_warn];
+        $totalWarn    = $productModel->where('(stock - freeze_stock)<'. $goods_stocks_warn)->group('goods_id')->count('id');
         return [
             'totalGoods'=>$total,
             'totalMarketableUp'=>$totalMarketableUp,

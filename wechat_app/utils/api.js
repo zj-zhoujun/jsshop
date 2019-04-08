@@ -680,8 +680,9 @@ function sharecode(callback) {
   }
 }
 //获取分类导航
-function getCatNav(data,callback) {
-  api('Categories.getNavCat', data, function (res) {
+function getCatNav(callback) {
+  console.log(callback);
+  api('categories.getnavcat',{},function (res) {
     console.log(res);
       callback(res);
     });
