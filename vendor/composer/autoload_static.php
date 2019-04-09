@@ -17,6 +17,7 @@ class ComposerStaticInitd7a1a5f41e2fb6148a8b8c876faba931
         'fe62ba7e10580d903cc46d808b5961a4' => __DIR__ . '/..' . '/tightenco/collect/src/Collect/Support/helpers.php',
         'caf31cc6ec7cf2241cb6f12c226c3846' => __DIR__ . '/..' . '/tightenco/collect/src/Collect/Support/alias.php',
         '1a97f75693790a971bff284d69bc93a2' => __DIR__ . '/..' . '/myxland/think-addons/src/helper.php',
+        '1cfd2761b63b0a29ed23657ea394cb2d' => __DIR__ . '/..' . '/topthink/think-captcha/src/helper.php',
         'cc56288302d9df745d97c934d6a6e5f0' => __DIR__ . '/..' . '/topthink/think-queue/src/common.php',
     );
 
@@ -25,6 +26,7 @@ class ComposerStaticInitd7a1a5f41e2fb6148a8b8c876faba931
         array (
             'think\\helper\\' => 13,
             'think\\composer\\' => 15,
+            'think\\captcha\\' => 14,
             'think\\' => 6,
         ),
         'm' => 
@@ -93,6 +95,10 @@ class ComposerStaticInitd7a1a5f41e2fb6148a8b8c876faba931
         'think\\composer\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-installer/src',
+        ),
+        'think\\captcha\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-captcha/src',
         ),
         'think\\' => 
         array (
