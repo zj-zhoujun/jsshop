@@ -9,3 +9,4 @@ vendor/zoujingli/wechat-php-sdk/Wechat/Cache/
 public/static/file
 public/install/install.lock
 /config/database.php
+runtime
