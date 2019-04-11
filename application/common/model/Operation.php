@@ -130,7 +130,7 @@ class Operation extends Common
         //根据菜单取菜单on的样式
         $onMenu = $this->getMenuNode($parent_menu_id, $controllerName, $actionName);
 
-        if(cache('?manage_operation_'.$manage_id)){
+        if(cache('?manage_operation_'.$manage_id) && 1==2){
             $list = cache('manage_operation_'.$manage_id);
         }else{
             $manageModel = new Manage();
@@ -139,7 +139,8 @@ class Operation extends Common
             //如果是超级管理员，直接返回
             if($manage_id == $manageModel::TYPE_SUPER_ID){
                 //直接取所有数据，然后返回
-                $list = $this->where(['perm_type'=>self::PERM_TYPE_SUB])->order('sort asc')->select();
+                $list = $this->where(['perm_type'=>self::PERM_TYPE_SUB,'is_del'=>0])->order('sort asc')->select();
+                //echo $this->getLastSql();exit;
             }else{
                 //取此管理员的所有角色
                 $roles = $manageRoleRel->where('manage_id',$manage_id)->select();
@@ -155,7 +156,7 @@ class Operation extends Common
                     ->field('o.*')
                     ->alias('o')
                     ->join(config('database.prefix').'manage_role_operation_rel mror', 'o.id = mror.operation_id')
-                    ->where('mror.manage_role_id','IN',$roles)
+                    ->where(['mror.manage_role_id'=>['IN'=>$roles],'o.is_del'=>0])
                     ->where('o.perm_type',self::PERM_TYPE_SUB)
                     ->order('o.sort asc')
                     ->select();
@@ -463,8 +464,9 @@ class Operation extends Common
     protected function tableWhere($post)
     {
         $where = [];
+        $where['is_del'] = 0;
         if(isset($post['parent_id']) && $post['parent_id'] != ""){
-            $where[] = ['parent_id', 'eq', $post['parent_id']];
+            $where['parent_id'] = [ 'eq', $post['parent_id']];
         }
 
 
@@ -512,7 +514,7 @@ class Operation extends Common
         //如果没有下级了，就可以删了
         $children = $this->where(['parent_id'=>$id])->select();
         if($children->isEmpty()){
-            $re = $this->where(['id'=>$id])->delete();
+            $re = $this->where(['id'=>$id])->setField('is_del',1);
             if($re){
                 $status['status'] = true;
             }else{
@@ -520,6 +522,14 @@ class Operation extends Common
             }
             return $status;
         }else{
+            $re = $this->where(['id'=>$id])->setField('is_del',1);
+            $re = $this->where(['parent_id'=>$id])->setField('is_del',1);
+            if($re){
+                $status['status'] = true;
+            }else{
+                $status['msg'] = "删除失败";
+            }
+            return $status;
             return error_code(11091);
         }
     }
