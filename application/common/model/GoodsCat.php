@@ -113,7 +113,7 @@ class GoodsCat extends Common
                         'type_id' => $this->getTypeName($vv['type_id']),
                         'image_id' => $this->getImage($vv['image_id']),
                         'sort' => $vv['sort'],
-                        'is_nav' => $v['is_nav'],
+                        'is_nav' => $vv['is_nav'],
                         'operating' => $vv['operating']
                     );
                 }

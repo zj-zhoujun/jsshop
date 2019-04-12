@@ -179,7 +179,9 @@
             var name = $("#name").val();
             var image_id = $("#image_value_image_id").val();
             var sort = $("#sort").val();
-            var is_nav = $("input[name='is_nav']").val();
+            var form = layui.form;
+            var is_nav = $("input[name='is_nav']:checked").val();
+
             if(name.length > 6){
                 layer.msg('分类名称不能大于6个字符');
                 return false;

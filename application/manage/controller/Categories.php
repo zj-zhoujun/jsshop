@@ -128,6 +128,7 @@ class Categories extends Manage
         }
         else
         {
+
             //存储编辑内容
             $data = array(
                 'id' => input('id'),
