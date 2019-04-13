@@ -603,6 +603,8 @@ class GoodsCat extends Common
             if($v['image_id'])
             {
                 $v['image_url'] = _sImage($v['image_id']);
+            }else{
+                $v['image_url'] = '';
             }
         }
         return $data;
