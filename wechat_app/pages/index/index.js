@@ -12,6 +12,10 @@ Page({
     interval: 3000, //商品轮播图切换间隔
     duration: 500, //商品轮播图切换动画时间
     slideImg: [], //幻灯片广告数据
+    navDownImg: [], //导航底部广告数据
+    midLeftImg: [], //中部左广告数据
+    midRightImg: [], //中部右广告数据
+    listUpImg: [], //产品上广告数据
     catNav: [], //分类导航数据
     notice: [], //公告数据
     coupon: [], //优惠券数据
@@ -43,6 +47,11 @@ Page({
     }
 
     this.slideImg(); //获取幻灯片广告数据
+    this.navDownImg(); //获取导航底部广告数据
+    this.navDownImg(); //获取导航底部广告数据
+    this.midLeftImg(); //中部左广告数据
+    this.midRightImg(); //中部右广告数据
+    this.listUpImg(); //产品上广告数据
     this.catNav(); //获取分类数据
     this.notice(); //获取公告数据
     this.coupon(); //获取优惠券数据
@@ -95,6 +104,46 @@ Page({
       });
     });
   },
+  //获取导航底部广告数据
+  navDownImg: function () {
+    var page = this;
+    //异步获取幻灯片广告数据
+    app.api.adList('nav_down', function (res) {
+      page.setData({
+        navDownImg: res.data.list
+      });
+    });
+  },
+  //中部左广告数据
+  midLeftImg: function () {
+    var page = this;
+    //异步获取幻灯片广告数据
+    app.api.adList('middle_left', function (res) {
+      page.setData({
+        midLeftImg: res.data.list
+      });
+    });
+  },
+  //中部右广告数据
+  midRightImg: function () {
+    var page = this;
+    //异步获取幻灯片广告数据
+    app.api.adList('middle_right', function (res) {
+      page.setData({
+        midRightImg: res.data.list
+      });
+    });
+  },
+  //商品上广告数据
+  listUpImg: function () {
+    var page = this;
+    //异步获取幻灯片广告数据
+    app.api.adList('list_up', function (res) {
+      page.setData({
+        listUpImg: res.data.list
+      });
+    });
+  },
   //获取分类导航数据
   catNav: function () {
     var page = this;
@@ -104,7 +153,7 @@ Page({
       console.log(2);
       console.log(res);
       page.setData({
-        catNav: res.data.list
+        catNav: res.data
       });
     });
   },
@@ -295,6 +344,15 @@ Page({
         url: '../form/detail/form?id=' + val,
       });
     }
+  },
+
+  //产品分类跳转产品列表
+  navcatList: function (e) {
+    var val = e.target.dataset.id;
+    console.log(val)
+    wx.navigateTo({
+      url: '../goods/itemList/itemList?id=' + val
+    });
   },
 
   //客服回调

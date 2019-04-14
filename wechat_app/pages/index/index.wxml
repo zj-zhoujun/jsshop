@@ -73,14 +73,24 @@
       <view class='nav' bindtap='myCollection'><image src='../image/group15.png'></image><text>我的收藏</text></view>
     </view>
   </view>
-   <view class='button-list'>
-    <view class='button-list-mid'>
-      <view class='nav' bindtap='allCategories'>
-      <image src='../image/group10.png'></image>
-      <text>全部分类</text>
+  <view class='button-list' wx:if="{{catNav.length > 0}}">
+    <view class='button-list-mid' wx:for="{{catNav}}" wx:key="{{index}}">
+      <view class='nav' bindtap='navcatList' data-id="{{item.id}}">
+        <image src="{{item.image}}"></image>
+        <text>{{item.name}}</text>
       </view>
-      
     </view>
+  </view>
+
+  <!-- 导航底部广告图 -->
+  <view wx:if="{{navDownImg.length > 0}}">
+    <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{navDownImg}}" wx:key="{{index}}">
+        <swiper-item>
+          <image src="{{item.img}}" class="slide-image" bindtap="slideDetail" data-type="{{item.type}}" data-val="{{item.val}}" />
+        </swiper-item>
+      </block>  
+    </swiper>
   </view>
 
   <!-- 限时秒杀 -->
@@ -113,7 +123,26 @@
       </view>
     </view>
   </view>
-
+  <view class="middle-advert">
+    <view class="middle-item item-left">
+      <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+        <block wx:for="{{midLeftImg}}" wx:key="{{index}}">
+          <swiper-item>
+            <image src="{{item.img}}" class="slide-image" bindtap="slideDetail" data-type="{{item.type}}" data-val="{{item.val}}" />
+          </swiper-item>
+        </block>  
+      </swiper>
+    </view>
+    <view class="middle-item">
+      <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+        <block wx:for="{{midRightImg}}" wx:key="{{index}}">
+          <swiper-item>
+            <image src="{{item.img}}" class="slide-image" bindtap="slideDetail" data-type="{{item.type}}" data-val="{{item.val}}" />
+          </swiper-item>
+        </block>  
+      </swiper>
+    </view>
+  </view>
   <!--精品团购-->
   <view class='group-recommends' wx:if="{{group.length >0}}">
     <view class='recommends-header'>
@@ -171,7 +200,16 @@
       </view>
     <!-- </view> -->
   </view>
-
+  <!-- 商品上部广告图 -->
+  <view wx:if="{{listUpImg.length > 0}}">
+    <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{listUpImg}}" wx:key="{{index}}">
+        <swiper-item>
+          <image src="{{item.img}}" class="slide-image" bindtap="slideDetail" data-type="{{item.type}}" data-val="{{item.val}}" />
+        </swiper-item>
+      </block>  
+    </swiper>
+  </view>
   <!-- 热卖推荐 -->
   <view class='hot-recommends'>
     <!-- <view class='hot-recommends-mid'> -->
@@ -183,18 +221,20 @@
       <!-- 热门推荐商品 -->
       <view class='hot-recommends-body'>
         <!-- 循环商品 -->
-        <view class='hot-body-mid' wx:for="{{hotGoods}}" wx:key="{{index}}">
-          <!-- 绑定商品 -->
-          <view bindtap="goodsDetail" data-id="{{item.id}}">
-            <!-- 商品图片 -->
-            <image class='pic' mode='aspectFill' src='{{item.image_url}}'></image>
-            <!-- 商品名称和价格 -->
-            <view class='recommends-body-bottom'>
-              <text class='name'>{{item.name}}</text>
-              <view class='price-cart'>
-                <text class='price'>￥{{item.price}}</text>
-                <image class='icon' src='../image/cart.png'></image>
-              </view>
+        
+        <view class='every-commodity {{listgrid?"every-commodity-grid":""}}' wx:for="{{hotGoods}}" wx:key="{{index}}" bindtap="goodsDetail" data-id="{{item.id}}">
+          <image class='commodity-pic' mode='aspectFill' src='{{item.image_url}}'></image>
+          <view class='every-commodity-right'>
+            <text class='commodity-name'>{{item.name}}</text>
+            <view class='preferential'>
+              <text wx:for="{{item.label_ids}}" wx:key="ind" wx:for-item="items" class="lable_{{items.style}}">{{items.name}}</text>
+            </view>
+            <view class='preferential' wx:if="{{item.product.promotion_list}}">
+              <text wx:for="{{item.product.promotion_list}}" wx:key="ind" wx:for-item="items" class='{{items.type==2?"promotion_on":"promotion_off"}}'>{{items.name}}</text>
+            </view>
+            <view class='price-cart'>
+              <text class='price'>￥{{item.price}}</text>
+              <image class='cart-img' src='../../image/cart.png'></image>
             </view>
           </view>
         </view>
