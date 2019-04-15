@@ -83,14 +83,8 @@
   </view>
 
   <!-- 导航底部广告图 -->
-  <view wx:if="{{navDownImg.length > 0}}">
-    <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{navDownImg}}" wx:key="{{index}}">
-        <swiper-item>
-          <image src="{{item.img}}" class="slide-image" bindtap="slideDetail" data-type="{{item.type}}" data-val="{{item.val}}" />
-        </swiper-item>
-      </block>  
-    </swiper>
+  <view class="nav-down" wx:if="{{navDownImg.length > 0}}">
+    <image src="{{navDownImg[0].img}}" class="slide-image" bindtap="slideDetail" data-type="{{navDownImg[0].type}}" data-val="{{navDownImg[0].val}}" />
   </view>
 
   <!-- 限时秒杀 -->
@@ -124,23 +118,18 @@
     </view>
   </view>
   <view class="middle-advert">
-    <view class="middle-item item-left">
-      <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-        <block wx:for="{{midLeftImg}}" wx:key="{{index}}">
-          <swiper-item>
-            <image src="{{item.img}}" class="slide-image" bindtap="slideDetail" data-type="{{item.type}}" data-val="{{item.val}}" />
-          </swiper-item>
-        </block>  
-      </swiper>
+    <view class="middle-item left">
+    <view class="left-item">
+      <image src="{{midLeftImg[0].img}}" class="slide-image" bindtap="slideDetail" data-type="{{midLeftImg[0].type}}" data-val="{{midLeftImg[0].val}}" />
     </view>
-    <view class="middle-item">
-      <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-        <block wx:for="{{midRightImg}}" wx:key="{{index}}">
-          <swiper-item>
-            <image src="{{item.img}}" class="slide-image" bindtap="slideDetail" data-type="{{item.type}}" data-val="{{item.val}}" />
-          </swiper-item>
-        </block>  
-      </swiper>
+    </view>
+    <view class="middle-item right">
+      <view class="swiper-item top">
+        <image src="{{midRightImg[0].img}}" class="slide-image" bindtap="slideDetail" data-type="{{midRightImg[0].type}}" data-val="{{midRightImg[0].val}}" />
+      </view>
+      <view class="swiper-item">
+        <image src="{{midRightImg[1].img}}" class="slide-image" bindtap="slideDetail" data-type="{{midRightImg[1].type}}" data-val="{{midRightImg[1].val}}" />
+      </view>
     </view>
   </view>
   <!--精品团购-->
@@ -201,14 +190,8 @@
     <!-- </view> -->
   </view>
   <!-- 商品上部广告图 -->
-  <view wx:if="{{listUpImg.length > 0}}">
-    <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{listUpImg}}" wx:key="{{index}}">
-        <swiper-item>
-          <image src="{{item.img}}" class="slide-image" bindtap="slideDetail" data-type="{{item.type}}" data-val="{{item.val}}" />
-        </swiper-item>
-      </block>  
-    </swiper>
+  <view class="nav-down" wx:if="{{listUpImg.length > 0}}">
+    <image src="{{listUpImg[0].img}}" class="slide-image" bindtap="slideDetail" data-type="{{listUpImg[0].type}}" data-val="{{listUpImg[0].val}}" />
   </view>
   <!-- 热卖推荐 -->
   <view class='hot-recommends'>

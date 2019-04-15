@@ -335,6 +335,9 @@ hot-recommends .name{
   border: 2rpx solid #f3f3f3;
   border-top: none;
 }
+.nav-down{
+  height:188rpx;
+}
 .middle-advert{
   margin-top: 10rpx;
   overflow: hidden;
@@ -342,6 +345,20 @@ hot-recommends .name{
 .middle-item{
   float: left;
   width:49%;
+}
+.middle-item.right{
+  float: right;
+}
+.middle-item .left-item {
+  width: 100%;
+  height:376rpx;
+}
+.middle-item .swiper-item {
+  width:100%;
+  height:184rpx;
+}
+.middle-item .swiper-item.top{
+  margin-bottom:8rpx;
 }
 .middle-item.item-left{
   margin-right:2%;
