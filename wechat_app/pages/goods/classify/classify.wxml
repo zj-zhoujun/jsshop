@@ -24,6 +24,7 @@
                 <text bindtap='goodsList' data-id="{{item.id}}">{{item.name}}</text>
             </view>
         </view>
+        dfdgdfgfg
     </scroll-view>
 </view>
 
