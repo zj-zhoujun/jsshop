@@ -42,7 +42,8 @@ Page({
     share: false,
     nickname: '',
     avatar: '',
-    cnumber: 0
+    cnumber: 0,
+    hotGoods: [] //热卖推荐商品数据
   },
 
   //商品减一
@@ -156,6 +157,7 @@ Page({
         }
         this.getMyShareCode(); //获取我的推荐码
         this.getUserInfo(); //获取个人信息
+        this.hotGoods(); //获取热卖推荐数据
       //工具条操作
       this.setData({
         hidebtn: 'hidebtn',
@@ -209,7 +211,43 @@ Page({
             });
         }
     },
+    //热卖推荐获取
+    hotGoods: function (flag = false) {
+      var page = this;
+      page.setData({
+        ajaxStatus: false
+      });
+      if (flag) {
+        page.setData({
+          hotPage: 1,
+          hotGoods: []
+        });
+      }
+      var data = {
+        where: {
+          hot: 1
+        },
+        page: page.data.hotPage,
+        limit: page.data.hotLimit
+      };
+      app.api.goodsList(data, function (res) {
+        if (res.status) {
+          let hotPage = page.data.hotPage + 1;
+          let hotGoods = page.data.hotGoods.concat(res.data.list);
 
+          let loadingComplete = false;
+          if (res.data.list.length < page.data.hotLimit) {
+            loadingComplete = true;
+          }
+          page.setData({
+            hotPage: hotPage,
+            hotGoods: hotGoods,
+            loadingComplete: loadingComplete,
+            ajaxStatus: true
+          });
+        }
+      });
+    },
     //刷新页面
     onShow: function () {
         let userToken = app.db.get('userToken');
@@ -662,6 +700,13 @@ Page({
         });
         page.getCartNumber();
       });
+  },
+  //跳转到商品详情页面
+  goodsDetail: function (e) {
+    let ins = encodeURIComponent('id=' + e.currentTarget.dataset.id);
+    wx.navigateTo({
+      url: '../detail/detail?scene=' + ins
+    });
   },
 
   //获取当前选中的货品

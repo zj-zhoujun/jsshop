@@ -18,6 +18,8 @@ Page({
         //获取全部数据
         let all_cat = app.db.get('all_cat');
         if (all_cat) {
+            console.log(11111)
+            console.log(all_cat)
             //缓存有值
             let on_class = 0;
             if (all_cat[0].id) {
@@ -35,6 +37,7 @@ Page({
             });
         } else {
             //缓存无值
+            console.log(22222222222222222222)
             app.api.getAllCat(function (res) {
                 if (res.status) {
                     let on_class = 0;
@@ -71,6 +74,7 @@ Page({
 
     //获取一级分类下的子分类列表
     getClassList: function (parent_id) {
+        console.log(33333333333)
         var page = this;
         var data = {
             parent_id: parent_id
