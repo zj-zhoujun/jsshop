@@ -76,7 +76,7 @@
   <view class='button-list' wx:if="{{catNav.length > 0}}">
     <view class='button-list-mid' wx:for="{{catNav}}" wx:key="{{index}}">
       <view class='nav' bindtap='navcatList' data-id="{{item.id}}">
-        <image src="{{item.image}}"></image>
+        <image src="{{item.image_url}}"></image>
         <text>{{item.name}}</text>
       </view>
     </view>
@@ -163,32 +163,7 @@
   </view>
 
   <!-- 店家推荐 -->
-  <view class='seller-recommends'>
-    <!-- <view class='seller-recommends-mid'> -->
-      <!-- 店家推荐标题 -->
-      <view class='recommends-header'>
-        <image class='recommends-img' src='../image/seller.png'></image><text>店家推荐</text>
-      </view>
-      <!-- 店家推荐商品列表 -->
-      <view class='seller-recommends-body'>
-        <!-- 商品 -->
-        <view wx:for="{{recommend}}" wx:key="{{index}}">
-          <view bindtap="goodsDetail" data-id="{{item.id}}" class='seller-body-mid'>
-            <!-- 商品图片 -->
-            <image class='pic' mode='aspectFill' src='{{item.image_url}}'></image>
-            <!-- 商品信息 -->
-            <view class='recommends-body-bottom'>
-              <text class='name'>{{item.name}}</text>
-              <view class='price-cart'>
-                <text class='price'>￥{{item.price}}</text>
-                <image class='icon' src='../image/cart.png'></image>
-              </view>
-            </view>
-          </view>
-        </view>
-      </view>
-    <!-- </view> -->
-  </view>
+
   <!-- 商品上部广告图 -->
   <view class="nav-down" wx:if="{{listUpImg.length > 0}}">
     <image src="{{listUpImg[0].img}}" class="slide-image" bindtap="slideDetail" data-type="{{listUpImg[0].type}}" data-val="{{listUpImg[0].val}}" />
