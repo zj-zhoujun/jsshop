@@ -316,6 +316,7 @@ Page({
   
   //广告跳转
   slideDetail: function (e) {
+    console.log(e)
     var types = e.target.dataset.type;
     var val = e.target.dataset.val;
     if (types == 1) {
@@ -348,8 +349,7 @@ Page({
 
   //产品分类跳转产品列表
   navcatList: function (e) {
-    var val = e.target.dataset.id;
-    console.log(val)
+    var val = e.currentTarget.dataset.val;
     wx.navigateTo({
       url: '../goods/itemList/itemList?id=' + val
     });

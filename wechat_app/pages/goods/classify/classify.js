@@ -5,10 +5,24 @@ Page({
     //页面数据
     data: {
         class_list: [],
+        goodsList: [],
+        ajaxStatus: false,
+        loading: true,
+        loadingComplete: false,
+        nodata:false,
         all_cat: [],
         on_class: 0,
         content_height: 0,
-        cate_style: app.config.cate_style
+        cate_style: app.config.cate_style,
+        searchData: {
+            where: {},
+            limit: 10,
+            page: 1,
+            order: {
+                key: 'sort',
+                sort: 'asc'
+            }
+        },
     },
 
     //加载执行
@@ -35,6 +49,10 @@ Page({
                 class_list: class_list,
                 cate_style: app.config.cate_style
             });
+            var obj = {
+                cat_id: all_cat[0].id
+            }
+            page.getGoods(obj)
         } else {
             //缓存无值
             console.log(22222222222222222222)
@@ -57,6 +75,12 @@ Page({
 
                     //存储缓存
                     app.db.set('all_cat', res.data);
+                    console.log(7777777777777)
+                    console.log(res.data)
+                    var obj = {
+                        cat_id: res.data[0].id
+                    }
+                    page.getGoods(obj)
                 }
             });
         }
@@ -71,7 +95,53 @@ Page({
             }
         });
     },
-
+    getGoods: function (data) {
+        console.log(1111111111111111111111111111111111)
+        console.log(data)
+        var page = this;
+        if (page.data.ajaxStatus) {
+            return false;
+        }
+        page.setData({
+            ajaxStatus: true,
+            loading: true,
+            loadingComplete: false,
+            nodata: false,
+        });
+        //如果已经没有数据了，就不取数据了，直接提示已经没有数据
+        if (page.data.loadingComplete) {
+            wx.showToast({
+                title: '暂时没有数据了',
+                icon: 'success',
+                duration: 2000
+            });
+            return false;
+        }
+        console.log(3333333)
+        this.data.searchData.where = data
+        app.api.goodsList(this.data.searchData, function (res) {
+            if (res.status) {
+                //判是否没有数据了，只要返回的记录条数小于总记录条数，那就说明到底了，因为后面没有数据了 
+                var isEnd = false;
+                if (res.data.list.length < page.data.searchData.limit) {
+                    isEnd = true;
+                }
+                //判断是否为空
+                var isEmpty = false;
+                if (page.data.searchData.page == 1 && res.data.list.length == 0) {
+                    isEmpty = true;
+                }
+                page.setData({
+                    goodsList: res.data.list,
+                    ajaxStatus: false,
+                    loading: !isEnd && !isEmpty,
+                    toView: '',
+                    loadingComplete: isEnd && !isEmpty,
+                    nodata: isEmpty,
+                });
+            }
+        });
+    },
     //获取一级分类下的子分类列表
     getClassList: function (parent_id) {
         console.log(33333333333)
@@ -94,6 +164,11 @@ Page({
         let o_id = e.currentTarget.dataset.id;
         let all_cat = page.data.all_cat;
         let class_list = [];
+        console.log(o_id)
+        var obj = {
+            cat_id: o_id
+        }
+        this.getGoods(obj)
         //page.getClassList(e.currentTarget.dataset.id);
         for (let i = 0; i < all_cat.length; i++) {
             if (all_cat[i].id == o_id) {
@@ -111,7 +186,12 @@ Page({
             class_list: class_list
         });
     },
-
+    goodsDetail: function (e) {
+        let ins = encodeURIComponent('id=' + e.currentTarget.dataset.id);
+        wx.navigateTo({
+            url: '../detail/detail?scene=' + ins
+        });
+    },
     //前往商品分类列表
     goodsList: function (event) {
         wx.navigateTo({

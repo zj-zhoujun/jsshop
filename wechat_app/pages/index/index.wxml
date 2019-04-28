@@ -75,7 +75,7 @@
   </view>
   <view class='button-list' wx:if="{{catNav.length > 0}}">
     <view class='button-list-mid'>
-      <view wx:for="{{catNav}}" wx:key="{{index}}" class='nav' bindtap='navcatList' data-id="{{item.id}}">
+      <view wx:for="{{catNav}}" wx:key="{{index}}" class='nav' bindtap='navcatList' data-val="{{item.id}}">
         <image src="{{item.image_url}}"></image>
         <text>{{item.name}}</text>
       </view>
