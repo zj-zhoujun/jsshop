@@ -29,6 +29,8 @@ Page({
 
   //加载执行
   onLoad: function (options) {
+    console.log(1111)
+    console.log(options)
     var where = {};
     if (options.id) {
         where = {
@@ -235,6 +237,8 @@ Page({
       });
       return false;
     }
+    console.log(3333333)
+    console.log(this.data)
     app.api.goodsList(this.data.searchData,function(res){
       if(res.status){
         //判是否没有数据了，只要返回的记录条数小于总记录条数，那就说明到底了，因为后面没有数据了 

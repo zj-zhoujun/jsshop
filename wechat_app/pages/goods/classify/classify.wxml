@@ -24,7 +24,24 @@
                 <text bindtap='goodsList' data-id="{{item.id}}">{{item.name}}</text>
             </view>
         </view>
-        dfdgdfgfg
+        <view class='content-body'>
+            <view class='every-commodity {{listgrid?"every-commodity-grid":""}}' wx:for="{{goodsList}}" wx:key="{{index}}" bindtap="goodsDetail" data-id="{{item.id}}">
+            <image class='commodity-pic' mode='aspectFill' src='{{item.image_url}}'></image>
+            <view class='every-commodity-right'>
+                <text class='commodity-name'>{{item.name}}</text>
+                <view class='preferential'>
+                <text wx:for="{{item.label_ids}}" wx:key="ind" wx:for-item="items" class="lable_{{items.style}}">{{items.name}}</text>
+                </view>
+                <view class='preferential' wx:if="{{item.product.promotion_list}}">
+                <text wx:for="{{item.product.promotion_list}}" wx:key="ind" wx:for-item="items" class='{{items.type==2?"promotion_on":"promotion_off"}}'>{{items.name}}</text>
+                </view>
+                <view class='price-cart'>
+                <text class='price'>￥{{item.price}}</text>
+                <image class='cart-img' src='../../image/cart.png'></image>
+                </view>
+            </view>
+            </view>
+        </view>
     </scroll-view>
 </view>
 
