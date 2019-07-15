@@ -226,5 +226,8 @@
       </view>
       <view class="loading" id="loading" hidden="{{!loadingComplete}}">——— 我们是有底线的 ———</view>
     <!-- </view> -->
+    <view class="loading" id="loading" hidden="{{!loadingComplete}}"><a href="http://www.beian.miit.gov.cn" target="_blank">Copyright©太仓市高新区齐闪闪超市  苏ICP备19031177号</a>
+</view>
   </view>
+  
 </view>
