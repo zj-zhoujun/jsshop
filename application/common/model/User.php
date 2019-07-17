@@ -180,10 +180,10 @@ class User extends Common
             $result['msg'] = '请输入手机号码';
             return $result;
         }
-        if(!isset($data['code'])) {
-            $result['msg'] = '请输入验证码';
-            return $result;
-        }
+//        if(!isset($data['code'])) {
+//            $result['msg'] = '请输入验证码';
+//            return $result;
+//        }
 
         //判断是否是用户名登陆
         $smsModel = new Sms();

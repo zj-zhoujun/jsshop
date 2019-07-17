@@ -123,14 +123,14 @@ Page({
       })
       return false;
     }
-    if (this.data.code == '') {
-      wx.showToast({
-        title: '请输入验证码',
-        icon: 'success',
-        duration: 2000
-      })
-      return false;
-    }
+    // if (this.data.code == '') {
+    //   wx.showToast({
+    //     title: '请输入验证码',
+    //     icon: 'success',
+    //     duration: 2000
+    //   })
+    //   return false;
+    // }
   
     var data = {
       mobile: this.data.mobile,
