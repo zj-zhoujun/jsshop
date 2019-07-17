@@ -298,7 +298,7 @@ class BillPayments extends Common
                     //如果是订单类型，做支付后处理
                     $orderModel = new Order();
                     foreach($billPaymentRelList as $k => $v){
-                        $orderModel->pay($v['source_id'], $payment_code);
+                        $orderModel->pay($v['source_id'], $payment_code,$is_offline);
                     }
                 }elseif($billPaymentInfo['type'] == self::TYPE_RECHARGE){
                     //给用户做充值

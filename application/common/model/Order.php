@@ -1109,7 +1109,7 @@ class Order extends Common
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function pay($order_id, $payment_code)
+    public function pay($order_id, $payment_code,$is_offline=0)
     {
         $return_data = array(
             'status' => false,
@@ -1139,6 +1139,7 @@ class Order extends Common
             $data['payed'] = $order['order_amount'];
             $data['pay_status'] = self::PAY_STATUS_YES;
             $data['payment_time'] = time();
+            $data['offline_status'] = $is_offline;
             $result = $this->where('order_id', 'eq', $order_id)
                 ->update($data);
 
