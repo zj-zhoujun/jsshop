@@ -1111,6 +1111,7 @@ class Order extends Common
      */
     public function pay($order_id, $payment_code,$is_offline=0)
     {
+        //dump($is_offline);exit;
         $return_data = array(
             'status' => false,
             'msg' => '订单支付失败',
@@ -1142,8 +1143,8 @@ class Order extends Common
             $data['offline_status'] = $is_offline;
             $result = $this->where('order_id', 'eq', $order_id)
                 ->update($data);
-
             $return_data['data'] = $result;
+
             if($result !== false)
             {
                 $return_data['status'] = true;
@@ -1164,7 +1165,6 @@ class Order extends Common
         //订单记录
         $orderLog = new OrderLog();
         $orderLog->addLog($order_id, $order['user_id'], $orderLog::LOG_TYPE_PAY, $return_data['msg'], [$return_data, $data]);
-
         return $return_data;
     }
 

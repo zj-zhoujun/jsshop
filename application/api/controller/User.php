@@ -19,6 +19,7 @@ use org\Curl;
 use think\facade\Cache;
 use think\facade\Request;
 use think\Container;
+use think\Db;
 
 class User extends Api
 {
@@ -695,9 +696,11 @@ class User extends Api
             $params = $data['params'];
         }
 
+        Db::startTrans();
         $billPaymentsModel = new BillPayments();
         //生成支付单,并发起支付
         return $billPaymentsModel->pay(input('param.ids'),input('param.payment_code'),$this->userId,input('param.payment_type'),$params,$is_offline);
+        Db::commit();
     }
 
 

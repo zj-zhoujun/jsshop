@@ -1,6 +1,7 @@
 //这里的配置文件除了api_url，其他值都会取后台的值，后台的值会覆盖这里的值，这里的仅作为初始的配置
 module.exports = {
-  api_url: 'https://苏州苏鲜配送.com/',
+  //api_url: 'https://苏州苏鲜配送.com/',
+  api_url: 'http://jsshop.com/',
   shop_logo: 'https://苏州苏鲜配送.com/static/images/default.png',
   shop_name: '苏鲜',
   image_max: 5,           //上传图片的时候，最多能够上传几张

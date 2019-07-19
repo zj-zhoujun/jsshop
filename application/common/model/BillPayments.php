@@ -195,20 +195,14 @@ class BillPayments extends Common
             'data'   => array(),
             'msg'    => ''
         ];
-        //判断支付方式
-        $paymentsModel = new Payments();
-        $paymentsInfo  = $paymentsModel->getPayment($payment_code, $paymentsModel::PAYMENT_STATUS_YES);
-        if (!$paymentsInfo) {
-            return error_code(10058);
-        }
 
         $paymentRel = $this->formatPaymentRel($source_str, $type, $params);
         if (!$paymentRel['status']) {
             return $paymentRel;
         }
 
-        Db::startTrans();
-        try {
+        //Db::startTrans();
+        //try {
             $data['payment_id'] = get_sn(2);
             $data['money']      = $paymentRel['data']['money'];
             if ($user_id == '') {
@@ -231,20 +225,20 @@ class BillPayments extends Common
             $billPaymentsRelModel = new BillPaymentsRel();
             $billPaymentsRelModel->saveAll($rel_arr);
 
-            Db::commit();
+           // Db::commit();
 
-        } catch (\Exception $e) {
-            Db::rollback();
-            $result['msg'] = $e->getMessage();
-            return $result;
-        }
+//        } catch (\Exception $e) {
+//            Db::rollback();
+//            $result['msg'] = $e->getMessage();
+//            return $result;
+//        }
         //判断支付单金额是否为0，如果为0，直接支付成功,
         if ($data['money'] == 0 || $data['money'] == '0' || $data['money'] == '0.00') {
+            //dump(time().'--2');
             $this->toUpdate($data['payment_id'], SELF::STATUS_PAYED, $data['payment_code'],$data['money'], '金额为0，自动支付成功', '');
             return error_code(10059);
-        }
-        //线下付款直接支付成功
-        if($is_offline){
+        }elseif($is_offline){
+            //线下付款直接支付成功
             $this->toUpdate($data['payment_id'], SELF::STATUS_PAYED, $data['payment_code'],$data['money'], '线下付款，自动支付成功', '',$is_offline);
         }
         $result['status'] = true;
@@ -277,23 +271,26 @@ class BillPayments extends Common
         $data['trade_no'] = $trade_no;
         //线下支付状态
         if($is_offline){
-            $data['offline_status'] = $is_offline;
+            //$data['offline_status'] = $is_offline;
         }
         $where[] = ['payment_id','eq', $payment_id];
         $where[] = ['money','eq',$money];
         $where[] = ['status','neq',self::STATUS_PAYED];
         $billPaymentInfo = $this->where($where)->find();
+
         if(!$billPaymentInfo){
             $result['msg'] = '没有找到此未支付的支付单号';
             return $result;
         }
 
-        Db::startTrans();
-        try {
+        //Db::startTrans();
+        //try {
             $this->where($where)->data($data)->update();
+
             if($status == self::STATUS_PAYED){
                 $billPaymentsRelModel = new BillPaymentsRel();
                 $billPaymentRelList = $billPaymentsRelModel->where(array('payment_id'=>$payment_id))->select();
+
                 if($billPaymentInfo['type'] == self::TYPE_ORDER){
                     //如果是订单类型，做支付后处理
                     $orderModel = new Order();
@@ -316,18 +313,17 @@ class BillPayments extends Common
                     //::todo 其他业务逻辑
                 }
             }
-            Db::commit();
+            //Db::commit();
             $result['status'] = true;
             $result['data'] = $payment_id;
             $result['msg'] = '支付成功';
-        } catch (\Exception $e) {
-            Db::rollback();
-            $result['msg'] = $e->getMessage();
-            trace("支付单".$billPaymentInfo['payment_id']."更新状态报错，报:".$result['msg'],'money');
-            return $result;
-
-        }
-
+//        } catch (\Exception $e) {
+//            Db::rollback();
+//            $result['msg'] = $e->getMessage();
+//            trace("支付单".$billPaymentInfo['payment_id']."更新状态报错，报:".$result['msg'],'money');
+//            return $result;
+//
+//        }
         return $result;
 
     }
