@@ -70,6 +70,10 @@
             <td>手机：{$order.ship_mobile}</td>
             <td>订单备注：{$order.mark}</td>
         </tr>
+        <tr>
+            <td>支付方式：{if condition="$order['payment_code'] eq 'offline'"}线下收款{else /}线上支付{/if}</td>
+            <td></td>
+        </tr>
     </table>
 
     <table class="table table-condensed">

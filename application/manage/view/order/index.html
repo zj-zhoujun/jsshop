@@ -155,9 +155,10 @@
                 {type:'checkbox', fixed: 'left'},
                 {field: 'order_id', title: '订单号', width:140, align: 'center', fixed: 'left'},
                 {field: 'order_id', title: '打印',align: 'center', fixed: 'left',templet:function (data) {
-                    var html='<a href="{:url("order/print_tpl")}?order_id='+data.order_id+'&type=1" target="_blank">购</a>&nbsp;';
-                    html+='<a href="{:url("order/print_tpl")}?order_id='+data.order_id+'&type=2"  target="_blank">配</a>&nbsp;';
-                    html+='<a href="{:url("order/print_tpl")}?order_id='+data.order_id+'&type=3"  target="_blank">联</a>&nbsp;';
+//                    var html='<a href="{:url("order/print_tpl")}?order_id='+data.order_id+'&type=1" target="_blank">购</a>&nbsp;';
+//                    html+='<a href="{:url("order/print_tpl")}?order_id='+data.order_id+'&type=2"  target="_blank">配</a>&nbsp;';
+//                    html+='<a href="{:url("order/print_tpl")}?order_id='+data.order_id+'&type=3"  target="_blank">联</a>&nbsp;';
+                    var html = '<a href="{:url("order/print_tpl")}?order_id='+data.order_id+'&type=2"  target="_blank">配</a>&nbsp;';
 //                    if(data.print){
 //                        html+='<a href="javascript:void(0);" style="color: green;" onclick="printExpress('+data.order_id+')">递</a>';
 //                    }else{
@@ -171,6 +172,7 @@
                 {field: 'ship_mobile', title: '收货人手机号', width:120, align: 'center'},
                 {field: 'area_name', title: '收货地址', align: 'center'},
                 {field: 'pay_status', title: '支付状态', width:90, align: 'center'},
+                {field: 'payment_code', title: '支付方式', width:90, align: 'center'},
                 {field: 'ship_status', title: '发货状态', width:90, align: 'center'},
                 {field: 'order_amount', title: '订单总额', width:100, align: 'center', templet:function(data){return '￥'+data.order_amount}},
                 {field: 'source', title: '订单来源', width:130, align: 'center'},

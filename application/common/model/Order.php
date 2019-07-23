@@ -211,7 +211,7 @@ class Order extends Common
 
         if($isPage){
             $data = $this->alias('o')
-                ->field('o.order_id, o.user_id, o.ctime, o.ship_mobile, o.ship_address, o.status, o.pay_status, o.ship_status, o.confirm, o.is_comment, o.order_amount, o.source, o.ship_area_id,o.ship_name')
+                ->field('o.order_id, o.user_id, o.ctime, o.ship_mobile, o.ship_address, o.status,o.payment_code, o.pay_status, o.ship_status, o.confirm, o.is_comment, o.order_amount, o.source, o.ship_area_id,o.ship_name')
                 ->join(config('database.prefix').'user u', 'o.user_id = u.id', 'left')
                 ->where($where)
                 ->order('ctime desc')
@@ -260,6 +260,7 @@ class Order extends Common
                 $v['operating']   = $this->getOperating($v['order_id'], $v['status'], $v['pay_status'], $v['ship_status']);
                 $v['area_name']   = get_area($v['ship_area_id']) . '-' . $v['ship_address'];
                 $v['pay_status']  = config('params.order')['pay_status'][$v['pay_status']];
+                $v['payment_code'] = config('params.payment_type')[$v['payment_code']];
                 $v['ship_status'] = config('params.order')['ship_status'][$v['ship_status']];
                 $v['source']      = config('params.order')['source'][$v['source']];
                 //获取订单打印状态
@@ -1111,7 +1112,6 @@ class Order extends Common
      */
     public function pay($order_id, $payment_code,$is_offline=0)
     {
-        //dump($is_offline);exit;
         $return_data = array(
             'status' => false,
             'msg' => '订单支付失败',
@@ -1143,8 +1143,8 @@ class Order extends Common
             $data['offline_status'] = $is_offline;
             $result = $this->where('order_id', 'eq', $order_id)
                 ->update($data);
-            $return_data['data'] = $result;
 
+            $return_data['data'] = $result;
             if($result !== false)
             {
                 $return_data['status'] = true;
@@ -1165,6 +1165,7 @@ class Order extends Common
         //订单记录
         $orderLog = new OrderLog();
         $orderLog->addLog($order_id, $order['user_id'], $orderLog::LOG_TYPE_PAY, $return_data['msg'], [$return_data, $data]);
+
         return $return_data;
     }
 

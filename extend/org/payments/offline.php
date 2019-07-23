@@ -22,14 +22,16 @@ class offline implements Payment
             'data' => [],
             'msg' => ''
         ];
-
+        $result['status'] = true;
+        $result['data'] = $paymentInfo;
+        return $result;
         //改变支付单状态
         $billPaymentModel = new BillPayments();
         $billPaymentInfo = $billPaymentModel->where(['payment_id' => $paymentInfo['payment_id']])->find();
         if(!$billPaymentInfo){
             return error_code(10056,true);
         }
-        $resultBillPayment = $billPaymentModel->toUpdate( $paymentInfo['payment_id'],$billPaymentModel::STATUS_PAYED,'balancepay',$paymentInfo['money'],$res['data']['memo'],$res['data']['id']);
+        $resultBillPayment = $billPaymentModel->toUpdate( $paymentInfo['payment_id'],$billPaymentModel::STATUS_PAYED,'offline',$paymentInfo['money'],'线下付款','',1);
         if($resultBillPayment['status']){
             $result['msg'] = $resultBillPayment['msg'];
             $result['status'] = true;
