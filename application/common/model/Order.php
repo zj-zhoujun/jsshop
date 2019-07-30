@@ -225,7 +225,7 @@ class Order extends Common
                 ->count();
         }else{
             $data = $this->alias('o')
-                ->field('o.order_id, o.user_id, o.ctime, o.ship_mobile, o.ship_address, o.status, o.pay_status, o.ship_status, o.confirm, o.is_comment, o.order_amount, o.source, o.ship_area_id,o.ship_name')
+                ->field('o.order_id, o.user_id, o.ctime, o.ship_mobile, o.ship_address, o.status, o.pay_status,o.payment_code, o.ship_status, o.confirm, o.is_comment, o.order_amount, o.source, o.ship_area_id,o.ship_name')
                 ->join(config('database.prefix').'user u', 'o.user_id = u.id', 'left')
                 ->where($where)
                 ->order('ctime desc')
@@ -255,7 +255,9 @@ class Order extends Common
 
         if (count($result['data']) > 0) {
             foreach ($result['data'] as $k => &$v) {
+
                 $v['status_text'] = config('params.order')['status_text'][$this->getStatus($v['status'], $v['pay_status'], $v['ship_status'], $v['confirm'], $v['is_comment'])];
+
                 $v['username']    = get_user_info($v['user_id'], 'nickname');
                 $v['operating']   = $this->getOperating($v['order_id'], $v['status'], $v['pay_status'], $v['ship_status']);
                 $v['area_name']   = get_area($v['ship_area_id']) . '-' . $v['ship_address'];
@@ -272,6 +274,7 @@ class Order extends Common
                 }
             }
         }
+
         return $result;
     }
 

@@ -77,6 +77,7 @@ class Ietask extends Manage{
         $data['params'] = json_encode($where);
 
         $res = $ietaskModle->addExportTask($data, $job);
+
         if ($res !== false) {
             $result['status'] = true;
             $result['msg']    = '导出任务加入成功，请到任务列表中下载文件';
