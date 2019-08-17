@@ -200,6 +200,16 @@ class Order extends Api
      */
     public function create()
     {
+        $h = date('H');
+        if($h>=19){
+            $result = [
+                'status' => false,
+                'data' => 10000,
+                'msg' => '对不起，下单时间为早8点到晚8点'
+            ];
+            return $result;
+        }
+        
         $receipt_type = Request::param('receipt_type', 1);
         $store_id = Request::param('store_id', false);
         $lading_name = Request::param('lading_name', false);
