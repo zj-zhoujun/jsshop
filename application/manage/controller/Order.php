@@ -8,7 +8,9 @@ use app\common\model\OrderItems;
 use app\common\model\OrderLog;
 use app\common\model\Ship;
 use app\common\model\Store;
+use think\db\Query;
 use think\facade\Request;
+use think\Db;
 
 /**
  * 订单模块
@@ -320,8 +322,6 @@ class Order extends Manage
         $data = $billDeliveryModel->getLogisticsInformation(input('param.order_id',''));
         return $this->fetch('logistics',[ 'data' => $data ]);
     }
-
-
     /**
      * 数据统计
      * @return array
@@ -452,6 +452,48 @@ class Order extends Manage
             $logi_info = model('common/Logistics')->getAll();
             $this->assign('logi', $logi_info);
             return $this->fetch('print_form');
+        }
+    }
+
+    /**
+     * @return mixed 订单汇总
+     */
+    public function count(){
+
+        if(Request::isAjax()){
+            $ids = Db::name('order')->where('ship_status',1)->column('order_id');//待收货订单
+            $ids = implode(',',$ids);
+            $list = Db::name('order_items')->where('order_id','in',$ids)->select();//待收货订单分表信息
+            if(!$list){
+                $return_data = array(
+                    'status' => false,
+                    'msg' => '暂无订单',
+                    'count' => 0,
+                    'data' => []
+                );
+                return $return_data;
+            }
+            $goods = [];
+            foreach($list as $k=>$v){
+                if(isset($goods[$v['product_id']])){
+                    $goods[$v['product_id']]['num'] += $v['nums'];
+                }else{
+                    $goods[$v['product_id']]['num'] = $v['nums'];//订单数量
+//                $goods[$v['product_id']]['name'] = $goods_info[$v['goods_id']];//产品名称
+//                $goods[$v['product_id']]['spec'] = $product_info[$v['product_id']];//产品规格名称
+                    $goods[$v['product_id']]['name'] = $v['name'];//产品名称
+                    $goods[$v['product_id']]['spec'] = $v['addon'];//产品规格名称
+                }
+            }
+            $return_data = array(
+                'status' => true,
+                'msg' => '没有符合的订单',
+                'count' => count($goods),
+                'data' => $goods
+            );
+            return $return_data;
+        }else{
+            return $this->fetch();
         }
     }
 }
