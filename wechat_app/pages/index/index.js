@@ -349,7 +349,7 @@ Page({
 
   //产品分类跳转产品列表
   navcatList: function (e) {
-    var val = e.currentTarget.dataset.val;
+    var val = e.currentTarget.dataset.id;
     wx.navigateTo({
       url: '../goods/itemList/itemList?id=' + val
     });

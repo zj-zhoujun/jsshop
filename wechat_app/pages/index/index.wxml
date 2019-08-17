@@ -24,7 +24,7 @@
   </swiper>
 
   <!-- 公告 -->
-  <view class='news-coupons-mid' wx:if="{{notice.length > 0}}">
+  <!-- <view class='news-coupons-mid' wx:if="{{notice.length > 0}}">
     <view class='news'>
       <image src='../image/news.png'></image>
       <swiper class="swiper_news" vertical="true" autoplay="true" circular="true" interval="3000">
@@ -33,7 +33,7 @@
         </swiper-item>
       </swiper>        
     </view>
-  </view>
+  </view> -->
   <!-- 优惠券 -->
   <!-- <view class='news-coupons-mid' wx:if="{{coupon.length > 0}}">
     <view class='coupons'>

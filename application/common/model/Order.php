@@ -203,7 +203,7 @@ class Order extends Common
         }
         if(!empty($input['order_unified_status']))
         {
-            $where = array_merge($where, $this->getReverseStatus($input['order_unified_status'], '`o`.'));
+            $where = array_merge($where, $this->getReverseStatus($input['order_unified_status'], 'o.'));
         }
 
         $page = $input['page']?$input['page']:1;

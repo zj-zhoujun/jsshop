@@ -74,6 +74,13 @@
             <td>支付方式：{if condition="$order['payment_code'] eq 'offline'"}线下收款{else /}线上支付{/if}</td>
             <td></td>
         </tr>
+        {foreach $order.delivery as $key=>$vo}
+        <tr>
+            <td>配送人：{$vo.logi_code_name}</td>
+            <td>配送电话：{$vo.logi_no}</td>
+        </tr>
+        {/foreach}
+
     </table>
 
     <table class="table table-condensed">

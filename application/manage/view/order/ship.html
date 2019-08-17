@@ -86,17 +86,17 @@
         <legend>物流信息</legend>
     </fieldset>
     <div class="layui-form-item">
-        <label class="layui-form-label">物流公司：</label>
+        <label class="layui-form-label">配送人：</label>
         <div class="layui-input-inline seller-inline-3">
             <select name="logi_code" id="logi_code" lay-search>
-                <option value="">搜索选择物流公司</option>
+                <option value="">搜索选择配送人</option>
                 {foreach $logi as $k=>$v}
                     <option value="{$v['logi_code']}" {if $v['logi_code'] == $ship['logi_code']}selected{/if}>{$v['logi_name']}</option>
                 {/foreach}
             </select>
         </div>
 
-        <label class="layui-form-label">物流单号：</label>
+        <label class="layui-form-label">配送电话：</label>
         <div class="layui-input-inline seller-inline-4">
             <input type="text" id="logi_no" value="" class="layui-input">
         </div>

@@ -139,7 +139,12 @@ class Operation extends Common
             //如果是超级管理员，直接返回
             if($manage_id == $manageModel::TYPE_SUPER_ID){
                 //直接取所有数据，然后返回
-                $list = $this->where(['perm_type'=>self::PERM_TYPE_SUB,'is_del'=>0])->order('sort asc')->select();
+                if(input('is_admin')){
+                    $list = $this->where(['perm_type'=>self::PERM_TYPE_SUB])->order('sort asc')->select();
+                }else{
+                    $list = $this->where(['perm_type'=>self::PERM_TYPE_SUB,'is_del'=>0])->order('sort asc')->select();
+                }
+
                 //echo $this->getLastSql();exit;
             }else{
                 //取此管理员的所有角色
