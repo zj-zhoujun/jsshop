@@ -131,14 +131,21 @@ class Ship extends Common
      *      $shiModel->getShipCost(1,1,1600);
      *      die();
      */
-    public function getShipCost($area_id = 0, $weight = 0, $totalmoney = 0)
+    public function getShipCost($area_id = 0, $weight = 0, $totalmoney = 0,$ship_id = 0)
     {
 
-        $postfee = '0.00';
-        //先判断是否子地区满足条件
-        $def = $this->where([
-            ['status', '=', self::STATUS_YES], ['area_fee', 'like', '%\\\"' . $area_id . '\\\"%'], ['type', '=', self::TYPE_PART],
-        ])->find();
+        //dump($ship_id);
+        $postfee = 0;
+        $def = '';
+        if($ship_id){
+            $def = $this->where(['id' => $ship_id])->find();
+        }else{
+            //先判断是否子地区满足条件
+            $def = $this->where([
+                ['status', '=', self::STATUS_YES], ['area_fee', 'like', '%\\\"' . $area_id . '\\\"%'], ['type', '=', self::TYPE_PART],
+            ])->find();
+        }
+
         //没有子地区取默认
         if (!$def) {
             $def = $this->where(['is_def' => self::IS_DEF_YES, 'status' => self::STATUS_YES])->find();
@@ -150,12 +157,14 @@ class Ship extends Common
                 return $postfee;
             }
         }
+        //dump($def['type']);
         if ($def['free_postage'] == self::FREE_POSTAGE_YES) {
             return $postfee;
         }
         if ($def['type'] == self::TYPE_PART) {
             $area_fee = json_decode($def['area_fee'], true);
             if ($area_fee) {
+
                 $isIn = false;
                 foreach ($area_fee as $key => $val) {
                     $val['goodsmoney'] = $def['goodsmoney'];
@@ -171,7 +180,9 @@ class Ship extends Common
                     $total   = self::calculate_fee($val, $weight, $totalmoney);
                     $postfee = getMoney($total);
                 }
-            } else {
+            }
+            $postfee = (float)$postfee;
+            if(!$postfee){
                 $total   = self::calculate_fee($def, $weight, $totalmoney);
                 $postfee = getMoney($total);
             }
@@ -223,12 +234,11 @@ class Ship extends Common
      */
     static function calculate_fee($ship, $weight, $totalmoney = 0)
     {
-
+        //满多少免运费
+        if (isset($ship['goodsmoney']) && $ship['goodsmoney'] > 0 && $totalmoney >= $ship['goodsmoney']) {
+            return 0;
+        }
         if ($weight > $ship['firstunit']) {
-            //满多少免运费
-            if (isset($ship['goodsmoney']) && $ship['goodsmoney'] > 0 && $totalmoney > $ship['goodsmoney']) {
-                return 0;
-            }
             $shipmoney = 0;
             $tmp_exp = trim(str_replace('w', $weight, $ship['exp']));
             eval("\$shipmoney = $tmp_exp;");

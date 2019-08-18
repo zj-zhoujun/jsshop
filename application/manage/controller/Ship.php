@@ -41,8 +41,8 @@ class Ship extends Manage
             $area_fee = [];
             if($type==ShipModel::TYPE_PART){
                 $area_id = input('area_id/a',[]);
-                $firstunit_area_price = input('firstunit_area_price/a',[]);
-                $continueunit_area_price = input('continueunit_area_price/a',[]);
+                //$firstunit_area_price = input('firstunit_area_price/a',[]);
+                //$continueunit_area_price = input('continueunit_area_price/a',[]);
 
                 foreach ($area_id as $key =>$val){
                     if($val){
@@ -50,8 +50,8 @@ class Ship extends Manage
                         $areaids = array_column($area_data,'id');
                         $area_fee[$key]['area_value'] = $val;
                         $area_fee[$key]['area'] = implode($areaids,',');
-                        $area_fee[$key]['firstunit_area_price'] = $firstunit_area_price[$key];
-                        $area_fee[$key]['continueunit_area_price'] = $continueunit_area_price[$key];
+                        $area_fee[$key]['firstunit_area_price'] = 0;
+                        $area_fee[$key]['continueunit_area_price'] = 0;
                     }
                 }
                 if(count($area_fee)<=0){
@@ -119,8 +119,8 @@ class Ship extends Manage
             $area_fee = [];
             if($type==ShipModel::TYPE_PART){
                 $area_id = input('area_id/a',[]);
-                $firstunit_area_price = input('firstunit_area_price/a',[]);
-                $continueunit_area_price = input('continueunit_area_price/a',[]);
+                //$firstunit_area_price = input('firstunit_area_price/a',[]);
+                //$continueunit_area_price = input('continueunit_area_price/a',[]);
 
                 foreach ($area_id as $key =>$val){
                     if($val){
@@ -128,8 +128,8 @@ class Ship extends Manage
                         $areaids = array_column($area_data,'id');
                         $area_fee[$key]['area_value'] = $val;
                         $area_fee[$key]['area'] = implode($areaids,',');
-                        $area_fee[$key]['firstunit_area_price'] = $firstunit_area_price[$key];
-                        $area_fee[$key]['continueunit_area_price'] = $continueunit_area_price[$key];
+                        $area_fee[$key]['firstunit_area_price'] = 0;
+                        $area_fee[$key]['continueunit_area_price'] = 0;
                     }
                 }
                 if(count($area_fee)<=0){

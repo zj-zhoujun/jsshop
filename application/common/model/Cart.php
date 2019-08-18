@@ -226,6 +226,7 @@ class Cart extends Common
             }
         }
 
+        $ship_id = 0;
         //运费判断
         if($receipt_type == 1)
         {
@@ -245,6 +246,7 @@ class Cart extends Common
                         $result['msg'] = '所选产品配送区域不同，不可同时购买';
                         return $result;
                     }
+                    $ship_id = $ship_arr[0];
                     //判断下单地址是否在配送区域内
                     $ship_area_str = Db::name('ship')->where('id',$ship_arr[0])->value('area_fee');
 
@@ -263,7 +265,7 @@ class Cart extends Common
 
 
                 $shipModel = new Ship();
-                $result['data']['cost_freight'] = $shipModel->getShipCost($area_id, $result['data']['weight'],$result['data']['goods_amount']);
+                $result['data']['cost_freight'] = $shipModel->getShipCost($area_id, $result['data']['weight'],$result['data']['goods_amount'],$ship_id);
                 $result['data']['amount'] += $result['data']['cost_freight'];
             }
         }
