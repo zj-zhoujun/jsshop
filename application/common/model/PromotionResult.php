@@ -6,30 +6,30 @@ class PromotionResult extends Common
 {
     public $code = [
 
-        'GOODS_REDUCE' => [
-            'name' => '指定商品减固定金额',
-            'type' => 'goods'
-        ],
+//        'GOODS_REDUCE' => [
+//            'name' => '指定商品减固定金额',
+//            'type' => 'goods'
+//        ],
         'GOODS_DISCOUNT' => [
             'name' => '指定商品打X折',
             'type' => 'goods',
         ],
-        'GOODS_ONE_PRICE' => [
-            'name' => '指定商品一口价',
-            'type' => 'goods',
-        ],
-        'ORDER_REDUCE' => [
-            'name' => '订单减指定金额',
-            'type' => 'order'
-        ],
-        'ORDER_DISCOUNT' => [
-            'name' => '订单打X折',
-            'type' => 'order',
-        ],
-        'GOODS_HALF_PRICE' => [
-            'name' => '指定商品每第几件减指定金额',
-            'type' => 'goods',
-        ],
+//        'GOODS_ONE_PRICE' => [
+//            'name' => '指定商品一口价',
+//            'type' => 'goods',
+//        ],
+//        'ORDER_REDUCE' => [
+//            'name' => '订单减指定金额',
+//            'type' => 'order'
+//        ],
+//        'ORDER_DISCOUNT' => [
+//            'name' => '订单打X折',
+//            'type' => 'order',
+//        ],
+//        'GOODS_HALF_PRICE' => [
+//            'name' => '指定商品每第几件减指定金额',
+//            'type' => 'goods',
+//        ],
     ];
 
 
