@@ -146,7 +146,7 @@ class Goods extends Api
             //商品分类
             if (isset($postWhere['cat_id'])) {
                 $cat_ids = Db::name('goods_cat')->where('parent_id',$postWhere['cat_id'])->column('id');
-                $cat_ids = array_push($cat_ids,$postWhere['cat_id']);
+                array_push($cat_ids,$postWhere['cat_id']);
                 $where[] = ['goods_cat_id', 'in', $cat_ids];
             }
             //价格区间
