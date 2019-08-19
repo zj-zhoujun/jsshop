@@ -131,7 +131,7 @@
             var name = $("#name").val();
             var image_id = $("#image_value_image_id").val();
             var sort = $("#sort").val();
-            var is_nav = $("input[name='is_nav']").val();
+            var is_nav = $("input[name='is_nav']:checked").val();
             var error = false;
             if(name.length > 6 || name.length < 1){
                 error = true;

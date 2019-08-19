@@ -8,6 +8,7 @@ use think\facade\Request;
 use app\common\model\Goods as GoodsModel;
 use app\common\model\Products;
 use app\common\model\Brand;
+use think\Db;
 
 /***
  * 商品相关接口
@@ -144,7 +145,9 @@ class Goods extends Api
             }
             //商品分类
             if (isset($postWhere['cat_id'])) {
-                $where[] = ['goods_cat_id', 'eq', $postWhere['cat_id']];
+                $cat_ids = Db::name('goods_cat')->where('parent_id',$postWhere['cat_id'])->column('id');
+                $cat_ids = array_push($cat_ids,$postWhere['cat_id']);
+                $where[] = ['goods_cat_id', 'in', $cat_ids];
             }
             //价格区间
             if (isset($postWhere['price_f']) && $postWhere['price_f']) {
