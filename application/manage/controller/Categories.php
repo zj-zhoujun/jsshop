@@ -85,7 +85,6 @@ class Categories extends Manage
                 'sort' => input('sort'),
                 'is_nav'=>input('is_nav'),
             );
-            dump($data);exit;
             $result = model('common/GoodsCat')->add($data);
             if($result !== false)
             {

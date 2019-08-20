@@ -174,6 +174,8 @@ class Goods extends Manage
                 $tmp_product['goods']['price']        = isset($val['price']) ? $val['price'] : 0;
                 $tmp_product['goods']['costprice']    = isset($val['costprice']) ? $val['costprice'] : 0;
                 $tmp_product['goods']['mktprice']     = isset($val['mktprice']) ? $val['mktprice'] : 0;
+                $tmp_product['goods']['unitprice']     = isset($val['unitprice']) ? $val['unitprice'] : 0;
+                $tmp_product['goods']['weight']     = isset($val['weight']) ? $val['weight'] : 0;
                 $tmp_product['goods']['marketable']   = isset($val['marketable']) ? $val['marketable'] : $productsModel::MARKETABLE_DOWN;
                 $tmp_product['goods']['stock']         = isset($val['stock']) ? $val['stock'] : 0;
                 $sn                                      = get_sn(4);
@@ -202,6 +204,8 @@ class Goods extends Manage
                     $price     = $tmp_product['goods']['price'];
                     $costprice = $tmp_product['goods']['costprice'];
                     $mktprice  = $tmp_product['goods']['mktprice'];
+                    $unitprice  = $tmp_product['goods']['unitprice'];
+                    $weight  = $tmp_product['goods']['weight'];
                 }
             }
             if(!$isExitDefalut){
@@ -214,6 +218,8 @@ class Goods extends Manage
             $upData['price']     = $price;
             $upData['costprice'] = $costprice;
             $upData['mktprice']  = $mktprice;
+            $upData['unitprice']  = $unitprice;
+            $upData['weight']  = $weight;
             $goodsModel->updateGoods($goods_id, $upData);
         } else {
             $sn                          = get_sn(4);
@@ -314,6 +320,8 @@ class Goods extends Manage
         $data['goods']['price']         = input('post.goods.price', '');
         $data['goods']['costprice']     = input('post.goods.costprice', '');
         $data['goods']['mktprice']      = input('post.goods.mktprice', '');
+        $data['goods']['unitprice']      = input('post.goods.unitprice', '');
+        $data['goods']['weight']      = input('post.goods.weight', '');
         $data['goods']['weight']        = input('post.goods.weight', '');
         $data['goods']['stock']         = input('post.goods.stock', '');
         $data['goods']['unit']          = input('post.goods.unit', '');
@@ -410,6 +418,8 @@ class Goods extends Manage
         $data['product']['price']      = $data['goods']['price'];//货品价格
         $data['product']['costprice']  = $data['goods']['costprice'];//货品成本价
         $data['product']['mktprice']   = $data['goods']['mktprice'];//货品市场价
+        $data['product']['unitprice'] = $data['goods']['unitprice'];//零售价
+        $data['product']['weight'] = $data['goods']['weight'];//重量
         $data['product']['marketable'] = $data['goods']['marketable'];//是否上架
         $data['product']['stock']      = $data['goods']['stock'];//货品库存
         $data['product']['is_defalut'] = $data['goods']['is_defalut'] ? $data['goods']['is_defalut'] : $productsModel::DEFALUT_YES;//是否默认货品
@@ -527,6 +537,8 @@ class Goods extends Manage
                 $items[$key]['price']     = $goodsDefault['price'];
                 $items[$key]['costprice'] = $goodsDefault['costprice'];
                 $items[$key]['mktprice']  = $goodsDefault['mktprice'];
+                $items[$key]['unitprice']  = $goodsDefault['unitprice'];
+                $items[$key]['weight']  = $goodsDefault['weight'];
                 if (isset($goodsDefault['sn']) && $goodsDefault['sn']) {
                     $items[$key]['sn'] = $goodsDefault['sn'] . '-' . ($key + 1);
                 }
@@ -714,6 +726,8 @@ class Goods extends Manage
                 $tmp_product['goods']['price']        = !empty($val['price']) ? $val['price'] : 0;
                 $tmp_product['goods']['costprice']    = !empty($val['costprice']) ? $val['costprice'] : 0;
                 $tmp_product['goods']['mktprice']     = !empty($val['mktprice']) ? $val['mktprice'] : 0;
+                $tmp_product['goods']['unitprice']     = !empty($val['unitprice']) ? $val['unitprice'] : 0;
+                $tmp_product['goods']['weight']     = !empty($val['weight']) ? $val['weight'] : 0;
                 $tmp_product['goods']['marketable']   = !empty($val['marketable']) ? $val['marketable'] : $productsModel::MARKETABLE_UP;
                 $tmp_product['goods']['stock']        = !empty($val['stock']) ? $val['stock'] : 0;
                 $sn                                   = get_sn(4);
@@ -766,6 +780,8 @@ class Goods extends Manage
                     $price     = $tmp_product['goods']['price'];
                     $costprice = $tmp_product['goods']['costprice'];
                     $mktprice  = $tmp_product['goods']['mktprice'];
+                    $unitprice  = $tmp_product['goods']['unitprice'];
+                    $weight  = $tmp_product['goods']['weight'];
                 }
             }
             if (!$isExitDefalut) {
@@ -778,6 +794,8 @@ class Goods extends Manage
             $upData['price']     = $price;
             $upData['costprice'] = $costprice;
             $upData['mktprice']  = $mktprice;
+            $upData['unitprice']  = $unitprice;
+            $upData['weight']  = $weight;
             $goodsModel->updateGoods($goods_id, $upData);
             //删除多余规格
             $productsModel->where([['id', 'not in', $exit_product], ['goods_id', '=', $goods_id]])->delete();
