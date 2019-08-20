@@ -956,9 +956,12 @@ class Goods extends Common
     public function getWeight($product_id)
     {
         $where[] = ['id', 'eq', $product_id];
-        $goods = model('common/Products')->field('goods_id')
+        $goods = model('common/Products')->field('goods_id,weight')
             ->where($where)
             ->find();
+        if($goods['weight']!=0){
+            return $goods['weight'];
+        }
         if($goods['goods_id'] != 0){
             $wh[] = ['id', 'eq', $goods['goods_id']];
 
