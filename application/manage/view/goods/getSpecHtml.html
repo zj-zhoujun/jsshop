@@ -13,6 +13,8 @@
         <th>销售价</th>
         <th>成本价</th>
         <th>市场价</th>
+        <th>重量</th>
+        <th>单价</th>
         <th>操作</th>
     </tr>
     </thead>
@@ -34,13 +36,19 @@
             <input type="text" name="product[{$vo.spec_name}][stock]" value="{$vo.stock}"   placeholder="库存" autocomplete="off" class="layui-input">
         </td>
         <td>
-            <input type="text" name="product[{$vo.spec_name}][price]" value="{$vo.price}"   placeholder="销售价" autocomplete="off" class="layui-input">
+            <input type="text" name="product[{$vo.spec_name}][price]" value="{$vo.price}"   placeholder="销售价" autocomplete="off" class="layui-input js-price">
         </td>
         <td>
             <input type="text" name="product[{$vo.spec_name}][costprice]" value="{$vo.costprice}"   placeholder="成本价" autocomplete="off" class="layui-input">
         </td>
         <td>
             <input type="text" name="product[{$vo.spec_name}][mktprice]" value="{$vo.mktprice}"  placeholder="市场价" autocomplete="off" class="layui-input">
+        </td>
+        <td>
+            <input type="text" name="product[{$vo.spec_name}][weight]" value="{$vo.weight}"  placeholder="重量" autocomplete="off" class="layui-input js-weight">
+        </td>
+        <td>
+            <input type="text" name="product[{$vo.spec_name}][unitprice]" value="{$vo.unitprice}"  placeholder="单价" autocomplete="off" class="layui-input js-unit">
         </td>
         <td>
             <a class="layui-btn layui-btn-danger layui-btn-xs del-class" >删除</a>
@@ -61,13 +69,19 @@
                 <input type="text" name="product[{$vo.spec_name}][stock]"   value="{$vo.stock}"  placeholder="库存" autocomplete="off" class="layui-input">
             </td>
             <td>
-                <input type="text" name="product[{$vo.spec_name}][price]"  value="{$vo.price}"  placeholder="销售价" autocomplete="off" class="layui-input">
+                <input type="text" name="product[{$vo.spec_name}][price]"  value="{$vo.price}"  placeholder="销售价" autocomplete="off" class="layui-input js-price">
             </td>
             <td>
                 <input type="text" name="product[{$vo.spec_name}][costprice]"  value="{$vo.costprice}" placeholder="成本价" autocomplete="off" class="layui-input">
             </td>
             <td>
                 <input type="text" name="product[{$vo.spec_name}][mktprice]"  value="{$vo.mktprice}"  placeholder="市场价" autocomplete="off" class="layui-input">
+            </td>
+            <td>
+                <input type="text" name="product[{$vo.spec_name}][weight]" value="{$vo.weight}"  placeholder="重量" autocomplete="off" class="layui-input js-weight">
+            </td>
+            <td>
+                <input type="text" name="product[{$vo.spec_name}][unitprice]" value="{$vo.unitprice}"  placeholder="单价" autocomplete="off" class="layui-input js-unit">
             </td>
             <td>
                 <a class="layui-btn layui-btn-danger layui-btn-xs del-class" >删除</a>
@@ -104,5 +118,21 @@
                 $("#more_spec .layui-form-checkbox").removeClass('layui-form-checked');
             }
         });
+    });
+    $(document).ready(function(){
+        //计算单价
+        $('.js-weight').keyup(function(){
+            var price = $(this).parent().siblings().children('.js-price').val();
+            //var weight = $(this).parent().siblings().children('.js-unit').val();
+            var weight = $(this).val();
+            var unit = parseFloat(price/weight);
+            $(this).parent().siblings().children('.js-unit').val(unit);
+        })
+        $('.js-price').keyup(function(){
+            var price = $(this).val();
+            var weight = $(this).parent().siblings().children('.js-weight').val();
+            var unit = parseFloat(price/weight);
+            $(this).parent().siblings().children('.js-unit').val(unit);
+        })
     });
 </script>
