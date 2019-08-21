@@ -196,13 +196,13 @@
             var price = $(this).parent().siblings().children('.js-price').val();
             //var weight = $(this).parent().siblings().children('.js-unit').val();
             var weight = $(this).val();
-            var unit = parseFloat(price/weight);
+            var unit = parseFloat(price/weight).toFixed(2);
             $(this).parent().siblings().children('.js-unit').val(unit);
         })
         $('.js-price').keyup(function(){
             var price = $(this).val();
             var weight = $(this).parent().siblings().children('.js-weight').val();
-            var unit = parseFloat(price/weight);
+            var unit = parseFloat(price/weight).toFixed(2);
             $(this).parent().siblings().children('.js-unit').val(unit);
         })
     });

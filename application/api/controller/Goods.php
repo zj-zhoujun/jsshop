@@ -181,7 +181,7 @@ class Goods extends Api
         $limit      = $limit ? $limit : $page_limit;
 
         $returnGoods = $goodsModel->getList($field, $where, $order, $page, $limit);
-
+        //dump($returnGoods);exit;
         if ($returnGoods['status']) {
             $return_data ['msg']                = '查询成功';
             $return_data ['data']['list']       = $returnGoods['data'];

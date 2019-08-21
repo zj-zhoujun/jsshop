@@ -168,6 +168,9 @@ class Goods extends Manage
         if ($open_spec) {
             //多规格
             $product     = input('post.product/a', []);
+            $unitprice_arr = array_column($product,'unitprice');
+            $min_unitprice = min($unitprice_arr);
+            $max_unitprice = max($unitprice_arr);
             $total_stock = $price = $costprice = $mktprice = 0;
             $isExitDefalut = false;
             foreach ($product as $key => $val) {
@@ -220,6 +223,8 @@ class Goods extends Manage
             $upData['mktprice']  = $mktprice;
             $upData['unitprice']  = $unitprice;
             $upData['weight']  = $weight;
+            $upData['min_unitprice'] = $min_unitprice;
+            $upData['max_unitprice'] = $max_unitprice;
             $goodsModel->updateGoods($goods_id, $upData);
         } else {
             $sn                          = get_sn(4);
@@ -240,6 +245,10 @@ class Goods extends Manage
                 $result['msg'] = '货品数据保存失败';
                 return $result;
             }
+            $upData = [];
+            $upData['min_unitprice'] = $data['product']['unitprice'];
+            $upData['min_unitprice'] =$data['product']['unitprice'];
+            $goodsModel->updateGoods($goods_id, $upData);
         }
         //保存会员价
         $grade_price = input('post.goods.grade_price/a', []);
@@ -715,6 +724,9 @@ class Goods extends Manage
         if ($open_spec) {
             //多规格
             $product       = input('post.product/a', []);
+            $unitprice_arr = array_column($product,'unitprice');
+            $min_unitprice = min($unitprice_arr);
+            $max_unitprice = max($unitprice_arr);
             $total_stock   = $price = $costprice = $mktprice = 0;
             $isExitDefalut = false;
             $exit_product  = [];
@@ -796,6 +808,8 @@ class Goods extends Manage
             $upData['mktprice']  = $mktprice;
             $upData['unitprice']  = $unitprice;
             $upData['weight']  = $weight;
+            $upData['min_unitprice'] = $min_unitprice;
+            $upData['max_unitprice'] = $max_unitprice;
             $goodsModel->updateGoods($goods_id, $upData);
             //删除多余规格
             $productsModel->where([['id', 'not in', $exit_product], ['goods_id', '=', $goods_id]])->delete();
@@ -831,6 +845,10 @@ class Goods extends Manage
                 $result['msg'] = '货品数据保存失败';
                 return $result;
             }
+            $upData = [];
+            $upData['min_unitprice'] = $data['product']['unitprice'];
+            $upData['min_unitprice'] =$data['product']['unitprice'];
+            $goodsModel->updateGoods($goods_id, $upData);
         }
         //删除多余货品数据
         if ($productIds) {
