@@ -88,6 +88,15 @@
             </div>
         </div>
     </div>
+    <div id="div6"  style="display: none">
+        <input type="hidden" name="cat_id" id="cat_id">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><i class="required-color">*</i>商品分类：</label>
+            <div class="layui-input-inline seller-inline-5">
+                <input type="text" id="cat" name="cat" readonly="readonly" required placeholder="请选择商品分类" autocomplete="off" class="layui-input" onclick="cats_list()">
+            </div>
+        </div>
+    </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">排序：</label>
@@ -133,6 +142,12 @@
                 $("#form_id").val(res.id);
                 $("input[name=form]").val(res.name);
             });
+        }else if (type === '6'){
+            $("#div6").show();
+            $.get("{:url('Carousel/formInfo')}?id={$info.val}",function(res){
+                $("#cat_id").val(res.id);
+                $("input[name=cat]").val(res.name);
+            });
         } else {
             $("#div4").show();
             $.get("{:url('Carousel/articleTypeInfo')}?id={$info.val}", function(res){
@@ -148,6 +163,7 @@
                 $("#div3").hide();
                 $("#div4").hide();
                 $("#div5").hide();
+                $("#div6").hide();
             }
             if (data.value === "2") {
                 $("#div1").hide();
@@ -155,6 +171,7 @@
                 $("#div3").hide();
                 $("#div4").hide();
                 $("#div5").hide();
+                $("#div6").hide();
             }
             if (data.value === "3") {
                 $("#div1").hide();
@@ -162,6 +179,7 @@
                 $("#div3").show();
                 $("#div4").hide();
                 $("#div5").hide();
+                $("#div6").hide();
             }
             if (data.value === "4") {
                 $("#div1").hide();
@@ -169,6 +187,7 @@
                 $("#div3").hide();
                 $("#div4").show();
                 $("#div5").hide();
+                $("#div6").hide();
             }
             if (data.value === '5') {
                 $("#div1").hide();
@@ -176,6 +195,15 @@
                 $("#div3").hide();
                 $("#div4").hide();
                 $("#div5").show();
+                $("#div6").hide();
+            }
+            if (data.value === '6') {
+                $("#div1").hide();
+                $("#div2").hide();
+                $("#div3").hide();
+                $("#div4").hide();
+                $("#div5").hide();
+                $("#div6").show();
             }
         });
 
@@ -187,6 +215,8 @@
             if(layEvent === 'selectArticle'){ //选择
                 $("#article").val(data.title);
                 $("#article_id").val(data.id);
+                $("#cat").val('');
+                $("#cat_id").val('');
                 $("#goods").val('');
                 $("#goods_id").val('');
                 $("#url").val('');
@@ -204,6 +234,8 @@
             if(layEvent === 'selectGoods'){ //选择
                 $("#goods").val(data.name);
                 $("#goods_id").val(data.id);
+                $("#cat").val('');
+                $("#cat_id").val('');
                 $("#article_id").val('');
                 $("#article").val('');
                 $("#url").val('');
@@ -212,7 +244,27 @@
                 layer.close(window.box);
             }
         });
+        //监听商品列表页工具条
+        table.on('tool(catsTable)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
 
+            if(layEvent === 'selectCats'){ //选择
+                $("#goods").val('');
+                $("#goods_id").val('');
+                $("#cat").val(data.name);
+                $("#cat_id").val(data.id);
+                $("#article_id").val('');
+                $("#article").val('');
+                $("#url").val('');
+                $("#article_type_id").val('');
+                $("#article_type").val('');
+                $("#form_id").val('');
+                $("#form_select").val('');
+                layer.close(window.box);
+            }
+        });
         // 监听文章分类列表页工具条
         table.on('tool(articleTypeTable)', function(obj){
             var data = obj.data;
@@ -222,6 +274,8 @@
             if(layEvent === 'selectType'){ //选择
                 $("#article_type_id").val(data.id);
                 $("#article_type").val(data.type_name.replace(/\└―/g, ''));
+                $("#cat").val('');
+                $("#cat_id").val('');
                 $("#goods").val('');
                 $("#goods_id").val('');
                 $("#article_id").val('');
@@ -241,6 +295,8 @@
             if(layEvent === 'selectform'){ //选择
                 $("#form_id").val(data.id);
                 $("#form_select").val(data.name);
+                $("#cat").val('');
+                $("#cat_id").val('');
                 $("#article_type_id").val();
                 $("#article_type").val();
                 $("#goods").val('');
@@ -260,6 +316,8 @@
             $("#goods_id").val('');
             $("#article_type_id").val('');
             $("#article_type").val('');
+            $("#cat").val('');
+            $("#cat_id").val('');
         }
 
         //表单提交
@@ -284,6 +342,17 @@
                 content: e,
                 area: ['700px', '450px'],
                 title:'商品列表'
+            });
+        });
+    }
+    function cats_list()
+    {
+        JsGet("{:url('Carousel/getCats')}",function(e){
+            window.box = layer.open({
+                type: 1,
+                content: e,
+                area: ['700px', '450px'],
+                title:'商品分类列表'
             });
         });
     }

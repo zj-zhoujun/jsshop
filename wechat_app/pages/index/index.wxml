@@ -65,14 +65,14 @@
   </view>
 
   <!-- 导航图标 -->
-  <view class='button-list'>
-    <view class='button-list-mid'>
+  <!-- <view class='button-list'> -->
+    <!-- <view class='button-list-mid'>
       <view class='nav' bindtap='allCategories'><image src='../image/group10.png'></image><text>全部分类</text></view>
       <view class='nav' bindtap='hotSale'><image src='../image/group11.png'></image><text>热卖商品</text></view>
       <view class='nav' bindtap='myOrder'><image src='../image/group14.png'></image><text>我的订单</text></view>
       <view class='nav' bindtap='myCollection'><image src='../image/group15.png'></image><text>我的收藏</text></view>
     </view>
-  </view>
+  </view> -->
   <view class='button-list' wx:if="{{catNav.length > 0}}">
     <view class='button-list-mid'>
       <view class='nav' wx:for="{{catNav}}" wx:key="{{index}}" bindtap='navcatList' data-id="{{item.id}}">

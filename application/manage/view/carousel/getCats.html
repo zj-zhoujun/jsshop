@@ -1,0 +1,53 @@
+
+<div class="layui-form seller-form"  action="" >
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">分类名称：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" lay-verify="title" style="width:200px;" placeholder="请输入商品分类名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <button class="layui-btn layui-btn-sm" lay-submit lay-filter="goods-search">查询</button>
+        </div>
+    </div>
+</div>
+
+<table id="catsTable" lay-filter="catsTable"></table>
+
+<script>
+    layui.use(['form', 'laydate','table'], function(){
+        var layer = layui.layer, table = layui.table,form = layui.form,date = layui.laydate;
+        table.render({
+            elem: '#catsTable',
+            height: '330',
+            cellMinWidth: '80',
+            page: 'true',
+            limit:'20',
+            url: "{:url('Categories/lists')}?_ajax=1",
+            id:'catsTable',
+            cols: [[
+                {type: 'numbers'},
+                {field: 'name', title: '分类名称', width:200, align: 'center'},
+                {field: 'image_id', title: '图标', width:65, align: 'center', templet: function(data){
+                    return '<a href="javascript:void(0);" onclick=viewImage("'+data.image_id+'")><image style="max-width:30px;max-height:30px;" src="'+data.image_id+'"/></a>';
+                }},
+                {fixed: 'right', width:100, title:'操作',align:'center', toolbar:'#goodsBar'}
+            ]]
+        });
+        form.on('submit(goods-search)', function(data){
+            layui.table.reload('catsTable', {
+                where: data.field
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    });
+</script>
+
+<script type="text/html" id="goodsBar">
+    <a class="layui-btn layui-btn-xs" lay-event="selectCats">选择</a>
+</script>

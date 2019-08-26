@@ -22,6 +22,7 @@ class Carousel extends Common
     const ARTICLE_TYPE      = 3;
     const ARTICLE_LIST_TYPE = 4;
     const FORM_TYPE         = 5;
+    const CAT_TYPE         = 6;
 
     protected $rule =   [
         'name'              =>  'require|max:50',
@@ -29,6 +30,7 @@ class Carousel extends Common
         'type'              =>  'number|require',
         'url'               =>  'requireIf:type,'.self::URL_TYPE.'|url',
         'goods_id'          =>  'requireIf:type,'.self::GOODS_TYPE.'|number',
+        'cat_id'            =>  'requireIf:type,'.self::CAT_TYPE.'|number',
         'article_id'        =>  'requireIf:type,'.self::ARTICLE_TYPE.'|number',
         'article_type_id'   =>  'requireIf:type,'.self::ARTICLE_LIST_TYPE.'|number',
         'position_id'       =>  'require',
@@ -45,6 +47,7 @@ class Carousel extends Common
         'url.url'                   =>  'url链接不是有效的地址',
         'url.requireIf'             =>  '请输入广告URL链接',
         'goods_id.requireIf'        =>  '请选择广告商品',
+        'cat_id.requireIf'          =>  '请选择商品分类',
         'article_id.requireIf'      =>  '请选择广告文章',
         'article_type_id.requireIf' =>  '请选择文章分类',
         'position_id.require'       =>  '请选择要添加的广告位',
@@ -152,6 +155,9 @@ class Carousel extends Common
                 break;
             case self::FORM_TYPE:
                 $data['val'] = $data['form_id'];
+                break;
+            case self::CAT_TYPE:
+                $data['val'] = $data['cat_id'];
                 break;
             default:
                 break;

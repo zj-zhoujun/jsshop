@@ -54,6 +54,13 @@ class Categories extends Manage
             return $return_data;
         }
     }
+    public function lists()
+    {
+        if(Request::isAjax()){
+            $filter              = input('request.');
+            return model('common/GoodsCat')->tableData($filter);
+        }
+    }
 
 
     /**

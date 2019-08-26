@@ -375,6 +375,7 @@ class Order extends Manage
         }
         $orderModel = new Model();
         $order_info = $orderModel->getOrderInfoByOrderID($order_id, false, false);
+        //dump($order_info);exit;
         $this->assign('order', $order_info);
         $this->view->engine->layout(false);
         $shop_name   = getSetting('shop_name');

@@ -15,6 +15,7 @@ use app\common\model\Article;
 use app\common\model\Form;
 use app\common\model\Goods;
 use think\facade\Request;
+use think\Db;
 
 class Carousel extends Manage
 {
@@ -129,6 +130,16 @@ class Carousel extends Manage
         $this->view->engine->layout(false);
         return $this->fetch('getGoods');
     }
+    /**
+     *  加载商品分类列表模板
+     * User:tianyu
+     * @return mixed
+     */
+    public function getCats()
+    {
+        $this->view->engine->layout(false);
+        return $this->fetch('getCats');
+    }
 
 
     /**
@@ -172,6 +183,11 @@ class Carousel extends Manage
     {
         $goodsModel = new Goods();
         return $goodsModel->field('id,name')->where('id',input('param.id'))->find();
+    }
+    public function catInfo()
+    {
+
+        return Db::name('goods_cat')->field('id,name')->where('id',input('param.id'))->find();
     }
 
 
