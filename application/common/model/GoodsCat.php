@@ -609,4 +609,48 @@ class GoodsCat extends Common
         }
         return $data;
     }
+
+    public function tableData($post)
+    {
+        if(isset($post['limit'])){
+            $limit = $post['limit'];
+        }else{
+            $limit = config('paginate.list_rows');
+        }
+        $tableWhere = $this->tableWhere($post);
+        $list = $this->field($tableWhere['field'])->where($tableWhere['where'])->order($tableWhere['order'])->paginate($limit);
+        $data = $this->tableFormat($list->getCollection());         //返回的数据格式化，并渲染成table所需要的最终的显示数据类型
+
+        $re['code'] = 0;
+        $re['msg'] = '';
+        $re['count'] = $list->total();
+        $re['data'] = $data;
+
+        return $re;
+    }
+    protected function tableFormat($list)
+    {
+
+        foreach($list as $key => $val){
+            $list[$key]['image'] = _sImage($val['image_id']);
+        }
+        return $list;
+    }
+    protected function tableWhere($post)
+    {
+        $where = $whereOr = [];
+
+        if (isset($post['name']) && $post['name'] != "") {
+            $where[] = ['name', 'like', '%' . $post['name'] . '%'];
+        }
+        if (isset($post['parent'])) {
+            $where[] = ['parent_id', 'eq',$post['parent']];
+        }
+        $result['where'] = $where;
+        $result['whereOr'] = $whereOr;
+
+        $result['field'] = "*";
+        $result['order'] = ['id' => 'desc'];
+        return $result;
+    }
 }

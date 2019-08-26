@@ -212,6 +212,8 @@ class Carousel extends Common
                 $list[$key]['value'] = model('ArticleType')->where('id', $val['val'])->value('type_name');
             } elseif ($val['type'] == self::FORM_TYPE){
                 $list[$key]['value'] = model('Form')->where('id', $val['val'])->value('name');
+            }elseif ($val['type'] == self::CAT_TYPE){
+                $list[$key]['value'] = model('goods_cat')->where('id', $val['val'])->value('name');
             } else {
                 $list[$key]['value'] = $val['val'];
             }

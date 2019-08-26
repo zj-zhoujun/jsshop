@@ -345,6 +345,11 @@ Page({
         url: '../form/detail/form?id=' + val,
       });
     }
+    else if (types == 6) {
+      wx.navigateTo({
+        url: '../goods/detail/classify?id=' + val,
+      });
+    }
   },
 
   //产品分类跳转产品列表

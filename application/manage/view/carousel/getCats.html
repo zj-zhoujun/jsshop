@@ -25,13 +25,13 @@
             cellMinWidth: '80',
             page: 'true',
             limit:'20',
-            url: "{:url('Categories/lists')}?_ajax=1",
+            url: "{:url('Categories/lists')}?_ajax=1&parent=0",
             id:'catsTable',
             cols: [[
                 {type: 'numbers'},
                 {field: 'name', title: '分类名称', width:200, align: 'center'},
                 {field: 'image_id', title: '图标', width:65, align: 'center', templet: function(data){
-                    return '<a href="javascript:void(0);" onclick=viewImage("'+data.image_id+'")><image style="max-width:30px;max-height:30px;" src="'+data.image_id+'"/></a>';
+                    return '<a href="javascript:void(0);" onclick=viewImage("'+data.image+'")><image style="max-width:30px;max-height:30px;" src="'+data.image+'"/></a>';
                 }},
                 {fixed: 'right', width:100, title:'操作',align:'center', toolbar:'#goodsBar'}
             ]]

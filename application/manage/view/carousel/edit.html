@@ -144,7 +144,7 @@
             });
         }else if (type === '6'){
             $("#div6").show();
-            $.get("{:url('Carousel/formInfo')}?id={$info.val}",function(res){
+            $.get("{:url('Carousel/catInfo')}?id={$info.val}",function(res){
                 $("#cat_id").val(res.id);
                 $("input[name=cat]").val(res.name);
             });
