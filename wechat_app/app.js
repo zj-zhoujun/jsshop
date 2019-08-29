@@ -4,6 +4,9 @@ App({
   db: require('utils/db.js'), //本地存储
   common: require('utils/common.js'),
   jshopConf:{},
+  globalData: {
+    classifyId: 0
+  },
   onLaunch: function (e) {
     let line_conf = this.db.get('config');
     if(line_conf){

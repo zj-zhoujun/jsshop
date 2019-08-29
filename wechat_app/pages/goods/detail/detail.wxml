@@ -67,9 +67,9 @@
         <text class='salespromotion-service-name'>{{index}}</text>
         <view class='salespromotion-service-b'>
           <block wx:for="{{item}}" wx:for-item="i" wx:key="{{index-1}}">
-            <view wx:if="{{i.is_default}}" class='pitch-on'>{{i.name}}</view>
-            <view wx:elif="{{i.product_id != 0}}" class='{{i.is_default ? "pitch-on" : ""}} ' data-key="{{i.product_id}}" data-id="{{i.name}}" bindtap="selectSku">{{i.name}}</view>
-            <view wx:elif="{{i.product_id == 0}}" class='nothing'>{{i.name}}</view>
+            <view wx:if="{{i.is_default}}" class='pitch-on'>{{i.name}} <text wx:if="{{goodsInfo.unitprice > 0}}">| {{goodsInfo.unitprice}} <text wx:if="{{goodsInfo.unit}}">/{{goodsInfo.unit}}</text></text></view>
+            <view wx:elif="{{i.product_id != 0}}" class='{{i.is_default ? "pitch-on" : ""}} ' data-key="{{i.product_id}}" data-id="{{i.name}}" bindtap="selectSku">{{i.name}} <text wx:if="{{goodsInfo.unitprice > 0}}">| {{goodsInfo.unitprice}} <text wx:if="{{goodsInfo.unit}}">/{{goodsInfo.unit}}</text></text></view>
+            <view wx:elif="{{i.product_id == 0}}" class='nothing'>{{i.name}} <text wx:if="{{goodsInfo.unitprice > 0}}">| {{goodsInfo.unitprice}} <text wx:if="{{goodsInfo.unit}}">/{{goodsInfo.unit}}</text></text></view>
           </block>
         </view>
       </view>

@@ -319,6 +319,7 @@ Page({
     console.log(e)
     var types = e.target.dataset.type;
     var val = e.target.dataset.val;
+    console.log(e)
     if (types == 1) {
       //URL
       let ins = encodeURIComponent(val);
@@ -346,8 +347,10 @@ Page({
       });
     }
     else if (types == 6) {
-      wx.navigateTo({
-        url: '../goods/detail/classify?id=' + val,
+      console.log('../goods/classify/classify?id=' + val)
+      getApp().globalData.classifyId = val
+      wx.switchTab({
+        url: '../goods/classify/classify?id=' + val,
       });
     }
   },
@@ -380,6 +383,7 @@ Page({
     // wx.navigateTo({
     //   url: '/pages/other/articleList/articleList?id=10003',
     // });
+    getApp().globalData.classifyId = ''
     wx.switchTab({
       url: '/pages/goods/classify/classify'
     });

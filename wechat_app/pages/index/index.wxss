@@ -90,7 +90,7 @@ swiper-item{
   overflow: hidden;
 }
 .button-list .button-list-mid .nav{
-  width: 25%;
+  width: 20%;
   float: left;
   text-align: center;
   font-size: 24rpx;

@@ -28,20 +28,29 @@ Page({
     //加载执行
     onShow: function (options) {
         var page = this;
-
+        var did = getApp().globalData.classifyId
+        // var did = '100'
         //获取全部数据
         let all_cat = app.db.get('all_cat');
         if (all_cat) {
-            console.log(11111)
-            console.log(all_cat)
+            var objData = all_cat.find(function (obj) {
+                return obj.id === did
+            })
+            console.log(objData)
+            console.log('缓存有值')
             //缓存有值
             let on_class = 0;
-            if (all_cat[0].id) {
-                on_class = all_cat[0].id;
-            }
             let class_list = [];
-            if (all_cat[0].child) {
-                class_list = all_cat[0].child;
+            if (did) {
+                on_class = objData.id
+                if (objData.child) {
+                    class_list = objData.child;
+                }
+            } else {
+                on_class = all_cat[0].id;
+                if (all_cat[0].child) {
+                    class_list = all_cat[0].child;
+                }
             }
             page.setData({
                 all_cat: all_cat,
@@ -50,21 +59,30 @@ Page({
                 cate_style: app.config.cate_style
             });
             var obj = {
-                cat_id: all_cat[0].id
+                cat_id: did ? objData.id : all_cat[0].id
             }
             page.getGoods(obj)
         } else {
             //缓存无值
-            console.log(22222222222222222222)
+            console.log('缓存无值')
             app.api.getAllCat(function (res) {
                 if (res.status) {
+                    var objData = res.data.find(function (obj) {
+                        return obj.id === did
+                    })
+                    console.log(objData)
                     let on_class = 0;
-                    if (res.data[0].id) {
-                        on_class = res.data[0].id;
-                    }
                     let class_list = [];
-                    if (res.data[0].child) {
-                        class_list = res.data[0].child;
+                    if (did) {
+                        on_class = objData.id
+                        if (objData.child) {
+                            class_list = objData.child;
+                        }
+                    } else {
+                        on_class = res.data[0].id;
+                        if (res.data[0].child) {
+                            class_list = res.data[0].child;
+                        }
                     }
                     page.setData({
                         all_cat: res.data,
@@ -75,10 +93,8 @@ Page({
 
                     //存储缓存
                     app.db.set('all_cat', res.data);
-                    console.log(7777777777777)
-                    console.log(res.data)
                     var obj = {
-                        cat_id: res.data[0].id
+                        cat_id: did ? objData.id : res.data[0].id
                     }
                     page.getGoods(obj)
                 }
@@ -96,8 +112,6 @@ Page({
         });
     },
     getGoods: function (data) {
-        console.log(1111111111111111111111111111111111)
-        console.log(data)
         var page = this;
         if (page.data.ajaxStatus) {
             return false;
@@ -117,7 +131,6 @@ Page({
             });
             return false;
         }
-        console.log(3333333)
         this.data.searchData.where = data
         app.api.goodsList(this.data.searchData, function (res) {
             if (res.status) {
@@ -144,7 +157,6 @@ Page({
     },
     //获取一级分类下的子分类列表
     getClassList: function (parent_id) {
-        console.log(33333333333)
         var page = this;
         var data = {
             parent_id: parent_id
@@ -164,7 +176,6 @@ Page({
         let o_id = e.currentTarget.dataset.id;
         let all_cat = page.data.all_cat;
         let class_list = [];
-        console.log(o_id)
         var obj = {
             cat_id: o_id
         }

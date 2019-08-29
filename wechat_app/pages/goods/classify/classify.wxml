@@ -36,7 +36,8 @@
                 <text wx:for="{{item.product.promotion_list}}" wx:key="ind" wx:for-item="items" class='{{items.type==2?"promotion_on":"promotion_off"}}'>{{items.name}}</text>
                 </view>
                 <view class='price-cart'>
-                <text class='price'>￥{{item.price}}</text>
+                <text wx:if="{{item.min_unitprice > 0 && item.max_unitprice > 0}}" class='price'>￥{{item.min_unitprice}}-{{item.max_unitprice}}<text class="price" wx:if="{{item.unit}}">/{{item.unit}}</text></text>
+                <text wx:elif="{{item.min_unitprice == 0 || item.max_unitprice == 0}}" class='price'>￥{{item.price}}<text class="price" wx:if="{{item.unit}}">/{{item.unit}}</text></text>
                 <image class='cart-img' src='../../image/cart.png'></image>
                 </view>
             </view>
