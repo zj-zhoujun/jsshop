@@ -34,6 +34,10 @@ class Setting extends Common
             'name' => '联系手机号',
             'value' => ''
         ],
+        'kefu_mobile' => [
+            'name' => '客服电话',
+            'value' => ''
+        ],
         'store_switch' => [
             'name' => '开启门店自提',
             'value' => '2'

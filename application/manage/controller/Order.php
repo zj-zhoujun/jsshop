@@ -380,14 +380,16 @@ class Order extends Manage
         $this->view->engine->layout(false);
         $shop_name   = getSetting('shop_name');
         $shop_mobile = getSetting('shop_mobile');
+        $kefu_mobile = getSetting('kefu_mobile');
         $this->assign('shop_name', $shop_name);
         $this->assign('shop_mobile', $shop_mobile);
+        $this->assign('kefu_mobile', $kefu_mobile);
 
 
         if ($type == self::SHOPPING) {//购物清单
             return $this->fetch('shopping');
         } elseif ($type == self::DISTRIBUTION) {//配货单
-            return $this->fetch('distribution');
+            return $this->fetch('distribution2');
         } elseif ($type == self::UNION) {
             return $this->fetch('union');
         } elseif ($type == self::EXPRESS) {
