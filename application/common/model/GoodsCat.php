@@ -134,15 +134,12 @@ class GoodsCat extends Common
      */
     public function getAllCat($id = false)
     {
+        $where = [];
         $where[] = ['is_show','eq',1];
         if($id)
         {
             $where[] = ['id', 'neq', $id];
             $where[] = ['parent_id', 'neq', $id];
-        }
-        else
-        {
-            $where = [];
         }
         $data = $this->field('id, parent_id, name, sort, image_id')
             ->where($where)
