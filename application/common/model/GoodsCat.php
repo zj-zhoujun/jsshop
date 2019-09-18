@@ -42,6 +42,7 @@ class GoodsCat extends Common
     {
 
         $data = $this->field('id, parent_id, name, type_id, sort, image_id,is_nav')
+            ->where(['is_show'=>1])
             ->order([ 'sort' => 'asc'])
             ->select();
 
@@ -133,6 +134,7 @@ class GoodsCat extends Common
      */
     public function getAllCat($id = false)
     {
+        $where[] = ['is_show','eq',1];
         if($id)
         {
             $where[] = ['id', 'neq', $id];
@@ -289,7 +291,7 @@ class GoodsCat extends Common
     public function getChildClass($parent_id = self::TOP_CLASS_PARENT_ID)
     {
         $where[] = array('parent_id', 'eq', $parent_id);
-
+        $where[] = ['is_show','eq',1];
         $data = $this->field('id, name, sort, image_id')
             ->where($where)
             ->order('sort asc')
@@ -466,7 +468,7 @@ class GoodsCat extends Common
     public function getCatByParentId($parentId = 0)
     {
         $filter['parent_id'] = $parentId;
-
+        $filter[] = ['is_show','eq',1];
         $data = $this->field('id, name, parent_id, type_id, sort, image_id')
             ->where($filter)
             ->order('sort asc')
@@ -592,7 +594,8 @@ class GoodsCat extends Common
     public function getNavChild()
     {
         //$where[] = array('parent_id', 'eq', $parent_id);
-        $where = ['is_nav'=>1];
+        $where = ['is_nav'=>1,'is_show'=>1];
+
         $data = $this->field('id, name, sort, image_id')
             ->where($where)
             ->order('sort asc')
