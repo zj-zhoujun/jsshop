@@ -465,12 +465,11 @@ class GoodsCat extends Common
     public function getCatByParentId($parentId = 0)
     {
         $filter['parent_id'] = $parentId;
-        $filter[] = ['is_show','eq',1];
+        $filter['is_show'] = 1;
         $data = $this->field('id, name, parent_id, type_id, sort, image_id')
             ->where($filter)
             ->order('sort asc')
             ->select();
-
         return $data;
     }
 
