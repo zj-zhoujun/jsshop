@@ -232,6 +232,16 @@ class Goods extends Common
 //                $image_url = _sImage($value['image_id']);
 //                $list[$key]['image_url'] = $image_url;
 //                $list[$key]['label_ids'] = getLabel($value['label_ids']);
+                $spec_arr = unserialize($value['spes_desc']);
+                $str = '';
+                if($spec_arr){
+                    foreach($spec_arr as $v){
+                        $str .= implode('/',$v).'/';
+                    }
+                    $str = rtrim($str,'/');
+                }
+
+                $list[$key]['spec_str'] = $str;
             }
 
             $result['data'] = $list->toArray();
