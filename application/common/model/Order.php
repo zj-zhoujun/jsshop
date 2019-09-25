@@ -1140,7 +1140,9 @@ class Order extends Common
         else
         {
             $data['payment_code'] = $payment_code;
-            $data['payed'] = $order['order_amount'];
+            if(!$is_offline){
+                $data['payed'] = $order['order_amount'];
+            }
             $data['pay_status'] = self::PAY_STATUS_YES;
             $data['payment_time'] = time();
             $data['offline_status'] = $is_offline;
