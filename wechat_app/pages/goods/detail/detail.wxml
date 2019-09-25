@@ -30,7 +30,7 @@
     <view class='price-salesvolume'>
       <view class='commodity-price'>
         <text class='current-price'>￥{{goodsInfo.product.price}}</text>
-        <text class='cost-price'>￥{{goodsInfo.product.mktprice}}</text>
+        <!-- <text class='cost-price'>￥{{goodsInfo.product.mktprice}}</text> -->
       </view>
       <view class='commodity-salesvolume'>销量：{{goodsInfo.buy_count}}件</view>
     </view>
