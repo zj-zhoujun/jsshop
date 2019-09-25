@@ -78,10 +78,10 @@
     <table>
         <tr>
             <td>运费：{$order.cost_freight}</td>
-            <!--<td>预付款：{$order.payed}</td>-->
-            <td>应收：{if condition="$order['payment_code'] eq 'offline'"}{$order['order_amount']}{else/}0{/if}</td>
+            <td>预付款：{$order.payed}</td>
+            <td>应收：{$order['order_amount']-$order['payed']}</td>
             <td style="font-size: 16px;font-weight: bold;">
-                客户应付：{if condition="$order['payment_code'] eq 'offline'"}{$order['order_amount']}{else/}0{/if}
+                客户应付：{$order['order_amount']-$order['payed']}
             </td>
         </tr>
     </table>
