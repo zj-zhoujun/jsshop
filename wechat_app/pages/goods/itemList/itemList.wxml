@@ -60,6 +60,9 @@
           <view class='preferential' wx:if="{{item.product.promotion_list}}">
             <text wx:for="{{item.product.promotion_list}}" wx:key="ind" wx:for-item="items" class='{{items.type==2?"promotion_on":"promotion_off"}}'>{{items.name}}</text>
           </view>
+          <view>
+            <text>{{item.spec_str}}</text>
+          </view>
           <view class='price-cart'>
             <text wx:if="{{item.min_unitprice > 0 && item.max_unitprice > 0}}" class='price'>￥{{item.min_unitprice}}-{{item.max_unitprice}}<text class="price" wx:if="{{item.unit}}">/{{item.unit}}</text></text>
             <text wx:elif="{{item.min_unitprice == 0 || item.max_unitprice == 0}}" class='price'>￥{{item.price}}<text class="price" wx:if="{{item.unit}}">/{{item.unit}}</text></text>
