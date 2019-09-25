@@ -1,0 +1,168 @@
+<style>
+    .text-left {border:#333 1px dashed;}
+    /*.text-left tr{border:#333 1px dashed;}*/
+    .text-left th{border-bottom:#333 1px dashed;border-right:#333 1px dashed;}
+    .text-left td{border-right:#333 1px dashed;}
+</style>
+<div class="content">
+    <table class="table">
+        <colgroup>
+            <col width="40%">
+            <col width="20%">
+            <col width="40%">
+        </colgroup>
+        <tbody>
+        <tr>
+            <td>
+                <p><h4>{$shop_name}</h4></p>
+                <p>收货人：{$order.ship_name}（{$order.ship_mobile}）</p>
+                <p>地址:{$order.ship_area_name} - {$order.ship_address}</p>
+            </td>
+            <td class="text-center">
+                <p><h3>收货确认单</h3></p>
+                <p> {foreach $order.delivery as $key=>$vo}
+                    配送：{$vo.logi_code_name}（{$vo.logi_no}）
+                {/foreach}</p>
+                <p>{if condition="$order['payment_code'] eq 'offline'"}货到付款{else /}线上支付{/if}</p>
+            </td>
+            <td class="text-right">
+                <p>客服电话:{$kefu_mobile}</p>
+                <p>订单号:{$order.order_id}</p>
+                <p>日期:{$order.ctime|date="Y-m-d"}</p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="table text-left">
+        <!--<colgroup>-->
+            <!--<col width="50%">-->
+            <!--<col width="10%">-->
+            <!--<col width="10%">-->
+            <!--<col width="10%">-->
+            <!--<col width="10%">-->
+            <!--<col width="10%">-->
+        <!--</colgroup>-->
+        <tbody>
+        <tr>
+            <th>#</th>
+            <th>商品编码</th>
+            <th>商品名称</th>
+            <th>数量</th>
+            <th>单价</th>
+            <th>应付金额</th>
+            <th>备注</th>
+        </tr>
+        {volist name='order.items' id='vo'}
+        <tr>
+            <td>{$key+1}</td>
+            <td>{$vo.bn}</td>
+            <td>
+                {$vo.name}{if condition="$vo.addon"} - {$vo.addon}{/if}
+            </td>
+            <td>￥{$vo.price}</td>
+            <td>{$vo.nums}</td>
+            <td>￥{$vo.amount}</td>
+            <td></td>
+        </tr>
+        {/volist}
+        <!--<tr>-->
+            <!--<td></td>-->
+            <!--<td align="right">配送费：</td>-->
+            <!--<td>{$order.cost_freight}</td>-->
+            <!--<td align="right">合计：</td>-->
+            <!--<td>{$order.order_amount}</td>-->
+        <!--</tr>-->
+        </tbody>
+    </table>
+    <table>
+        <tr>
+            <td>运费：{$order.cost_freight}</td>
+            <td>预付款：{$order.payed}</td>
+            <td>应收：{$order['order_amount']-$order['payed']}</td>
+            <td style="font-size: 16px;font-weight: bold;">客户应付：{$order['order_amount']-$order['payed']}</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>收货人签字：</td>
+            <td>配送员签字：</td>
+            <td>现场实付：</td>
+        </tr>
+    </table>
+    <!--<table>-->
+        <!--<tr>-->
+            <!--<td>订单备注：</td>-->
+        <!--</tr>-->
+    <!--</table>-->
+    <!--<table class="table">-->
+        <!--<colgroup>-->
+            <!--<col width="50%">-->
+            <!--<col width="50%">-->
+        <!--</colgroup>-->
+        <!--<tr>-->
+            <!--<td>订单附言： {$order.memo}</td>-->
+            <!--<td>配送： {if $order.logistics_name}{$order.logistics_name}{/if}</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>地址：{$order.ship_area_name} - {$order.ship_address}</td>-->
+            <!--<td>收货人：{$order.ship_name}</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>手机：{$order.ship_mobile}</td>-->
+            <!--<td>订单备注：{$order.mark}</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>支付方式：{if condition="$order['payment_code'] eq 'offline'"}线下收款{else /}线上支付{/if}</td>-->
+            <!--<td></td>-->
+        <!--</tr>-->
+    <!--</table>-->
+
+    <!--<table class="table table-condensed">-->
+        <!--<tr>-->
+            <!--<td><h4><strong>签字：</strong></h4></td>-->
+        <!--</tr>-->
+    <!--</table>-->
+    <input type="submit" class="btn btn-print" onclick="window.print()" value="打印"/>
+</div>
+
+<style>
+    /*打印时隐藏打印按钮*/
+    @media print {
+        .btn-print {
+            display: none
+        }
+    }
+    .content{
+        width: 90%;
+        margin: 0 auto;
+    }
+    table{
+        width: 100%;
+        border-spacing: 0;
+        /*margin-bottom: 20px;*/
+    }
+    td,th{
+        padding: 10px 5px;
+        border-bottom: 1px solid #ddd;
+        font-size: 14px;
+        vertical-align: top;
+    }
+    .text-left{
+        text-align: left;
+    }
+    .text-center{
+        text-align: center;
+    }
+    .text-right{
+        text-align: right;
+    }
+    .btn-print{
+        width: 100%;
+        margin-top: 20px;
+        height: 50px;
+        color: #fff;
+        background-color: #009688;
+        border: none;
+    }
+</style>
