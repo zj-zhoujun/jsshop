@@ -462,7 +462,6 @@ class Order extends Manage
      * @return mixed 订单汇总
      */
     public function count(){
-
         if(Request::isAjax()){
             $ids = Db::name('order')->where('ship_status',1)->column('order_id');//待收货订单
             $ids = implode(',',$ids);
