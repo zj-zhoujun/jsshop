@@ -1,6 +1,6 @@
 /* pages/classify.wxss */
 .classify-content{
-  padding-top: 120rpx;
+  padding-top: 195rpx;
   width: 100%;
    /* height: 990rpx;   */
   overflow: hidden; 
@@ -273,3 +273,27 @@
 }
 
 .every-commodity-grid .commodity-pic {}
+
+.nav {
+    height: 80rpx;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    line-height: 80rpx;
+    background: #f7f7f7;
+    font-size: 14px;
+    white-space: nowrap;
+    position: fixed;
+    top: 49px;
+    left: 0;
+    z-index: 99;
+}
+.nav-item {
+    width: 20%;
+    display: inline-block;
+    text-align: center;
+    margin-left:3%;
+}
+.nav-item.active{
+    color: red;
+}

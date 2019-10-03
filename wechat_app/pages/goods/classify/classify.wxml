@@ -7,23 +7,22 @@
     <button class="message" hover-class="none" open-type="contact" bindcontact="customerService">
         <image src='../../image/message3.png'></image>
     </button>
+    <scroll-view scroll-x="true" class="nav" scroll-with-animation="{{true}}">
+        <block wx:for="{{all_cat}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+            <view class="nav-item {{on_class==item.id ?'active':''}}"  bindtap="topclass" data-id="{{item.id}}">{{item.name}}</view>
+        </block>        
+    </scroll-view>
 </view>
 
 <!-- 二级分类 -->
 <view class='classify-content' style="height:{{content_height}}px" wx:if="{{cate_style==3}}"> 
     <scroll-view class='classify-content-left' scroll-y="true">
-        <block wx:for="{{all_cat}}" wx:key="index" wx:for-index="index" wx:for-item="item">
-            <view class="{{on_class==item.id?'choose':''}}" bindtap="topclass" data-id="{{item.id}}">{{item.name}}</view>
+        <block wx:for="{{class_list}}" wx:key="{{index}}" wx:for-index="index" wx:for-item="item">
+            <view class="{{two_class==item.id?'choose':''}}" bindtap="leftclass" data-id="{{item.id}}">{{item.name}}</view>
         </block>
     </scroll-view>
 
     <scroll-view class='classify-content-right' scroll-y="true">
-        <view class='right-body'>
-            <view wx:for="{{class_list}}" wx:key="{{index}}">
-                <image bindtap='goodsList' data-id="{{item.id}}" src='{{item.image_url}}' ></image>
-                <text bindtap='goodsList' data-id="{{item.id}}">{{item.name}}</text>
-            </view>
-        </view>
         <view class='content-body'>
             <view class='every-commodity {{listgrid?"every-commodity-grid":""}}' wx:for="{{goodsList}}" wx:key="{{index}}" bindtap="goodsDetail" data-id="{{item.id}}">
             <image class='commodity-pic' mode='aspectFill' src='{{item.image_url}}'></image>

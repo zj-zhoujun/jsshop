@@ -12,6 +12,7 @@ Page({
         nodata:false,
         all_cat: [],
         on_class: 0,
+        two_class: 0,
         content_height: 0,
         cate_style: app.config.cate_style,
         searchData: {
@@ -40,6 +41,7 @@ Page({
             console.log('缓存有值')
             //缓存有值
             let on_class = 0;
+            let two_class = 0;
             let class_list = [];
             if (did) {
                 on_class = objData.id
@@ -50,16 +52,19 @@ Page({
                 on_class = all_cat[0].id;
                 if (all_cat[0].child) {
                     class_list = all_cat[0].child;
+                    two_class = class_list[0].id;
                 }
             }
             page.setData({
                 all_cat: all_cat,
                 on_class: on_class,
+                two_class: two_class,
                 class_list: class_list,
                 cate_style: app.config.cate_style
             });
             var obj = {
-                cat_id: did ? objData.id : all_cat[0].id
+                cat_id: two_class
+                // cat_id: did ? objData.id : two_class
             }
             page.getGoods(obj)
         } else {
@@ -72,6 +77,7 @@ Page({
                     })
                     console.log(objData)
                     let on_class = 0;
+                    let two_class = 0;
                     let class_list = [];
                     if (did) {
                         on_class = objData.id
@@ -82,11 +88,13 @@ Page({
                         on_class = res.data[0].id;
                         if (res.data[0].child) {
                             class_list = res.data[0].child;
+                            two_class = class_list[0].id;
                         }
                     }
                     page.setData({
                         all_cat: res.data,
                         on_class: on_class,
+                        two_class: two_class,
                         class_list: class_list,
                         cate_style: app.config.cate_style
                     });
@@ -94,7 +102,8 @@ Page({
                     //存储缓存
                     app.db.set('all_cat', res.data);
                     var obj = {
-                        cat_id: did ? objData.id : res.data[0].id
+                        // cat_id: did ? objData.id : two_class
+                        cat_id: two_class
                     }
                     page.getGoods(obj)
                 }
@@ -197,6 +206,23 @@ Page({
             class_list: class_list
         });
     },
+
+    //切换二级分类
+    leftclass: function (e) {
+        let page = this;
+        let o_id = e.currentTarget.dataset.id;
+        var obj = {
+            cat_id: o_id
+        }
+        this.getGoods(obj)
+        //page.getClassList(e.currentTarget.dataset.id);
+
+        //设置当前样式
+        page.setData({
+            two_class: o_id
+        });
+    },
+
     goodsDetail: function (e) {
         let ins = encodeURIComponent('id=' + e.currentTarget.dataset.id);
         wx.navigateTo({
