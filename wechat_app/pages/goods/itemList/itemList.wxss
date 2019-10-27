@@ -156,10 +156,15 @@ page{
   width: 420rpx;
   overflow: hidden;
   height:52rpx;
+  margin-top: 30px;
 }
 .price{
-  font-size: 32rpx;
+  /* font-size: 32rpx; */
   color: #FF3B44;
+}
+.spec-str{
+  font-size: 32rpx;
+  /* color: #FF3B44; */
 }
 .cart-img{
   width: 52rpx;

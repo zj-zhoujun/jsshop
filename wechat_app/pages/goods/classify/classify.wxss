@@ -289,7 +289,7 @@
     z-index: 99;
 }
 .nav-item {
-    width: 20%;
+    /* width: 20%; */
     display: inline-block;
     text-align: center;
     margin-left:3%;
