@@ -5,7 +5,8 @@ App({
   common: require('utils/common.js'),
   jshopConf:{},
   globalData: {
-    classifyId: 0
+    classifyId: 0,
+    two_classifyId: 0
   },
   onLaunch: function (e) {
     let line_conf = this.db.get('config');

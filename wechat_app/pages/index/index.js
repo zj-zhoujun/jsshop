@@ -74,6 +74,8 @@ Page({
 
   //页面显示
   onShow: function () {
+    getApp().globalData.classifyId = ""
+    getApp().globalData.two_classifyId = ""
       let userToken = wx.getStorageSync('userToken');
       let myInviteCode = wx.getStorageSync('myInviteCode');
       if (userToken && !myInviteCode) {
@@ -358,9 +360,14 @@ Page({
   //产品分类跳转产品列表
   navcatList: function (e) {
     var val = e.currentTarget.dataset.id;
-    wx.navigateTo({
-      url: '../goods/itemList/itemList?id=' + val
+    getApp().globalData.classifyId = val
+    console.log('../goods/classify/classify?id=' + val)
+    wx.switchTab({
+      url: '../goods/classify/classify?id=' + val,
     });
+    // wx.navigateTo({
+    //   url: '../goods/itemList/itemList?id=' + val
+    // });
   },
 
   //客服回调

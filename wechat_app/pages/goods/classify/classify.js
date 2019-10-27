@@ -30,6 +30,7 @@ Page({
     onShow: function (options) {
         var page = this;
         var did = getApp().globalData.classifyId
+        var two_did = getApp().globalData.two_classifyId
         // var did = '100'
         //获取全部数据
         let all_cat = app.db.get('all_cat');
@@ -37,8 +38,8 @@ Page({
             var objData = all_cat.find(function (obj) {
                 return obj.id === did
             })
-            console.log(objData)
-            console.log('缓存有值')
+            // console.log(objData)
+            // console.log('缓存有值')
             //缓存有值
             let on_class = 0;
             let two_class = 0;
@@ -47,6 +48,11 @@ Page({
                 on_class = objData.id
                 if (objData.child) {
                     class_list = objData.child;
+                    if (two_did) {
+                        two_class = two_did;
+                    } else {
+                        two_class = class_list[0].id;
+                    }
                 }
             } else {
                 on_class = all_cat[0].id;
@@ -55,6 +61,7 @@ Page({
                     two_class = class_list[0].id;
                 }
             }
+            getApp().globalData.two_classifyId = two_class
             page.setData({
                 all_cat: all_cat,
                 on_class: on_class,
@@ -83,6 +90,11 @@ Page({
                         on_class = objData.id
                         if (objData.child) {
                             class_list = objData.child;
+                            if (two_did) {
+                                two_class = two_did;
+                            } else {
+                                two_class = class_list[0].id;
+                            }
                         }
                     } else {
                         on_class = res.data[0].id;
@@ -91,6 +103,7 @@ Page({
                             two_class = class_list[0].id;
                         }
                     }
+                    getApp().globalData.two_classifyId = two_class
                     page.setData({
                         all_cat: res.data,
                         on_class: on_class,
@@ -185,6 +198,9 @@ Page({
         let o_id = e.currentTarget.dataset.id;
         let all_cat = page.data.all_cat;
         let class_list = [];
+        getApp().globalData.classifyId = o_id
+        console.log('切换分类')
+        console.log(o_id)
         var obj = {
             cat_id: o_id
         }
@@ -218,6 +234,8 @@ Page({
         //page.getClassList(e.currentTarget.dataset.id);
 
         //设置当前样式
+        console.log(o_id)
+        getApp().globalData.two_classifyId = o_id
         page.setData({
             two_class: o_id
         });
