@@ -167,6 +167,7 @@
   width: 300rpx;
   overflow: hidden;
   height: 52rpx;
+  margin-top: 25px;
 }
 
 .price {
