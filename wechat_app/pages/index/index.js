@@ -150,10 +150,7 @@ Page({
   catNav: function () {
     var page = this;
     //异步获取幻灯片广告数据
-    console.log(1);
     app.api.getCatNav(function (res) {
-      console.log(2);
-      console.log(res);
       page.setData({
         catNav: res.data
       });
@@ -318,10 +315,8 @@ Page({
   
   //广告跳转
   slideDetail: function (e) {
-    console.log(e)
     var types = e.target.dataset.type;
     var val = e.target.dataset.val;
-    console.log(e)
     if (types == 1) {
       //URL
       let ins = encodeURIComponent(val);
@@ -349,7 +344,7 @@ Page({
       });
     }
     else if (types == 6) {
-      console.log('../goods/classify/classify?id=' + val)
+      // console.log('../goods/classify/classify?id=' + val)
       getApp().globalData.classifyId = val
       wx.switchTab({
         url: '../goods/classify/classify?id=' + val,
@@ -361,7 +356,7 @@ Page({
   navcatList: function (e) {
     var val = e.currentTarget.dataset.id;
     getApp().globalData.classifyId = val
-    console.log('../goods/classify/classify?id=' + val)
+    // console.log('../goods/classify/classify?id=' + val)
     wx.switchTab({
       url: '../goods/classify/classify?id=' + val,
     });

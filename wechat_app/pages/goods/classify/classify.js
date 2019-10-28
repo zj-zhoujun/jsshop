@@ -44,6 +44,7 @@ Page({
             let on_class = 0;
             let two_class = 0;
             let class_list = [];
+            let cat_id = ''
             if (did) {
                 on_class = objData.id
                 if (objData.child) {
@@ -53,12 +54,18 @@ Page({
                     } else {
                         two_class = class_list[0].id;
                     }
+                    cat_id = two_class
+                } else {
+                    cat_id = on_class
                 }
             } else {
                 on_class = all_cat[0].id;
                 if (all_cat[0].child) {
                     class_list = all_cat[0].child;
                     two_class = class_list[0].id;
+                    cat_id = two_class
+                } else {
+                    cat_id = on_class
                 }
             }
             getApp().globalData.two_classifyId = two_class
@@ -70,22 +77,23 @@ Page({
                 cate_style: app.config.cate_style
             });
             var obj = {
-                cat_id: two_class
+                cat_id: cat_id
                 // cat_id: did ? objData.id : two_class
             }
             page.getGoods(obj)
         } else {
             //缓存无值
-            console.log('缓存无值')
+            // console.log('缓存无值')
             app.api.getAllCat(function (res) {
                 if (res.status) {
                     var objData = res.data.find(function (obj) {
                         return obj.id === did
                     })
-                    console.log(objData)
+                    // console.log(objData)
                     let on_class = 0;
                     let two_class = 0;
                     let class_list = [];
+                    let cat_id = ''
                     if (did) {
                         on_class = objData.id
                         if (objData.child) {
@@ -95,12 +103,18 @@ Page({
                             } else {
                                 two_class = class_list[0].id;
                             }
+                            cat_id = two_class
+                        } else {
+                            cat_id = on_class
                         }
                     } else {
                         on_class = res.data[0].id;
                         if (res.data[0].child) {
                             class_list = res.data[0].child;
                             two_class = class_list[0].id;
+                            cat_id = two_class
+                        } else {
+                            cat_id = on_class
                         }
                     }
                     getApp().globalData.two_classifyId = two_class
@@ -116,7 +130,7 @@ Page({
                     app.db.set('all_cat', res.data);
                     var obj = {
                         // cat_id: did ? objData.id : two_class
-                        cat_id: two_class
+                        cat_id: cat_id
                     }
                     page.getGoods(obj)
                 }
@@ -198,12 +212,23 @@ Page({
         let o_id = e.currentTarget.dataset.id;
         let all_cat = page.data.all_cat;
         let class_list = [];
-        getApp().globalData.classifyId = o_id
-        console.log('切换分类')
-        console.log(o_id)
-        var obj = {
-            cat_id: o_id
+        let on_class = o_id;
+        let two_class = 0;
+        var cat_id = ''
+        var objData = all_cat.find(function (obj) {
+            return obj.id === o_id
+        })
+        if (objData.child) {
+            two_class = objData.child[0].id
+            cat_id = two_class
+        } else {
+            cat_id = o_id
         }
+        var obj = {
+            cat_id: cat_id
+        }
+        getApp().globalData.classifyId = o_id
+        getApp().globalData.two_classifyId = two_class
         this.getGoods(obj)
         //page.getClassList(e.currentTarget.dataset.id);
         for (let i = 0; i < all_cat.length; i++) {
@@ -218,7 +243,8 @@ Page({
 
         //设置当前样式
         page.setData({
-            on_class: o_id,
+            on_class: on_class,
+            two_class: two_class,
             class_list: class_list
         });
     },
@@ -234,7 +260,6 @@ Page({
         //page.getClassList(e.currentTarget.dataset.id);
 
         //设置当前样式
-        console.log(o_id)
         getApp().globalData.two_classifyId = o_id
         page.setData({
             two_class: o_id
