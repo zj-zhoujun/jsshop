@@ -170,6 +170,7 @@
   overflow: hidden;
   height: 52rpx;
   margin-top: 20px;
+  text-align:left;
 }
 .spec-str{
   display:-webkit-box;
@@ -178,10 +179,7 @@
 .price {
   font-size: 32rpx;
   color: #FF3B44;
-  display:-webkit-box;
-  text-align:left;
 }
-
 .cart-img {
   width: 52rpx;
   height: 52rpx;
