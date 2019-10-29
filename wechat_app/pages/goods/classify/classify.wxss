@@ -143,6 +143,8 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   white-space: normal;
+  text-align:left;
+  margin-bottom:5px;
 }
 
 .preferential {
@@ -167,12 +169,17 @@
   width: 300rpx;
   overflow: hidden;
   height: 52rpx;
-  margin-top: 25px;
+  margin-top: 20px;
 }
-
+.spec-str{
+  display:-webkit-box;
+  text-align:left;
+}
 .price {
   font-size: 32rpx;
   color: #FF3B44;
+  display:-webkit-box;
+  text-align:left;
 }
 
 .cart-img {
