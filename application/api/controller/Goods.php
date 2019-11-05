@@ -166,7 +166,7 @@ class Goods extends Api
         $goodsModel = new GoodsModel();
         $where[]    = ['marketable', 'eq', $goodsModel::MARKETABLE_UP];
 
-
+        $where[] = ['is_del', 'eq', '0'];
         $return_data = $this->allowedField($field);
         if (!$return_data['status']) {
             return $return_data;
