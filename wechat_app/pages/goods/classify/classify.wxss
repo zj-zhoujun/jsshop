@@ -177,7 +177,7 @@
   text-align:left;
 }
 .price {
-  font-size: 32rpx;
+  font-size: 26rpx;
   color: #FF3B44;
 }
 .cart-img {

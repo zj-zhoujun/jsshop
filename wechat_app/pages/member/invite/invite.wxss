@@ -118,6 +118,10 @@
     margin: 0;
     left: 0;
 }
+.qrcode image{
+    width: 150px;
+    height: 150px;
+}
 .map-pop{
   position: fixed;
   bottom: 0;

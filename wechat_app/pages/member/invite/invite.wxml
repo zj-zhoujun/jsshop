@@ -3,14 +3,15 @@
   <view class='invite-c'>
     <view class='invite-w'>
       <view class='invite-w-t'>我的专属邀请码</view>
+      <view class='qrcode'><image src='{{qrcode}}'></image></view>
       <text class='invite-w-num'>{{code}}</text>
       <view class='invite-w-detail'>快去分享您的邀请码吧，让更多的好友加入到【{{title}}】，您也可以获得丰厚的奖励！</view>
       <view class='invite-w-bot'>
-        <view bindtap='commission'>
+        <!-- <view bindtap='commission'>
           <image class='invite-w-bot-ic' src='../../image/ic-earnings.png'></image>
           <text class='invite-w-bot-red'>￥{{money}}元</text>
           <text class='invite-w-bot-gray'>佣金收益</text>
-        </view>
+        </view> -->
         <view bindtap='recommendlist'>
           <image class='invite-w-bot-ic' src='../../image/ic-number.png'></image>
           <text class='invite-w-bot-red'>{{number}}人</text>
