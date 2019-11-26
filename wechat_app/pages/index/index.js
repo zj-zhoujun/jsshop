@@ -346,8 +346,9 @@ Page({
     else if (types == 6) {
       // console.log('../goods/classify/classify?id=' + val)
       getApp().globalData.classifyId = val
-      wx.switchTab({
-        url: '../goods/classify/classify?id=' + val,
+      wx.navigateTo({
+        // url: '../goods/classify/classify?id=' + val,
+        url: '../goods/itemList/itemList?id=' + val,
       });
     }
   },

@@ -282,6 +282,19 @@ Page({
     //客服回调
     customerService: function (e) {},
 
+  //上拉加载
+  lower: function () {
+    var page = this;
+    page.setData({
+      toView: 'loading'
+    });
+    if (!page.data.loadingComplete) {
+      page.setSearchData({
+        page: page.data.searchData.page + 1
+      });
+      page.getGoods();
+    }
+  },
     //搜索
     // search: function (e) {
     //     var key = e.detail.value;
