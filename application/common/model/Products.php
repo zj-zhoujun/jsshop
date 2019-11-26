@@ -127,6 +127,7 @@ class Products extends Common
                     foreach($product_list as $a){
                         if(!array_diff_assoc($a['temp_spes_desc'],$tempProductSpesDesc)){
                             $defaultSpec[$k][$v]['product_id'] = $a['id'];
+                            $defaultSpec[$k][$v]['unit_price'] = $a['unitprice'];
                             break;           //找到了，就不循环剩下的货品了，没意义
                         }
                     }
