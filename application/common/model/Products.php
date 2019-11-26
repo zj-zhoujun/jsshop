@@ -103,9 +103,10 @@ class Products extends Common
             $product_list = $this->where(
                 [
                     ['goods_id','eq',$product['goods_id']],
-                    ['id','neq',$id],
+                   
                 ]
             )->select();
+            
             if(!$product_list->isEmpty()){
                 $product_list = $product_list->toArray();
             }else{
@@ -115,20 +116,22 @@ class Products extends Common
                 $product_list[$k]['temp_spes_desc'] = getProductSpesDesc($v['spes_desc']);
             }
             //遍历二维多规格信息，设置货品id
+            
             foreach($defaultSpec as $k => $j){
                 foreach($j as $v => $l){
                     //如果是默认选中的，不需要找货品信息
-                    if(isset($l['is_default'])){
-                        continue;
-                    }
+                    //if(isset($l['is_default'])){
+                      //  continue;
+                    //}
                     $tempProductSpesDesc = $productSpesDesc;
                     $tempProductSpesDesc[$k] = $v;
+                    
                     //循环所有货品，找到对应的多规格
                     foreach($product_list as $a){
                         if(!array_diff_assoc($a['temp_spes_desc'],$tempProductSpesDesc)){
                             $defaultSpec[$k][$v]['product_id'] = $a['id'];
                             $defaultSpec[$k][$v]['unit_price'] = $a['unitprice'];
-                            break;           //找到了，就不循环剩下的货品了，没意义
+                            //break;           //找到了，就不循环剩下的货品了，没意义
                         }
                     }
                 }
