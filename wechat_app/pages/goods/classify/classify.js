@@ -148,6 +148,7 @@ Page({
         });
     },
     getGoods: function (data) {
+        console.log(data)
         var page = this;
         if (page.data.ajaxStatus) {
             return false;
@@ -159,6 +160,7 @@ Page({
             nodata: false,
         });
         //如果已经没有数据了，就不取数据了，直接提示已经没有数据
+        console.log(page.data.loadingComplete)
         if (page.data.loadingComplete) {
             wx.showToast({
                 title: '暂时没有数据了',
@@ -180,8 +182,9 @@ Page({
                 if (page.data.searchData.page == 1 && res.data.list.length == 0) {
                     isEmpty = true;
                 }
+                let goodsList = page.data.goodsList.concat(res.data.list);
                 page.setData({
-                    goodsList: res.data.list,
+                    goodsList: goodsList,
                     ajaxStatus: false,
                     loading: !isEnd && !isEmpty,
                     toView: '',
@@ -215,6 +218,8 @@ Page({
         let on_class = o_id;
         let two_class = 0;
         var cat_id = ''
+        page.data.searchData.page = 1
+        page.data.goodsList = []
         var objData = all_cat.find(function (obj) {
             return obj.id === o_id
         })
@@ -256,6 +261,8 @@ Page({
         var obj = {
             cat_id: o_id
         }
+        page.data.searchData.page = 1
+        page.data.goodsList = []
         this.getGoods(obj)
         //page.getClassList(e.currentTarget.dataset.id);
 
@@ -283,16 +290,20 @@ Page({
     customerService: function (e) {},
 
   //上拉加载
-  lower: function () {
+  onReachBottom: function () {
+      console.log(this)
     var page = this;
+    console.log(page.data.searchData.page)
     page.setData({
       toView: 'loading'
     });
+    console.log(page.data.loadingComplete)
     if (!page.data.loadingComplete) {
-      page.setSearchData({
-        page: page.data.searchData.page + 1
-      });
-      page.getGoods();
+        page.data.searchData.page += 1
+        var obj = {
+            cat_id: page.data.on_class
+        }
+      page.getGoods(obj);
     }
   },
     //搜索
