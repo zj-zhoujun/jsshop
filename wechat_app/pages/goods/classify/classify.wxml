@@ -22,7 +22,7 @@
         </block>
     </scroll-view>
 
-    <scroll-view class='classify-content-right' scroll-y="true">
+    <scroll-view class='classify-content-right' scroll-y="true" bindscrolltolower="bindDownLoad">
         <view class='content-body'>
             <view class='every-commodity {{listgrid?"every-commodity-grid":""}}' wx:for="{{goodsList}}" wx:key="{{index}}" bindtap="goodsDetail" data-id="{{item.id}}">
             <image class='commodity-pic' mode='aspectFill' src='{{item.image_url}}'></image>

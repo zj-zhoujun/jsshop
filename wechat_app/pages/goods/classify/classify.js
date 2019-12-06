@@ -290,7 +290,7 @@ Page({
     customerService: function (e) {},
 
   //上拉加载
-  onReachBottom: function () {
+  bindDownLoad: function () {
       console.log(this)
     var page = this;
     console.log(page.data.searchData.page)
