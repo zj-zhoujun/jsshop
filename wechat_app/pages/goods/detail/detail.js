@@ -763,6 +763,7 @@ Page({
   
   //规格选择
   selectSku: function (obj) {
+    // console.log(obj)
     var id = obj.target.dataset.key;
     if(id == "" || id == "0"){
       app.common.errorToBack("出错了",0);
