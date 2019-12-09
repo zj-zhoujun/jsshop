@@ -241,7 +241,7 @@ class Cart extends Common
                 $map[] = ['ship_id','neq',0];
                 $product_info = Db::name('goods')->where($map)->field('name,ship_id')->select();
                 if($product_info){
-                    $ship_arr = array_column($product_info,'ship_id');
+                    $ship_arr = array_flip(array_column($product_info,'ship_id'));
                     if(count($ship_arr)>1){
                         $result['msg'] = '所选产品配送区域不同，不可同时购买';
                         return $result;
